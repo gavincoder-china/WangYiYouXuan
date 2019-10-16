@@ -1,7 +1,6 @@
 package com.wyyx.provider.util;
 
 
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.config.RequestConfig;
@@ -42,7 +41,8 @@ public class UrlUtils {
             InputStream inputStream = urlConnection.getInputStream();
             String responseStr = ConvertToString(inputStream);
             return responseStr;
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             return null;
         }
@@ -57,14 +57,17 @@ public class UrlUtils {
             while ((line = bufferedReader.readLine()) != null) {
                 result.append(line + "\n");
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             try {
                 inputStreamReader.close();
                 inputStream.close();
                 bufferedReader.close();
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -92,20 +95,24 @@ public class UrlUtils {
             } else {
                 return null;
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
 
             return null;
-        } finally {
+        }
+        finally {
             if (response != null) {
                 try {
                     response.close();//最后关闭response
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                 }
             }
             if (httpClient != null) {
                 try {
                     httpClient.close();
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                 }
             }
         }

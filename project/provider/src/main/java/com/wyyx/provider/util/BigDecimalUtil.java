@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 /**
  * **********************************************************
  *
- * @Project:  金融BigDecimal数据类型的工具类
+ * @Project: 金融BigDecimal数据类型的工具类
  * @Author : Gavincoder
  * @Mail : xunyegege@gmail.com
  * @Github : https://github.com/xunyegege
