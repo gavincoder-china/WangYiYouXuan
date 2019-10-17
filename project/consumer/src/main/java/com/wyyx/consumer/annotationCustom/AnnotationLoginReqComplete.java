@@ -3,6 +3,7 @@ package com.wyyx.consumer.annotationCustom;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wyyx.consumer.contants.ReturnResultContants;
+import com.wyyx.consumer.model.UserRedisModel;
 import com.wyyx.consumer.result.ReturnResultUtils;
 import com.wyyx.consumer.util.RedisUtil;
 import com.wyyx.provider.contants.CommonContants;
@@ -56,9 +57,9 @@ public class AnnotationLoginReqComplete implements HandlerInterceptor {
 
                     //Todo 设置自定义注解
 
-                    Oauth oauth = JSONObject.parseObject(jsonStr, Oauth.class);
+                    UserRedisModel userRedisModel = JSONObject.parseObject(jsonStr, UserRedisModel.class);
 
-                    request.setAttribute("userToken", oauth);
+                    request.setAttribute("userToken", userRedisModel);
 
                     return true;
                 }
