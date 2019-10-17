@@ -195,7 +195,7 @@
         where (select count(distinct (cp2.sales))
         from com_product cp2
         where cp2.P_type = cp.P_type
-        and cp2.sales > cp.sales) <![CDATA[<]]> 2
+        and cp2.sales > cp.sales) <![CDATA[<]]> #{num,jdbcType=INTEGER}
         order by P_type,cp.sales desc
     </select>
 </mapper>

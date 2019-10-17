@@ -19,8 +19,8 @@ public class ShopServiceImpl implements ShopService {
 
     //kitty_zhu :首页展示分类商品
     @Override
-    public List<ComProduct> selectAll() {
+    public List<ComProduct> selectAll(int num) {
 
-        return comProductMapper.selectAll();
+        return comProductMapper.selectAll(num);
     }
 }

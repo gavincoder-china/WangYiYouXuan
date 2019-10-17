@@ -22,7 +22,7 @@ public interface ComProductMapper {
    // List<ComProduct> selectAllByClass(ComProduct comProduct);
 
    //查询首页商品,
-   List<ComProduct> selectAll();
+   List<ComProduct> selectAll(@Param("num") int num);
 
 
 
