@@ -29,7 +29,7 @@ public class UserExperience implements Serializable {
     /**
     * 1增加，2减少
     */
-    private Boolean type;
+    private Byte type;
 
     /**
     * 该条记录创建时间

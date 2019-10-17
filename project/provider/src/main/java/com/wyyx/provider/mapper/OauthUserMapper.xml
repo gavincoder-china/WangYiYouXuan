@@ -7,17 +7,17 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="sex" jdbcType="BOOLEAN" property="sex" />
-    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="province" jdbcType="VARCHAR" property="province" />
     <result column="country" jdbcType="VARCHAR" property="country" />
     <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="platform" jdbcType="VARCHAR" property="platform" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, openid, nickname, sex, `language`, city, province, country, headimgurl, create_time
+    id, openid, nickname, sex, city, province, country, headimgurl, create_time, platform
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -34,13 +34,13 @@
   <insert id="insert" parameterType="com.wyyx.provider.dto.OauthUser">
     <!--@mbg.generated-->
     insert into oauth_user (id, openid, nickname, 
-      sex, `language`, city, 
-      province, country, headimgurl, 
-      create_time)
+      sex, city, province, 
+      country, headimgurl, create_time, 
+      platform)
     values (#{id,jdbcType=BIGINT}, #{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=BOOLEAN}, #{language,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
-      #{province,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{sex,jdbcType=TINYINT}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{platform,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wyyx.provider.dto.OauthUser">
     <!--@mbg.generated-->
@@ -58,9 +58,6 @@
       <if test="sex != null">
         sex,
       </if>
-      <if test="language != null">
-        `language`,
-      </if>
       <if test="city != null">
         city,
       </if>
@@ -76,6 +73,9 @@
       <if test="createTime != null">
         create_time,
       </if>
+      <if test="platform != null">
+        platform,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -88,10 +88,7 @@
         #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="sex != null">
-        #{sex,jdbcType=BOOLEAN},
-      </if>
-      <if test="language != null">
-        #{language,jdbcType=VARCHAR},
+        #{sex,jdbcType=TINYINT},
       </if>
       <if test="city != null">
         #{city,jdbcType=VARCHAR},
@@ -108,6 +105,9 @@
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="platform != null">
+        #{platform,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wyyx.provider.dto.OauthUser">
@@ -121,10 +121,7 @@
         nickname = #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="sex != null">
-        sex = #{sex,jdbcType=BOOLEAN},
-      </if>
-      <if test="language != null">
-        `language` = #{language,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=TINYINT},
       </if>
       <if test="city != null">
         city = #{city,jdbcType=VARCHAR},
@@ -141,6 +138,9 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="platform != null">
+        platform = #{platform,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -149,13 +149,13 @@
     update oauth_user
     set openid = #{openid,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=BOOLEAN},
-      `language` = #{language,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
       city = #{city,jdbcType=VARCHAR},
       province = #{province,jdbcType=VARCHAR},
       country = #{country,jdbcType=VARCHAR},
       headimgurl = #{headimgurl,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      platform = #{platform,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

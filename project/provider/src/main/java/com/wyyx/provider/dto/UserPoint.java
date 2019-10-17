@@ -29,7 +29,7 @@ public class UserPoint implements Serializable {
     /**
     * 1增加，2减少
     */
-    private Boolean type;
+    private Byte type;
 
     /**
     * 记录生成时间

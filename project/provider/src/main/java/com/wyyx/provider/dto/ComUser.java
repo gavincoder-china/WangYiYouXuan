@@ -34,7 +34,7 @@ public class ComUser implements Serializable {
     /**
     * 普通用户性别(1代表男;2代表女,0是未确定)
     */
-    private Boolean sex;
+    private Byte sex;
 
     /**
     * 普通用户地址
@@ -54,7 +54,7 @@ public class ComUser implements Serializable {
     /**
     * 普通用户角色(0代表非会员;1代表会员;2代表超级会员)
     */
-    private Boolean role;
+    private Byte role;
 
     /**
     * 普通用户创建时间

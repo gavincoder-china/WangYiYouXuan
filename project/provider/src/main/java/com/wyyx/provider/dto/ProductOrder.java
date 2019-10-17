@@ -39,7 +39,7 @@ public class ProductOrder implements Serializable {
     /**
     * 订单状态,0取消,1待支付,2支付成功,3支付失败,4已收货,5退货中,6已退货
     */
-    private Boolean state;
+    private Byte state;
 
     /**
     * 支付方式(如微信支付)

@@ -24,12 +24,7 @@ public class OauthUser implements Serializable {
     /**
     * 授权用户性别,1男,2女,0未知
     */
-    private Boolean sex;
-
-    /**
-    * 授权用户语言
-    */
-    private String language;
+    private Byte sex;
 
     /**
     * 授权用户所在城市
@@ -55,6 +50,11 @@ public class OauthUser implements Serializable {
     * 该条记录创建时间
     */
     private Date createTime;
+
+    /**
+    * 授权平台
+    */
+    private String platform;
 
     private static final long serialVersionUID = 1L;
 }

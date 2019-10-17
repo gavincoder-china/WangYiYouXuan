@@ -55,7 +55,7 @@ public class ComProduct implements Serializable {
     /**
     * 普通商品的状态(-1代表已删除;0代表已下架;1代表已上架)
     */
-    private Boolean status;
+    private Byte status;
 
     /**
     * 该条记录创建时间

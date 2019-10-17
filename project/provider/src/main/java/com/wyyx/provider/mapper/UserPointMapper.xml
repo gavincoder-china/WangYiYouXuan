@@ -8,7 +8,7 @@
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="point" jdbcType="INTEGER" property="point" />
     <result column="reason" jdbcType="VARCHAR" property="reason" />
-    <result column="type" jdbcType="BOOLEAN" property="type" />
+    <result column="type" jdbcType="TINYINT" property="type" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -33,7 +33,7 @@
       reason, `type`, create_time
       )
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{point,jdbcType=INTEGER}, 
-      #{reason,jdbcType=VARCHAR}, #{type,jdbcType=BOOLEAN}, #{createTime,jdbcType=TIMESTAMP}
+      #{reason,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.wyyx.provider.dto.UserPoint">
@@ -73,7 +73,7 @@
         #{reason,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
-        #{type,jdbcType=BOOLEAN},
+        #{type,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -94,7 +94,7 @@
         reason = #{reason,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
-        `type` = #{type,jdbcType=BOOLEAN},
+        `type` = #{type,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -108,7 +108,7 @@
     set user_id = #{userId,jdbcType=BIGINT},
       point = #{point,jdbcType=INTEGER},
       reason = #{reason,jdbcType=VARCHAR},
-      `type` = #{type,jdbcType=BOOLEAN},
+      `type` = #{type,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>

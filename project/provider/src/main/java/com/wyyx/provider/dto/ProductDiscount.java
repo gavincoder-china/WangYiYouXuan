@@ -29,7 +29,7 @@ public class ProductDiscount implements Serializable {
     /**
     * 优惠状态(0不优惠;1优惠;2即将有优惠)
     */
-    private Boolean status;
+    private Byte state;
 
     /**
     * 优惠开始时间

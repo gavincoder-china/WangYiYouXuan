@@ -8,14 +8,14 @@
     <result column="product_id" jdbcType="BIGINT" property="productId" />
     <result column="discount" jdbcType="INTEGER" property="discount" />
     <result column="discount_reason" jdbcType="VARCHAR" property="discountReason" />
-    <result column="status" jdbcType="BOOLEAN" property="status" />
+    <result column="state" jdbcType="TINYINT" property="state" />
     <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, product_id, discount, discount_reason, `status`, begin_time, end_time, create_time
+    id, product_id, discount, discount_reason, `state`, begin_time, end_time, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -32,10 +32,10 @@
   <insert id="insert" parameterType="com.wyyx.provider.dto.ProductDiscount">
     <!--@mbg.generated-->
     insert into product_discount (id, product_id, discount, 
-      discount_reason, `status`, begin_time, 
+      discount_reason, `state`, begin_time, 
       end_time, create_time)
     values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{discount,jdbcType=INTEGER}, 
-      #{discountReason,jdbcType=VARCHAR}, #{status,jdbcType=BOOLEAN}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{discountReason,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, #{beginTime,jdbcType=TIMESTAMP}, 
       #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wyyx.provider.dto.ProductDiscount">
@@ -54,8 +54,8 @@
       <if test="discountReason != null">
         discount_reason,
       </if>
-      <if test="status != null">
-        `status`,
+      <if test="state != null">
+        `state`,
       </if>
       <if test="beginTime != null">
         begin_time,
@@ -80,8 +80,8 @@
       <if test="discountReason != null">
         #{discountReason,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=BOOLEAN},
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
       </if>
       <if test="beginTime != null">
         #{beginTime,jdbcType=TIMESTAMP},
@@ -107,8 +107,8 @@
       <if test="discountReason != null">
         discount_reason = #{discountReason,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=BOOLEAN},
+      <if test="state != null">
+        `state` = #{state,jdbcType=TINYINT},
       </if>
       <if test="beginTime != null">
         begin_time = #{beginTime,jdbcType=TIMESTAMP},
@@ -128,7 +128,7 @@
     set product_id = #{productId,jdbcType=BIGINT},
       discount = #{discount,jdbcType=INTEGER},
       discount_reason = #{discountReason,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=BOOLEAN},
+      `state` = #{state,jdbcType=TINYINT},
       begin_time = #{beginTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP}

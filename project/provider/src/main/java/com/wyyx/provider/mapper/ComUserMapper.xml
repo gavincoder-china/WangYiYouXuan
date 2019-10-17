@@ -9,11 +9,11 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="sex" jdbcType="BOOLEAN" property="sex" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="birthday" jdbcType="DATE" property="birthday" />
     <result column="points" jdbcType="VARCHAR" property="points" />
-    <result column="role" jdbcType="BOOLEAN" property="role" />
+    <result column="role" jdbcType="TINYINT" property="role" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -40,9 +40,9 @@
       address, birthday, points, 
       `role`, create_time)
     values (#{id,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=BOOLEAN}, 
+      #{nickname,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
       #{address,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{points,jdbcType=VARCHAR}, 
-      #{role,jdbcType=BOOLEAN}, #{createTime,jdbcType=TIMESTAMP})
+      #{role,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wyyx.provider.dto.ComUser">
     <!--@mbg.generated-->
@@ -99,7 +99,7 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="sex != null">
-        #{sex,jdbcType=BOOLEAN},
+        #{sex,jdbcType=TINYINT},
       </if>
       <if test="address != null">
         #{address,jdbcType=VARCHAR},
@@ -111,7 +111,7 @@
         #{points,jdbcType=VARCHAR},
       </if>
       <if test="role != null">
-        #{role,jdbcType=BOOLEAN},
+        #{role,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -135,7 +135,7 @@
         `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="sex != null">
-        sex = #{sex,jdbcType=BOOLEAN},
+        sex = #{sex,jdbcType=TINYINT},
       </if>
       <if test="address != null">
         address = #{address,jdbcType=VARCHAR},
@@ -147,7 +147,7 @@
         points = #{points,jdbcType=VARCHAR},
       </if>
       <if test="role != null">
-        `role` = #{role,jdbcType=BOOLEAN},
+        `role` = #{role,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -162,11 +162,11 @@
       `password` = #{password,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
       `name` = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=BOOLEAN},
+      sex = #{sex,jdbcType=TINYINT},
       address = #{address,jdbcType=VARCHAR},
       birthday = #{birthday,jdbcType=DATE},
       points = #{points,jdbcType=VARCHAR},
-      `role` = #{role,jdbcType=BOOLEAN},
+      `role` = #{role,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>

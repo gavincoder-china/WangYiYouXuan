@@ -10,7 +10,7 @@
     <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
     <result column="receiver_phone" jdbcType="VARCHAR" property="receiverPhone" />
     <result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress" />
-    <result column="state" jdbcType="BOOLEAN" property="state" />
+    <result column="state" jdbcType="TINYINT" property="state" />
     <result column="pay_type" jdbcType="VARCHAR" property="payType" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
@@ -39,7 +39,7 @@
       )
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
       #{receiverName,jdbcType=VARCHAR}, #{receiverPhone,jdbcType=VARCHAR}, #{receiverAddress,jdbcType=VARCHAR}, 
-      #{state,jdbcType=BOOLEAN}, #{payType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      #{state,jdbcType=TINYINT}, #{payType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.wyyx.provider.dto.ProductOrder">
@@ -94,7 +94,7 @@
         #{receiverAddress,jdbcType=VARCHAR},
       </if>
       <if test="state != null">
-        #{state,jdbcType=BOOLEAN},
+        #{state,jdbcType=TINYINT},
       </if>
       <if test="payType != null">
         #{payType,jdbcType=VARCHAR},
@@ -124,7 +124,7 @@
         receiver_address = #{receiverAddress,jdbcType=VARCHAR},
       </if>
       <if test="state != null">
-        `state` = #{state,jdbcType=BOOLEAN},
+        `state` = #{state,jdbcType=TINYINT},
       </if>
       <if test="payType != null">
         pay_type = #{payType,jdbcType=VARCHAR},
@@ -143,7 +143,7 @@
       receiver_name = #{receiverName,jdbcType=VARCHAR},
       receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
       receiver_address = #{receiverAddress,jdbcType=VARCHAR},
-      `state` = #{state,jdbcType=BOOLEAN},
+      `state` = #{state,jdbcType=TINYINT},
       pay_type = #{payType,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

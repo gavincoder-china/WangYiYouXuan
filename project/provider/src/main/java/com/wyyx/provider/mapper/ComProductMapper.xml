@@ -13,7 +13,7 @@
     <result column="sell_price" jdbcType="DECIMAL" property="sellPrice" />
     <result column="inventory" jdbcType="BIGINT" property="inventory" />
     <result column="sales" jdbcType="BIGINT" property="sales" />
-    <result column="status" jdbcType="BOOLEAN" property="status" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -42,7 +42,7 @@
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{imgurl,jdbcType=VARCHAR}, #{goodratio,jdbcType=INTEGER}, #{buyPrice,jdbcType=DECIMAL}, 
       #{sellPrice,jdbcType=DECIMAL}, #{inventory,jdbcType=BIGINT}, #{sales,jdbcType=BIGINT}, 
-      #{status,jdbcType=BOOLEAN}, #{createTime,jdbcType=TIMESTAMP})
+      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wyyx.provider.dto.ComProduct">
     <!--@mbg.generated-->
@@ -111,7 +111,7 @@
         #{sales,jdbcType=BIGINT},
       </if>
       <if test="status != null">
-        #{status,jdbcType=BOOLEAN},
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -147,7 +147,7 @@
         sales = #{sales,jdbcType=BIGINT},
       </if>
       <if test="status != null">
-        `status` = #{status,jdbcType=BOOLEAN},
+        `status` = #{status,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -166,7 +166,7 @@
       sell_price = #{sellPrice,jdbcType=DECIMAL},
       inventory = #{inventory,jdbcType=BIGINT},
       sales = #{sales,jdbcType=BIGINT},
-      `status` = #{status,jdbcType=BOOLEAN},
+      `status` = #{status,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
