@@ -15,11 +15,12 @@
     <result column="sales" jdbcType="BIGINT" property="sales" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="P_type" jdbcType="INTEGER" property="pType" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, `name`, description, imgurl, goodratio, buy_price, sell_price, inventory, sales, 
-    `status`, create_time
+    `status`, create_time, P_type
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -38,11 +39,13 @@
     insert into com_product (id, `name`, description, 
       imgurl, goodratio, buy_price, 
       sell_price, inventory, sales, 
-      `status`, create_time)
+      `status`, create_time, P_type
+      )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{imgurl,jdbcType=VARCHAR}, #{goodratio,jdbcType=INTEGER}, #{buyPrice,jdbcType=DECIMAL}, 
       #{sellPrice,jdbcType=DECIMAL}, #{inventory,jdbcType=BIGINT}, #{sales,jdbcType=BIGINT}, 
-      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{pType,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.wyyx.provider.dto.ComProduct">
     <!--@mbg.generated-->
@@ -81,6 +84,9 @@
       <if test="createTime != null">
         create_time,
       </if>
+      <if test="pType != null">
+        P_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -115,6 +121,9 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pType != null">
+        #{pType,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -152,6 +161,9 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="pType != null">
+        P_type = #{pType,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -167,7 +179,8 @@
       inventory = #{inventory,jdbcType=BIGINT},
       sales = #{sales,jdbcType=BIGINT},
       `status` = #{status,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      P_type = #{pType,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
