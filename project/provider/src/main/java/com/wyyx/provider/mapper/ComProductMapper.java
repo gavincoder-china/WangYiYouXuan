@@ -1,4 +1,5 @@
 package com.wyyx.provider.mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.wyyx.provider.dto.ComProduct;
 
@@ -18,6 +19,12 @@ public interface ComProductMapper {
     int updateByPrimaryKey(ComProduct record);
 
     //查询首页分类商品
-    List<ComProduct> selectAllByClass(ComProduct comProduct);
+   // List<ComProduct> selectAllByClass(ComProduct comProduct);
+
+   //查询首页商品,
+   List<ComProduct> selectAll();
+
+
+
 
 }

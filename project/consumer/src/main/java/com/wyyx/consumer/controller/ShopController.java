@@ -46,9 +46,8 @@ public class ShopController {
      */
     @ApiOperation(value = "展示首页分类商品")
     @GetMapping(value = "/selectAllByClass")
-    public List<ComProduct> selectAllByClass(@Valid HomeVo homeVo) {
-        ComProduct comProduct = new ComProduct();
-        BeanUtils.copyProperties(homeVo,comProduct);
-        return shopService.queryAllByClass(comProduct);
+    public List<ComProduct> selectAllByClass() {
+
+        return shopService.selectAll();
     }
 }

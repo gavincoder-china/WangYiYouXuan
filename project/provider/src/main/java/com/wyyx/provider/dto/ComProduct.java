@@ -70,11 +70,11 @@ public class ComProduct implements Serializable {
     /**
      * 起始页
      */
-    private int startPage;
+   // private int startPage;
     /**
      * 每页多少条
      */
-    private int pageSize;
+   // private int pageSize;
 
     private static final long serialVersionUID = 1L;
 }
