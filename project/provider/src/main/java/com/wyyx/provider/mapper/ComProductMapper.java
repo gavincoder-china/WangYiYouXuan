@@ -2,6 +2,8 @@ package com.wyyx.provider.mapper;
 
 import com.wyyx.provider.dto.ComProduct;
 
+import java.util.List;
+
 public interface ComProductMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,8 @@ public interface ComProductMapper {
     int updateByPrimaryKeySelective(ComProduct record);
 
     int updateByPrimaryKey(ComProduct record);
+
+    //查询首页分类商品
+    List<ComProduct> selectAllByClass(ComProduct comProduct);
+
 }

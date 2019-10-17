@@ -3,6 +3,7 @@ package com.wyyx.provider.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -66,6 +67,14 @@ public class ComProduct implements Serializable {
      * 商品分类
      */
     private Integer pType;
+    /**
+     * 起始页
+     */
+    private int startPage;
+    /**
+     * 每页多少条
+     */
+    private int pageSize;
 
     private static final long serialVersionUID = 1L;
 }
