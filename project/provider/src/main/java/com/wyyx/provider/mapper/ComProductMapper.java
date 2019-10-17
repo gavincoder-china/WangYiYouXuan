@@ -1,4 +1,5 @@
 package com.wyyx.provider.mapper;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.wyyx.provider.dto.ComProduct;
@@ -18,16 +19,15 @@ public interface ComProductMapper {
 
     int updateByPrimaryKey(ComProduct record);
 
-    //查询首页分类商品
-   // List<ComProduct> selectAllByClass(ComProduct comProduct);
+    //zy：查询首页商品
+    List<ComProduct> selectAll(@Param("num") int num);
 
-   //查询首页商品,
-   List<ComProduct> selectAll(@Param("num") int num);
+    //zy：根据商品类型查询商品
+    List<ComProduct> selectByClass(@Param("p_type")int p_type,
+                                   @Param("start") int start, @Param("offset") int offset);
 
-   //模糊查询商品,带分页
-  List<ComProduct> selectByName(@Param("name") String name, @Param("start") int start, @Param("offset") int offset);
-
-
+    //zy：模糊查询商品,带分页
+    List<ComProduct> selectByName(@Param("name") String name, @Param("start") int start, @Param("offset") int offset);
 
 
 }

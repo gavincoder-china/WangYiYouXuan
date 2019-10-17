@@ -24,9 +24,15 @@ public class ShopServiceImpl implements ShopService {
         return comProductMapper.selectAll(num);
     }
 
+    //kitty_zhu :根据商品类型查询商品
+    @Override
+    public List<ComProduct> selectByClass( int p_type, int start, int offset) {
+        return comProductMapper.selectByClass( p_type, start, offset);
+    }
+
     @Override
     public List<ComProduct> selectByName(String name, int start, int offset) {
 
-        return null;
+        return comProductMapper.selectByName(name, start, offset);
     }
 }
