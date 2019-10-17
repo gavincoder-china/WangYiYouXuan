@@ -21,7 +21,8 @@ public class UserRedisModel  implements Serializable {
     private static final long serialVersionUID = -567136965701406919L;
 
     private long userID;
-    private long userName;
+    private String userName;
+    private String phone;
 
 
 }

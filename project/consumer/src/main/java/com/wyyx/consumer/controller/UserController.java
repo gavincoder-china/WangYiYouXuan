@@ -1,6 +1,9 @@
 package com.wyyx.consumer.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONObject;
+import com.wyyx.consumer.contants.ReturnResultContants;
+import com.wyyx.consumer.model.UserRedisModel;
 import com.wyyx.consumer.result.ReturnResult;
 import com.wyyx.consumer.result.ReturnResultUtils;
 import com.wyyx.consumer.util.RedisUtil;
@@ -11,19 +14,19 @@ import com.wyyx.provider.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
+import javax.validation.Valid;
 
 /**
  * **********************************************************
  *
- * @Project: 用户登录注册,积分系统等信息
+ * @Project: 用户登录注册, 积分系统等信息
  * @Author : Gavincoder
  * @Mail : xunyegege@gmail.com
  * @Github : https://github.com/xunyegege
@@ -42,36 +45,53 @@ public class UserController {
      */
 
     @Autowired
-    RedisUtil redisUtil;    /*装配redisUtil工具类*/
+    RedisUtil redisUtil;
+
     @Reference
     UserService userService;
-    //用户注册命名空间
-    String RegisterNameSpace = CommonContants.REGISTER_NAME_SPACE;
-    //用户登录命名空间
-    String LoginNameSpace = CommonContants.LOGIN_NAME_SPACE;
+
 
     @ApiOperation(value = "注册")
     @GetMapping(value = "/register")
-    public ReturnResult UserRegister(UserRegisterVo userRegisterVo, HttpServletRequest request) {
-        //把sessionid作为userToken
-        String userToken = request.getSession().getId();
-        //redis中没有该用户名则插入数据库
-        if (null == redisUtil.get(RegisterNameSpace + userToken)) {
+    public ReturnResult UserRegister(@Valid UserRegisterVo userRegisterVo, HttpServletRequest request) {
+
+
+        //检测该用户是否注册
+        if (null == redisUtil.get(CommonContants.REGISTER_NAME_SPACE + userRegisterVo.getPhone())) {
+
+
             ComUser comUser = new ComUser();
-            comUser.setPhone(userRegisterVo.getPhone());
-            comUser.setPassword(userRegisterVo.getPassword());
+            BeanUtils.copyProperties(userRegisterVo, comUser);
+
             try {
-                if (1 == userService.insertUser(comUser)) {
-                    //注册完登录(三分钟过期)
-                    redisUtil.set(LoginNameSpace + userToken, userRegisterVo.getPhone(),180);
-                    return ReturnResultUtils.returnSuccess();
+                if (1 == userService.register(comUser)) {
+                    //先存redis中的注册组
+                    redisUtil.set(CommonContants.REGISTER_NAME_SPACE + userRegisterVo.getPhone(), 1);
+
+                    //去库中再获取用户的唯一标示id,生成保存redis的userJson字符串
+                    ComUser user = userService.login(userRegisterVo.getPhone(), userRegisterVo.getPassword());
+                    UserRedisModel userRedisModel = new UserRedisModel();
+                    userRedisModel.setUserID(user.getId());
+                    userRedisModel.setPhone(user.getPhone());
+
+
+                    String userJsonStr = JSONObject.toJSONString(userRedisModel);
+                    //存登录用户的phone,以及用户的信息  注册完登录(三分钟过期)
+                    redisUtil.set(CommonContants.LOGIN_NAME_SPACE + user.getId(), userJsonStr, 180);
+
+
+                    //返回token
+                    return ReturnResultUtils.returnSuccess(user.getId());
+                } else {
+                    return ReturnResultUtils.returnFail(ReturnResultContants.CODE_REGISTER_WRONG, ReturnResultContants.MSG_REGISTER_WRONG);
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("register error");
                 e.printStackTrace();
             }
         }
-        return ReturnResultUtils.returnFail(UserContants.USER_IS_LOGIN_FAIL_CODE, "该用户已存在！");
+        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_REGISTER_ALREADY_EXIST, ReturnResultContants.MSG_REGISTER_ALREADY_EXIST);
     }
 
 

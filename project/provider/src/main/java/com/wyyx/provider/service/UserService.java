@@ -9,6 +9,12 @@ import com.wyyx.provider.dto.ComUser;
 public interface UserService {
 
     //插入用户信息
-    int insertUser(ComUser comUser);
+    int register(ComUser comUser);
+
+    //用户登录
+    ComUser login(String phone ,String password);
+
+
+
 }
 

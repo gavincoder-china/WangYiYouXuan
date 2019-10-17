@@ -16,4 +16,5 @@ public class UserRegisterVo implements Serializable {
     private String phone;
     //密码
     private String password;
+
 }
