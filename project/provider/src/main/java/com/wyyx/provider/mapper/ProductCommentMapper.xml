@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyyx.provider.mapper.ProductCommentMapper">
+  <resultMap id="BaseResultMap" type="com.wyyx.provider.dto.ProductComment">
+    <!--@mbg.generated-->
+    <!--@Table product_comment-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="rate_level" jdbcType="INTEGER" property="rateLevel" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, product_id, user_id, rate_level, `comment`, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from product_comment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from product_comment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wyyx.provider.dto.ProductComment">
+    <!--@mbg.generated-->
+    insert into product_comment (id, product_id, user_id, 
+      rate_level, `comment`, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{rateLevel,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wyyx.provider.dto.ProductComment">
+    <!--@mbg.generated-->
+    insert into product_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="rateLevel != null">
+        rate_level,
+      </if>
+      <if test="comment != null">
+        `comment`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="rateLevel != null">
+        #{rateLevel,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wyyx.provider.dto.ProductComment">
+    <!--@mbg.generated-->
+    update product_comment
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="rateLevel != null">
+        rate_level = #{rateLevel,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        `comment` = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wyyx.provider.dto.ProductComment">
+    <!--@mbg.generated-->
+    update product_comment
+    set product_id = #{productId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      rate_level = #{rateLevel,jdbcType=INTEGER},
+      `comment` = #{comment,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

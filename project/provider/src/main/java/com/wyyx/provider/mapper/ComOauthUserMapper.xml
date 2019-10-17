@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyyx.provider.mapper.ComOauthUserMapper">
+  <resultMap id="BaseResultMap" type="com.wyyx.provider.dto.ComOauthUser">
+    <!--@mbg.generated-->
+    <!--@Table com_oauth_user-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="oauth_user_id" jdbcType="BIGINT" property="oauthUserId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, oauth_user_id, create_time, phone
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from com_oauth_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from com_oauth_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wyyx.provider.dto.ComOauthUser">
+    <!--@mbg.generated-->
+    insert into com_oauth_user (id, oauth_user_id, create_time, 
+      phone)
+    values (#{id,jdbcType=BIGINT}, #{oauthUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{phone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wyyx.provider.dto.ComOauthUser">
+    <!--@mbg.generated-->
+    insert into com_oauth_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="oauthUserId != null">
+        oauth_user_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="oauthUserId != null">
+        #{oauthUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wyyx.provider.dto.ComOauthUser">
+    <!--@mbg.generated-->
+    update com_oauth_user
+    <set>
+      <if test="oauthUserId != null">
+        oauth_user_id = #{oauthUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wyyx.provider.dto.ComOauthUser">
+    <!--@mbg.generated-->
+    update com_oauth_user
+    set oauth_user_id = #{oauthUserId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      phone = #{phone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

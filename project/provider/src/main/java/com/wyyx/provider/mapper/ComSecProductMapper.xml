@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyyx.provider.mapper.ComSecProductMapper">
+  <resultMap id="BaseResultMap" type="com.wyyx.provider.dto.ComSecProduct">
+    <!--@mbg.generated-->
+    <!--@Table com_sec_product-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="com_product_id" jdbcType="BIGINT" property="comProductId" />
+    <result column="sec_product_id" jdbcType="BIGINT" property="secProductId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, com_product_id, sec_product_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from com_sec_product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from com_sec_product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wyyx.provider.dto.ComSecProduct">
+    <!--@mbg.generated-->
+    insert into com_sec_product (id, com_product_id, sec_product_id, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{comProductId,jdbcType=BIGINT}, #{secProductId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wyyx.provider.dto.ComSecProduct">
+    <!--@mbg.generated-->
+    insert into com_sec_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="comProductId != null">
+        com_product_id,
+      </if>
+      <if test="secProductId != null">
+        sec_product_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="comProductId != null">
+        #{comProductId,jdbcType=BIGINT},
+      </if>
+      <if test="secProductId != null">
+        #{secProductId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wyyx.provider.dto.ComSecProduct">
+    <!--@mbg.generated-->
+    update com_sec_product
+    <set>
+      <if test="comProductId != null">
+        com_product_id = #{comProductId,jdbcType=BIGINT},
+      </if>
+      <if test="secProductId != null">
+        sec_product_id = #{secProductId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wyyx.provider.dto.ComSecProduct">
+    <!--@mbg.generated-->
+    update com_sec_product
+    set com_product_id = #{comProductId,jdbcType=BIGINT},
+      sec_product_id = #{secProductId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
