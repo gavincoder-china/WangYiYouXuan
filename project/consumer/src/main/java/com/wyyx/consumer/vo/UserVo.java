@@ -1,4 +1,4 @@
-package com.wyyx.consumer.model;
+package com.wyyx.consumer.vo;
 
 import lombok.Data;
 
@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @description:
  ************************************************************/
 @Data
-public class UserRedisModel  implements Serializable {
+public class UserVo implements Serializable {
 
     private static final long serialVersionUID = -567136965701406919L;
 
