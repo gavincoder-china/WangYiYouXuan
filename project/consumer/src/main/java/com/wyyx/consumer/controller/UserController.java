@@ -3,7 +3,7 @@ package com.wyyx.consumer.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSONObject;
 import com.wyyx.consumer.contants.ReturnResultContants;
-import com.wyyx.consumer.model.UserRedisModel;
+import com.wyyx.consumer.vo.UserVo;
 import com.wyyx.consumer.result.ReturnResult;
 import com.wyyx.consumer.result.ReturnResultUtils;
 import com.wyyx.consumer.util.RedisUtil;
@@ -70,12 +70,12 @@ public class UserController {
 
                     //去库中再获取用户的唯一标示id,生成保存redis的userJson字符串
                     ComUser user = userService.login(userRegisterVo.getPhone(), userRegisterVo.getPassword());
-                    UserRedisModel userRedisModel = new UserRedisModel();
-                    userRedisModel.setUserID(user.getId());
-                    userRedisModel.setPhone(user.getPhone());
+                    UserVo userVo = new UserVo();
+                    userVo.setUserID(user.getId());
+                    userVo.setPhone(user.getPhone());
 
 
-                    String userJsonStr = JSONObject.toJSONString(userRedisModel);
+                    String userJsonStr = JSONObject.toJSONString(userVo);
                     //存登录用户的phone,以及用户的信息  注册完登录(三分钟过期)
                     redisUtil.set(CommonContants.LOGIN_NAME_SPACE + user.getId(), userJsonStr, 180);
 

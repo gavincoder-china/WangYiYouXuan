@@ -3,7 +3,7 @@ package com.wyyx.consumer.annotationCustom;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wyyx.consumer.contants.ReturnResultContants;
-import com.wyyx.consumer.model.UserRedisModel;
+import com.wyyx.consumer.vo.UserVo;
 import com.wyyx.consumer.result.ReturnResultUtils;
 import com.wyyx.consumer.util.RedisUtil;
 import com.wyyx.provider.contants.CommonContants;
@@ -57,9 +57,9 @@ public class AnnotationLoginReqComplete implements HandlerInterceptor {
 
                     //Todo 设置自定义注解
 
-                    UserRedisModel userRedisModel = JSONObject.parseObject(jsonStr, UserRedisModel.class);
+                    UserVo userVo = JSONObject.parseObject(jsonStr, UserVo.class);
 
-                    request.setAttribute("userToken", userRedisModel);
+                    request.setAttribute("userToken", userVo);
 
                     return true;
                 }

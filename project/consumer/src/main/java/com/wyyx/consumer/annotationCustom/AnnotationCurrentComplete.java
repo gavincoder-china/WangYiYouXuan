@@ -3,7 +3,7 @@ package com.wyyx.consumer.annotationCustom;
 
 
 
-import com.wyyx.consumer.model.UserRedisModel;
+import com.wyyx.consumer.vo.UserVo;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -15,7 +15,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class AnnotationCurrentComplete implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().isAssignableFrom(UserRedisModel.class)
+        return parameter.getParameterType().isAssignableFrom(UserVo.class)
                && parameter.hasParameterAnnotation(AnnotationCurrentUser.class);
     }
 
@@ -25,11 +25,11 @@ public class AnnotationCurrentComplete implements HandlerMethodArgumentResolver 
                                   NativeWebRequest webRequest,
                                   WebDataBinderFactory webDataBinderFactory) throws Exception {
 
-        UserRedisModel userRedisModel = (UserRedisModel) webRequest.getAttribute("userToken", RequestAttributes.SCOPE_REQUEST);
+        UserVo userVo = (UserVo) webRequest.getAttribute("userToken", RequestAttributes.SCOPE_REQUEST);
 
-        if (userRedisModel != null) {
+        if (userVo != null) {
 
-            return userRedisModel;
+            return userVo;
         }
 
         return null;
