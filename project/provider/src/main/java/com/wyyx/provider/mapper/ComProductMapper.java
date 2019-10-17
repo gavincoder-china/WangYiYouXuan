@@ -24,6 +24,9 @@ public interface ComProductMapper {
    //查询首页商品,
    List<ComProduct> selectAll(@Param("num") int num);
 
+   //模糊查询商品,带分页
+  List<ComProduct> selectByName(@Param("name") String name, @Param("start") int start, @Param("offset") int offset);
+
 
 
 
