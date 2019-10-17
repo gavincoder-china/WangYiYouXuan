@@ -2,7 +2,7 @@ package com.wyyx.consumer.queue.activeMQ;
 
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.gavin.provider.service.SecKillService;
+import com.wyyx.provider.service.SecKillService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ public class ActiveMQConsumer {
         String[] array = message.split("@");
 
         //进行生成订单操作
-        secKillService.createOrder(Long.parseLong(array[0]), Long.parseLong(array[1]));
+      //  secKillService.createOrder(Long.parseLong(array[0]), Long.parseLong(array[1]));
 
     }
 }
