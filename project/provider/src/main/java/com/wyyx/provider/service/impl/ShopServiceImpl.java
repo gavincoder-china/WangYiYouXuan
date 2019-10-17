@@ -5,6 +5,7 @@ import com.wyyx.provider.dto.ComProduct;
 import com.wyyx.provider.mapper.ComProductMapper;
 import com.wyyx.provider.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @date 2019-10-17 12:08
  */
 @Service
+@Transactional
 public class ShopServiceImpl implements ShopService {
     @Autowired
     private ComProductMapper comProductMapper;

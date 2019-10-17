@@ -1,20 +1,13 @@
 package com.wyyx.consumer.controller;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.dubbo.config.annotation.Service;
-import com.wyyx.consumer.vo.HomeVo;
 import com.wyyx.consumer.vo.PageVo;
 import com.wyyx.provider.dto.ComProduct;
-import com.wyyx.provider.mapper.ComProductMapper;
 import com.wyyx.provider.service.ShopService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
