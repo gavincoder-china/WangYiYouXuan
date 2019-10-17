@@ -2,6 +2,8 @@ package com.wyyx.provider.mapper;
 
 import com.wyyx.provider.dto.ProductCart;
 
+import java.util.List;
+
 public interface ProductCartMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,6 @@ public interface ProductCartMapper {
     int updateByPrimaryKeySelective(ProductCart record);
 
     int updateByPrimaryKey(ProductCart record);
+
+    List<ProductCart> queryAll(ProductCart productCart);
 }

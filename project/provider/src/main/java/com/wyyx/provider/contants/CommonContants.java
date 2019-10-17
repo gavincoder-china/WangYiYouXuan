@@ -23,6 +23,10 @@ public final class CommonContants {
     public static final String HOT_CACHE_ID = "HOT_CACHE_ID:";
     //redis分布式锁
     public static final String HOT_LOCK = "HOT_LOCK:";
+    //未登录时存入redis中的购物车
+    public static final String NO_LOGIN_CART_SPACE = "NO_LOGIN_SPACE";
+    //用户购物车
+    public static final String USER_CART = "USER_CART";
 
     //秒杀业务中已经购买过的用户id保存,保存 1
     public static final String SECKILL_IS = "SECKILL_IS:";
