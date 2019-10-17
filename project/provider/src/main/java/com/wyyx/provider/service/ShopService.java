@@ -13,4 +13,6 @@ public interface ShopService {
     List<ComProduct> selectAll(int num);
 
 
+    List<ComProduct> selectByName( String name, int start,  int offset);
+
 }

@@ -23,4 +23,10 @@ public class ShopServiceImpl implements ShopService {
 
         return comProductMapper.selectAll(num);
     }
+
+    @Override
+    public List<ComProduct> selectByName(String name, int start, int offset) {
+
+        return null;
+    }
 }
