@@ -1,5 +1,6 @@
 package com.wyyx.consumer.controller;
 
+import com.wyyx.consumer.contants.OrderStatus;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,29 @@ public class TestController {
     @ApiOperation(value = "测试")
     @GetMapping(value = "/test")
     public String test() {
+
+        switch (OrderStatus.getByValue((byte) 1)) {
+            case ORDER_CANCELED:
+                return OrderStatus.ORDER_CANCELED.getoDesc();
+            case ORDER_TO_PAY:
+                return OrderStatus.ORDER_TO_PAY.getoDesc();
+            case ORDER_PAY_SUCCESS:
+                return OrderStatus.ORDER_PAY_SUCCESS.getoDesc();
+            case ORDER_PAY_FAIL:
+                return OrderStatus.ORDER_PAY_FAIL.getoDesc();
+            case ORDER_TO_RECEIVE:
+                return OrderStatus.ORDER_TO_RECEIVE.getoDesc();
+            case ORDER_HAVE_RECEIVE:
+                return OrderStatus.ORDER_HAVE_RECEIVE.getoDesc();
+            case ORDER_TO_RETURN:
+                return OrderStatus.ORDER_TO_RETURN.getoDesc();
+            case ORDER_RETURN_SUCCESS:
+                return OrderStatus.ORDER_RETURN_SUCCESS.getoDesc();
+            case ORDER_RETURN_FAIL:
+                return OrderStatus.ORDER_RETURN_FAIL.getoDesc();
+
+        }
+
         return "测试成功";
     }
 }
