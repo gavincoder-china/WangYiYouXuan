@@ -39,4 +39,10 @@ public class ShopServiceImpl implements ShopService {
 
         return comProductMapper.selectByName(name, start, offset);
     }
+
+    @Override
+    public ComProduct selectByPrimaryKey(Long id) {
+
+        return comProductMapper.selectByPrimaryKey(id);
+    }
 }

@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder encoder;
+    //生成分布式id
     @Autowired
     private IdWorker idWorker;
 

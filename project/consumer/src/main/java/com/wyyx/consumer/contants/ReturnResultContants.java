@@ -43,6 +43,12 @@ public final class ReturnResultContants {
     public static final int CODE_SECKILL_CREATE_ORDER = 999;
     public static final String MSG_SECKILL_CREATE_ORDER = "恭喜您抢购成功,订单正在生成中";
 
+    //删除购物车提示
+    public static final int CODE_DEL_CART_WRONG = 252;
+    public static final String MSG_DEL_CART_WRONG = "删除失败，请重新删除";
 
+    //购物车为空时提示
+    public static final int CODE_CART_EMPTY = 000;
+    public static final String MSG_CART_EMPTY = "购物车暂无商品，请前去添加！";
 
 }

@@ -25,4 +25,6 @@ public interface ShopService {
      */
     List<ComProduct> selectByName(String name, int start, int offset);
 
+    //dkl 通过商品id查询商品全部信息
+    ComProduct selectByPrimaryKey(Long id);
 }
