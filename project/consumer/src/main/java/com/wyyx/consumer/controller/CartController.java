@@ -33,7 +33,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "cart")
 public class CartController {
-    @Autowired
+  /*  @Autowired
     private RedisUtils redisUtils;
     @Autowired
     private ComProductMapper comProductMapper;
@@ -60,8 +60,8 @@ public class CartController {
             BigDecimal pCount = new BigDecimal(noLoginProductCart.getProductCount());
             BigDecimal totalPrice = pCount.multiply(comProduct.getSellPrice());
             noLoginProductCart.setTotalPrice(totalPrice);
-            /*String productCartStr = JSONObject.toJSONString(productCart);
-            redisUtils.set(CommonContants.NO_LOGIN_CART_SPACE + id,productCartStr);*/
+            *//*String productCartStr = JSONObject.toJSONString(productCart);
+            redisUtils.set(CommonContants.NO_LOGIN_CART_SPACE + id,productCartStr);*//*
             //如何在用户登录后将未登录时加入购物车的商品整合到用户购物车中
             request.setAttribute("noLogin", noLoginProductCart);
         } else {
@@ -75,5 +75,5 @@ public class CartController {
             }
         }
         return null;
-    }
+    }*/
 }

@@ -44,4 +44,5 @@ public final class ReturnResultContants {
     public static final String MSG_SECKILL_CREATE_ORDER = "恭喜您抢购成功,订单正在生成中";
 
 
+
 }
