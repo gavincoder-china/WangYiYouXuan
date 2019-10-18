@@ -153,20 +153,21 @@ public class CartController {
 
     @ApiOperation("删除商品")
     @GetMapping(value = "/delCart")
-    public ReturnResult delCart(@ApiParam(value = "商品Id") @RequestParam(value = "pID") Long pid) {
-        int result = cartService.deleteProdectById(pid);
+    public ReturnResult delCart(@ApiParam(value = "商品Id") @RequestParam(value = "pID") Long pid,
+                                @ApiParam(value = "用户Id") @RequestParam(value = "userId")Long userId) {
+        int result = cartService.deleteProdectById(pid,userId);
         if (result != 1) {
             return ReturnResultUtils.returnFail(ReturnResultContants.CODE_DEL_CART_WRONG, ReturnResultContants.MSG_DEL_CART_WRONG);
         }
         return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
     }
 
-    @ApiOperation("修改购物车商品价格")
+    @ApiOperation("修改购物车商品数量并计算价格")
     @GetMapping(value = "/updateCart")
     public ReturnResult updateCart( @ApiParam(value = "商品ID") @RequestParam(value = "pID") Long pID,
-                                    @ApiParam(value = "选购商品数量") @RequestParam(value = "pNum") Long pNum){
+                                    @ApiParam(value = "选购商品数量") @RequestParam(value = "pNum") Long pNum,
+                                    @ApiParam(value = "用户Id") @RequestParam(value = "userId")Long userId){
+       cartService.updateProductCount(pID,userId,pNum);
        return null;
-
     }
-
 }

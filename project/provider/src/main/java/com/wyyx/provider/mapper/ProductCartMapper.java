@@ -31,5 +31,5 @@ public interface ProductCartMapper {
     int addProductCount(Long pid);
 
     //删除商品
-    int deleteProdectById(Long pid);
+    int deleteProdectById(Long pid,Long userId);
 }

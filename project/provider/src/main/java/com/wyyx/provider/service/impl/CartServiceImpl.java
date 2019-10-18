@@ -70,8 +70,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public int deleteProdectById(Long pid) {
-        return productCartMapper.deleteProdectById(pid);
+    public int deleteProdectById(Long pid,Long userId) {
+        return productCartMapper.deleteProdectById(pid,userId);
     }
 
 }

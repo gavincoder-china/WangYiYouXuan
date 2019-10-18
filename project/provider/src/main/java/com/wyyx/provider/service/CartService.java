@@ -25,7 +25,7 @@ public interface CartService {
     int addProductCount(Long pid);
 
     //删除购物车商品
-    int deleteProdectById(Long pid);
+    int deleteProdectById(Long pid,Long userId);
 
 
 }

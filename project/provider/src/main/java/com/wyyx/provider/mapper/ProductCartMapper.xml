@@ -135,6 +135,6 @@
   </update>
     <!--删除购物车商品-->
     <delete id="deleteProdectById" parameterType="java.lang.Long">
-    DELETE FROM product_cart WHERE product_id = #{pid}
+    DELETE FROM product_cart WHERE product_id = #{pid} and user_id = #{userId,jdbcType=BIGINT}
   </delete>
 </mapper>
