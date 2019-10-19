@@ -22,7 +22,6 @@ public final class ReturnResultContants {
     //登录失败
     public static final int CODE_LOGIN_WRONG = 260;
     public static final String MSG_LOGIN_WRONG = "登录失败";
-    public static final String MSG_LOGIN_ERROR = "用户名或密码错误";
 
     //用户注销失败
     public static final int CODE_DEL_WRONG = 261;

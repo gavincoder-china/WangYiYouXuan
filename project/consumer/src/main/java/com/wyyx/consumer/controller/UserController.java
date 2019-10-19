@@ -53,7 +53,6 @@ public class UserController {
     @Reference
     ComUserService comUserService;
 
-
     @ApiOperation(value = "用户注册")
     @GetMapping(value = "/register")
     public ReturnResult UserRegister(@Valid UserRegisterVo userRegisterVo) {
@@ -128,7 +127,7 @@ public class UserController {
                 return ReturnResultUtils.returnSuccess(userToken);
             }
         } else {
-            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_LOGIN_WRONG, ReturnResultContants.MSG_LOGIN_ERROR);
+            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_LOGIN_WRONG, ReturnResultContants.MSG_LOGIN_WRONG);
         }
         return ReturnResultUtils.returnFail(ReturnResultContants.CODE_LOGIN_WRONG, ReturnResultContants.MSG_LOGIN_WRONG);
     }
