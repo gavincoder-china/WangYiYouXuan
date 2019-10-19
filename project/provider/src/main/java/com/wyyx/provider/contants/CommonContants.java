@@ -40,6 +40,7 @@ public final class CommonContants {
     public static final String PAY = "请直接付款";
 
 
+
     //订单状态
     public static final Byte STATE_CANCEL_ORDER = 0;
     public static final Byte STATE_TO_PAY = 1;

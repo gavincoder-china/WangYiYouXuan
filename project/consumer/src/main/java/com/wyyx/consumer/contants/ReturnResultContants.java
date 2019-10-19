@@ -43,6 +43,7 @@ public final class ReturnResultContants {
     public static final int CODE_SECKILL_CREATE_ORDER = 999;
     public static final String MSG_SECKILL_CREATE_ORDER = "恭喜您抢购成功,订单正在生成中";
 
+
     //删除购物车提示
     public static final int CODE_DEL_CART_WRONG = 252;
     public static final String MSG_DEL_CART_WRONG = "删除失败，请重新删除";
@@ -54,4 +55,17 @@ public final class ReturnResultContants {
     //未勾选"我同意"
     public static final int CODE_IS_NOT_AGREE = 200;
     public static final String MSG_IS_NOT_AGREE = "请勾选我同意";
+
+    //zhuy:查询商品不存在
+    public static final int CODE_NOT_FIND_GOODS = 220;
+    public static final String MSG_NOT_FIND_GOODS = "该商品不存在!";
+
+    //zhuy:查询订单不存在
+    public static final int CODE_NOT_FIND_ORDERS = 230;
+    public static final String MSG_NOT_FIND_ORDERS = "该订单不存在!";
+
+    //zhuy:删除订单
+    public static final int CODE_DEL_ORDER_ORDERS = 260;
+    public static final String MSG_DEL_ORDER_ORDERS = "删除成功!";
+
 }

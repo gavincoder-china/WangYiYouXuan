@@ -1,6 +1,9 @@
 package com.wyyx.consumer.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.wyyx.consumer.contants.ReturnResultContants;
+import com.wyyx.consumer.result.ReturnResult;
+import com.wyyx.consumer.result.ReturnResultUtils;
 import com.wyyx.consumer.vo.PageVo;
 import com.wyyx.provider.dto.ComProduct;
 import com.wyyx.provider.service.ShopService;
@@ -43,9 +46,10 @@ public class ShopController {
      */
     @ApiOperation(value = "展示首页分类商品")
     @GetMapping(value = "/selectAllByClass")
-    public List<ComProduct> selectAllByClass(@ApiParam(value = "每个分类你需要的个数") @RequestParam(value = "num") int num) {
+    public ReturnResult selectAllByClass(@ApiParam(value = "每个分类你需要的个数") @RequestParam(value = "num") int num) {
 
-        return shopService.selectAll(num);
+        List<ComProduct> comProducts = shopService.selectAll(num);
+        return ReturnResultUtils.returnSuccess(comProducts);
     }
 
     /**
@@ -53,8 +57,9 @@ public class ShopController {
      */
     @ApiOperation(value = "根据商品类型查询")
     @GetMapping(value = "/selectByClass")
-    public List<ComProduct> selectByClass(@ApiParam(value = "查询商品的分类") @RequestParam(value = "p_type") int p_type, PageVo pageVo) {
-        return shopService.selectByClass(p_type, pageVo.getStart(), pageVo.getPageSize());
+    public ReturnResult selectByClass(@ApiParam(value = "查询商品的分类") @RequestParam(value = "p_type") int p_type, PageVo pageVo) {
+        List<ComProduct> comProducts = shopService.selectByClass(p_type, pageVo.getStart(), pageVo.getPageSize());
+        return ReturnResultUtils.returnSuccess(comProducts);
     }
 
     /**
@@ -62,8 +67,25 @@ public class ShopController {
      */
     @ApiOperation(value = "模糊查询")
     @GetMapping(value = "/selectByName")
-    public List<ComProduct> selectByName(@ApiParam(value = "查询的商品名字") @RequestParam(value = "name") String name,
-                                         @Valid PageVo pageVo) {
-        return shopService.selectByName(name, pageVo.getStart(), pageVo.getPageSize());
+    public ReturnResult selectByName(@ApiParam(value = "查询的商品名字") @RequestParam(value = "name") String name,
+                                     @Valid PageVo pageVo) {
+        List<ComProduct> comProducts = shopService.selectByName(name, pageVo.getStart(), pageVo.getPageSize());
+
+        //判断用户搜索的商品是否存在(长度为0，就代表是空的)
+        if (0 == comProducts.size()) {
+            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_NOT_FIND_GOODS, ReturnResultContants.MSG_NOT_FIND_GOODS);
+        }
+        return ReturnResultUtils.returnSuccess(comProducts);
+    }
+
+    /**
+     * @author kitty_zhu
+     */
+    @ApiOperation(value = "火爆商品默认查询")
+    @GetMapping(value = "/selectByHot")
+    public ReturnResult selectByHot() {
+
+        List<ComProduct> comProducts = shopService.selectByHot();
+        return ReturnResultUtils.returnSuccess(comProducts);
     }
 }
