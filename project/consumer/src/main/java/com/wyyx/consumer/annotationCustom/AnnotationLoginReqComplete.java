@@ -67,7 +67,7 @@ public class AnnotationLoginReqComplete implements HandlerInterceptor {
             }
 
 
-//           throw  new RuntimeException("请先登录");
+
 
             response.setCharacterEncoding("UTF-8");
             PrintWriter pw = response.getWriter();

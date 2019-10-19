@@ -14,5 +14,7 @@ public interface ComUserService {
     // 普通用户登录
     ComUser login(String phone ,String password);
 
+    ComUser selectByPhone(String phone);
+
 }
 

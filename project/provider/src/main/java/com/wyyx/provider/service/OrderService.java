@@ -31,11 +31,11 @@ public interface OrderService {
     //kitty_zhu:删除订单
     int delOrder(long id);
 
-    //kitty_zhu:查询isdel
-    boolean selectIsDel(long id);
+
 
     //kitty_zhu：查询订单状态
     byte selectOrderState(Long id);
     //kitty_zhu：插入用户评价
     int insertSelective(ProductComment productComment);
+    ProductOrder selectOrder(long id);
 }

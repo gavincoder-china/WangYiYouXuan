@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * **********************************************************
@@ -108,11 +109,12 @@ public class UserController {
         //通过手机号和密码去数据库查出用户对象
         ComUser comUser = comUserService.login(userVo.getPhone(), userVo.getPassword());
         if (null != comUser) {
-
+             String address=CommonContants.IS_COM_IP_ADDRESS;
             //获取当前位置的ip地址
             String curIpAddr = request.getLocalAddr();
             if (!curIpAddr.equals(redisUtil.get(CommonContants.COM_IP_ADDRESS))) {  //检测是否为常用地登录
                 log.error(CommonContants.NOT_COM_IP_ADDRESS);
+                address=CommonContants.NOT_COM_IP_ADDRESS;
                 redisUtil.set(CommonContants.COM_IP_ADDRESS,curIpAddr);
             }
 
@@ -125,7 +127,10 @@ public class UserController {
             Long userToken = comUser.getId();
             //将用户信息存入redis，并设置三分钟过期
             if (redisUtil.set(CommonContants.LOGIN_NAME_SPACE + userToken, userStr,180)) {
-                return ReturnResultUtils.returnSuccess(userToken);
+                HashMap<String, String> map = new HashMap<>();
+                map.put("address",address);
+                map.put("token",userToken.toString());
+                return ReturnResultUtils.returnSuccess(map);
             }
         } else {
             return ReturnResultUtils.returnFail(ReturnResultContants.CODE_LOGIN_WRONG, ReturnResultContants.MSG_WRONG_LOGIN);

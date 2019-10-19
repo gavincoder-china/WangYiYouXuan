@@ -1,161 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wyyx.provider.mapper.OauthUserMapper">
-  <resultMap id="BaseResultMap" type="com.wyyx.provider.dto.OauthUser">
-    <!--@mbg.generated-->
-    <!--@Table oauth_user-->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="openid" jdbcType="VARCHAR" property="openid" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="sex" jdbcType="TINYINT" property="sex" />
-    <result column="city" jdbcType="VARCHAR" property="city" />
-    <result column="province" jdbcType="VARCHAR" property="province" />
-    <result column="country" jdbcType="VARCHAR" property="country" />
-    <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="platform" jdbcType="VARCHAR" property="platform" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, openid, nickname, sex, city, province, country, headimgurl, create_time, platform
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from oauth_user
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    <!--@mbg.generated-->
-    delete from oauth_user
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.wyyx.provider.dto.OauthUser">
-    <!--@mbg.generated-->
-    insert into oauth_user (id, openid, nickname, 
-      sex, city, province, 
-      country, headimgurl, create_time, 
-      platform)
-    values (#{id,jdbcType=BIGINT}, #{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=TINYINT}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
-      #{country,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{platform,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.wyyx.provider.dto.OauthUser">
-    <!--@mbg.generated-->
-    insert into oauth_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="openid != null">
-        openid,
-      </if>
-      <if test="nickname != null">
-        nickname,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="city != null">
-        city,
-      </if>
-      <if test="province != null">
-        province,
-      </if>
-      <if test="country != null">
-        country,
-      </if>
-      <if test="headimgurl != null">
-        headimgurl,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="platform != null">
-        platform,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="openid != null">
-        #{openid,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        #{sex,jdbcType=TINYINT},
-      </if>
-      <if test="city != null">
-        #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null">
-        #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="country != null">
-        #{country,jdbcType=VARCHAR},
-      </if>
-      <if test="headimgurl != null">
-        #{headimgurl,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="platform != null">
-        #{platform,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wyyx.provider.dto.OauthUser">
-    <!--@mbg.generated-->
-    update oauth_user
-    <set>
-      <if test="openid != null">
-        openid = #{openid,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
+    <resultMap id="BaseResultMap" type="com.wyyx.provider.dto.OauthUser">
+        <!--@mbg.generated-->
+        <!--@Table oauth_user-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="sex" jdbcType="TINYINT" property="sex"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="platform" jdbcType="VARCHAR" property="platform"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, openid, nickname, sex, city, province, country, headimgurl, create_time, platform
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from oauth_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete from oauth_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wyyx.provider.dto.OauthUser">
+        <!--@mbg.generated-->
+        insert into oauth_user (id, openid, nickname,
+        sex, city, province,
+        country, headimgurl, create_time,
+        platform)
+        values (#{id,jdbcType=BIGINT}, #{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR},
+        #{sex,jdbcType=TINYINT}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
+        #{country,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{platform,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wyyx.provider.dto.OauthUser">
+        <!--@mbg.generated-->
+        insert into oauth_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="openid != null">
+                openid,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="country != null">
+                country,
+            </if>
+            <if test="headimgurl != null">
+                headimgurl,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="platform != null">
+                platform,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="openid != null">
+                #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="headimgurl != null">
+                #{headimgurl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="platform != null">
+                #{platform,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wyyx.provider.dto.OauthUser">
+        <!--@mbg.generated-->
+        update oauth_user
+        <set>
+            <if test="openid != null">
+                openid = #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                country = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="headimgurl != null">
+                headimgurl = #{headimgurl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="platform != null">
+                platform = #{platform,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wyyx.provider.dto.OauthUser">
+        <!--@mbg.generated-->
+        update oauth_user
+        set openid = #{openid,jdbcType=VARCHAR},
         nickname = #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
         sex = #{sex,jdbcType=TINYINT},
-      </if>
-      <if test="city != null">
         city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null">
         province = #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="country != null">
         country = #{country,jdbcType=VARCHAR},
-      </if>
-      <if test="headimgurl != null">
         headimgurl = #{headimgurl,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="platform != null">
-        platform = #{platform,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.wyyx.provider.dto.OauthUser">
-    <!--@mbg.generated-->
-    update oauth_user
-    set openid = #{openid,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=TINYINT},
-      city = #{city,jdbcType=VARCHAR},
-      province = #{province,jdbcType=VARCHAR},
-      country = #{country,jdbcType=VARCHAR},
-      headimgurl = #{headimgurl,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      platform = #{platform,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+        platform = #{platform,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--auto generated by MybatisCodeHelper on 2019-10-19-->
+    <select id="selectAllByOpenid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from oauth_user
+        where openid=#{openid,jdbcType=VARCHAR}
+        limit 1
+    </select>
 </mapper>

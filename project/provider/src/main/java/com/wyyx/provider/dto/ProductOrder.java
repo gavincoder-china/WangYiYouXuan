@@ -1,6 +1,7 @@
 package com.wyyx.provider.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 
@@ -54,6 +55,8 @@ public class ProductOrder implements Serializable {
      * 收货人姓名
      */
     private String receiverName;
+
+    private BigDecimal finalPrice;
 
     private static final long serialVersionUID = 1L;
 }

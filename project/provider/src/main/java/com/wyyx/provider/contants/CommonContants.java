@@ -62,5 +62,7 @@ public final class CommonContants {
     public static final String COM_IP_ADDRESS = "COM_IP_ADDRESS:";
     //异地登录提醒
     public static final String NOT_COM_IP_ADDRESS = "您的帐号未在常用地登录，请注意帐号安全";
+    public static final String IS_COM_IP_ADDRESS = "欢迎登录";
+
 
 }

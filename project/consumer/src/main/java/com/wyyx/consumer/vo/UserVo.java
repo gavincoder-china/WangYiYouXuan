@@ -27,4 +27,5 @@ public class UserVo implements Serializable {
     //是否同意,0标识不同意,其他数字表示同意
     private int isAgree = 1;
 
+
 }

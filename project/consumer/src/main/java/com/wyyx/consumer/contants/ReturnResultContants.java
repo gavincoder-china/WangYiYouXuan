@@ -69,7 +69,7 @@ public final class ReturnResultContants {
     public static final String MSG_DEL_ORDER_ORDERS = "删除成功!";
     //绑定手机号提示
     public static final int CODE_BIND_PHONE = 10086;
-    public static final String MSG_BIND_PHONE = "请您先绑定手机号！";
+    public static final String MSG_BIND_PHONE = "请您再绑定手机号！";
 
     //授权登录回调失败
     public static final int CODE_CALL_BACK_FAIL = 000;
@@ -85,6 +85,10 @@ public final class ReturnResultContants {
     public static final String MSG_PHONE_IS_BIND = "该用户已绑定手机";
 
     //评价成功
-    public static final int CODE_USER_COMMENT = 666;
-    public static final String MSGUSER_COMMENT_SUCCESS = "感谢您的评价！";
+    public static final int CODE_USER_COMMENT_SUCCESS = 666;
+    public static final String MSG_USER_COMMENT_SUCCESS = "感谢您的评价！";
+
+    //评价失败
+    public static final int CODE_USER_COMMENT_FAIL = 667;
+    public static final String MSG_USER_COMMENT_FAIL = "评价失败！";
 }

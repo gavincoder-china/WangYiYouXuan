@@ -49,7 +49,8 @@ public class OrderController {
         List<ProductOrder> productOrders = orderService.selectOrderByClass(state, pageVo.getStart(), pageVo.getPageSize());
         //如果查询的订单不存在
         if (0 == productOrders.size()) {
-            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_NOT_FIND_ORDERS, ReturnResultContants.MSG_NOT_FIND_ORDERS);
+            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_NOT_FIND_ORDERS,
+                                                ReturnResultContants.MSG_NOT_FIND_ORDERS);
         }
         return ReturnResultUtils.returnSuccess(productOrders);
     }
@@ -61,7 +62,8 @@ public class OrderController {
         List<ProductOrder> productOrders = orderService.selectByGoodsName(name, state, pageVo.getStart(), pageVo.getPageSize());
         //如果查询的订单不存在
         if (0 == productOrders.size()) {
-            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_NOT_FIND_ORDERS, ReturnResultContants.MSG_NOT_FIND_ORDERS);
+            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_NOT_FIND_ORDERS,
+                                                ReturnResultContants.MSG_NOT_FIND_ORDERS);
         }
         return ReturnResultUtils.returnSuccess(productOrders);
     }
@@ -86,13 +88,18 @@ public class OrderController {
     @GetMapping(value = "/delOrder")
     public ReturnResult delOrder(@ApiParam(value = "订单id") @RequestParam(value = "id") long id) {
 
+        ProductOrder order = orderService.selectOrder(id);
+
         //判断是否在回收站
-        if (true == orderService.selectIsDel(id)) {
+        if (order.getIsDelete()) {
             orderService.delOrder(id);
-            return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_DEL_ORDER_ORDERS, ReturnResultContants.MSG_DEL_ORDER_ORDERS);
+            return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_DEL_ORDER_ORDERS,
+                                                   ReturnResultContants.MSG_DEL_ORDER_ORDERS);
         }
-        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_NOT_FIND_GOODS, ReturnResultContants.MSG_NOT_FIND_ORDERS);
+        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_NOT_FIND_GOODS,
+                                            ReturnResultContants.MSG_NOT_FIND_ORDERS);
     }
+
 
     @ApiOperation(value = "订单打分")
     @GetMapping(value = "/orderGrade")
@@ -107,9 +114,12 @@ public class OrderController {
             BeanUtils.copyProperties(commentVo, productComment);
             orderService.insertSelective(productComment);
 
-            return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_USER_COMMENT, ReturnResultContants.MSGUSER_COMMENT_SUCCESS);
+            return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_USER_COMMENT_SUCCESS,
+                                                   ReturnResultContants.MSG_USER_COMMENT_SUCCESS);
         }
 
-        return null;
+        return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_USER_COMMENT_FAIL,
+                                               ReturnResultContants.MSG_USER_COMMENT_FAIL);
+
     }
 }

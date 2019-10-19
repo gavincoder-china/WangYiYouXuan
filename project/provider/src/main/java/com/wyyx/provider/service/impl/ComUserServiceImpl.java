@@ -27,8 +27,11 @@ public class ComUserServiceImpl implements ComUserService {
     @Override
     public int register(ComUser comUser) {
 
-        //设置加密
-        comUser.setPassword(encoder.encode(comUser.getPassword()));
+        if (null!=comUser.getPassword()){
+            //设置加密
+            comUser.setPassword(encoder.encode(comUser.getPassword()));
+        }
+
         //设置分布式id
         comUser.setId(idWorker.nextId());
 
@@ -45,6 +48,12 @@ public class ComUserServiceImpl implements ComUserService {
             return comUser;
         }
         return null;
+    }
+
+    @Override
+    public ComUser selectByPhone(String phone) {
+
+        return comUserMapper.selectByPhone(phone);
     }
 
 

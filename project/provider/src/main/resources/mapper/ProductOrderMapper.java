@@ -32,11 +32,10 @@ public interface ProductOrderMapper {
     List<ProductOrder> selectByIsDel(@Param("isDelete") boolean isDelete, @Param("start") int start, @Param("offset") int offset);
 
 
-    //kitty_zhu:查询订单状态
-    ProductOrder selectOrderState(@Param("id") Long id);
 
     //kitty_zhu:查询 isdel
-    ProductOrder selectById(@Param("id") Long id);
+    ProductOrder selectOrder(@Param("id") Long id);
 
-
+    //kitty_zhu:查询订单状态
+    List<ProductOrder> selectOrderState(@Param("id") Long id);
 }

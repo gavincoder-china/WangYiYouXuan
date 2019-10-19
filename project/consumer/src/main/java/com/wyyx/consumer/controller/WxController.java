@@ -18,8 +18,10 @@ import com.wyyx.consumer.contants.ReturnResultContants;
 import com.wyyx.consumer.result.ReturnResult;
 import com.wyyx.consumer.result.ReturnResultUtils;
 import com.wyyx.consumer.util.RedisUtil;
+import com.wyyx.consumer.vo.UserVo;
 import com.wyyx.provider.contants.CommonContants;
 import com.wyyx.provider.dto.ComOauthUser;
+import com.wyyx.provider.dto.ComUser;
 import com.wyyx.provider.dto.OauthUser;
 import com.wyyx.provider.service.ComOauthService;
 import com.wyyx.provider.service.ComUserService;
@@ -65,7 +67,7 @@ public class WxController {
 
     //用户授权后的回调方法
     @GetMapping(value = "/callBack")
-    public ReturnResult<String> callBack(String code) {
+    public ReturnResult callBack(String code) {
         //生成获取access_token、openid等属性的url
         String accessTokenUri = oauthUserService.getAccessTokenUrl(code);
         //请求获取获取access_token、openid等属性的url
@@ -84,8 +86,7 @@ public class WxController {
 
         //先用wxToken从redis查有无注册过
         if (StringUtils.isEmpty(redisUtil.get(CommonContants.REGISTER_NAME_SPACE + openid))) {
-            //未注册过时先将用户信息存在redis的注册组
-            redisUtil.set(CommonContants.REGISTER_NAME_SPACE + openid, userInfoStr);
+
 
             //将用户信息字符串转为用户对象
             OauthUser oauthUser = JSONObject.parseObject(userInfoStr, OauthUser.class);
@@ -95,48 +96,109 @@ public class WxController {
             if (1 == oauthUserService.register(oauthUser)) {  //插入成功，实现授权用户注册
                 //用openid查出授权用户信息
                 OauthUser user = oauthUserService.selectByOpenId(openid);
-                //取出授权用户的id,作为存在redis的token
-                Long wxToken = user.getId();
 
                 //将用户id存到中间表中，为绑定手机做铺垫
                 ComOauthUser comOauthUser = new ComOauthUser();
                 comOauthUser.setOauthUserId(user.getId());
-                comOauthUser.setCreateTime(new Date());
                 comOauthService.insertId(comOauthUser);
 
-                //从中间表查出手机号
-                String phone = comOauthService.selectPhone(user.getId());
-                if (!StringUtils.isEmpty(phone)) {    //手机号不为空时，将用户信息存入redis中，实现登录，且三分钟过期
-                    redisUtil.set(CommonContants.LOGIN_NAME_SPACE + wxToken, userInfoStr);
-                } else {
-                    return ReturnResultUtils.returnFail(ReturnResultContants.CODE_BIND_PHONE, ReturnResultContants.MSG_BIND_PHONE);
-                }
+                //未注册过时先将用户信息存在redis的注册组
+                redisUtil.set(CommonContants.REGISTER_NAME_SPACE + openid, 1);
+
+                return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_BIND_PHONE,
+                                                       ReturnResultContants.MSG_BIND_PHONE, user.getId());
+            }
+        } else {
+            //已经注册过的用户,存redis
+            OauthUser user = oauthUserService.selectByOpenId(openid);
+
+            //从OauthUser id获取中间表信息
+            ComOauthUser comOauthUser = comOauthService.selectMiddleInfo(user.getId());
+
+            //手机号不为空时，将用户信息存入redis中，实现登录，且三分钟过期
+            if (null != comOauthUser.getPhone()) {
+
+                ComUser comUser = comUserService.selectByPhone(comOauthUser.getPhone());
+
+                //new插入redis的用户vo
+                UserVo userVo = new UserVo();
+                userVo.setUserID(comUser.getId());
+                userVo.setPhone(comOauthUser.getPhone());
+
+                String jsonString = JSONObject.toJSONString(userVo);
+
+                redisUtil.set(CommonContants.LOGIN_NAME_SPACE + comUser.getId(), jsonString, 180);
+
+                return ReturnResultUtils.returnSuccess(comUser.getId());
+
+            } else {
+
+                return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_BIND_PHONE,
+                                                       ReturnResultContants.MSG_BIND_PHONE, user.getId());
             }
         }
-        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CALL_BACK_FAIL, ReturnResultContants.MSG_CALL_BACK_FAIL);
+        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CALL_BACK_FAIL,
+                                            ReturnResultContants.MSG_CALL_BACK_FAIL);
     }
 
     @ApiOperation(value = "/绑定手机号")
     @GetMapping(value = "/bindPhone")
-    public ReturnResult bindPhone(@ApiParam(value = "授权用户id") @RequestParam(value = "userId") Long userId,
-                                  @ApiParam(value = "要绑定的手机号") @RequestParam(value = "userId") String bindPhone) {
+    public ReturnResult bindPhone(@ApiParam(value = "授权用户表id") @RequestParam(value = "userId") Long userId,
+                                  @ApiParam(value = "要绑定的手机号") @RequestParam(value = "phone") String phone) {
 
+        ComOauthUser comOauthUser = comOauthService.selectMiddleInfo(userId);
         //先查中间表中有无该userId
-        if (null == comOauthService.selectId()) {
-            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_REGISTER_WRONG, ReturnResultContants.MSG_REGISTER_WRONG);
+        if (null == comOauthUser.getOauthUserId()) {
+            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_REGISTER_WRONG,
+                                                ReturnResultContants.MSG_REGISTER_WRONG);
         }
-        //根据输入的userId到中间表查询对应的手机号
-        String phone = comOauthService.selectPhone(userId);
-        if (StringUtils.isEmpty(phone)) {   //若手机号为空,调用方法绑定手机
-            ComOauthUser comOauthUser = new ComOauthUser();
-            comOauthUser.setPhone(bindPhone);
-            comOauthUser.setCreateTime(new Date());
+        if (null == comOauthUser.getPhone()) {   //若手机号为空,调用方法绑定手机
+
+            comOauthUser.setPhone(phone);
+
             if (1 == comOauthService.insertPhone(comOauthUser)) {   //手机号绑定成功
-                return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_BIND_PHONE_SUCCESS, ReturnResultContants.MSG_BIND_PHONE_SUCCESS);
+                //从用户表中查数据,如果没数据,就在普通用户表中加这个数据
+                ComUser comUser = comUserService.selectByPhone(phone);
+                if (null == comUser) {
+                    ComUser user = new ComUser();
+                    user.setPhone(phone);
+
+                    int registerResult = comUserService.register(user);
+
+                    ComUser comUserNew = comUserService.selectByPhone(phone);
+
+                    //new插入redis的用户vo
+                    UserVo userVo = new UserVo();
+                    userVo.setUserID(comUserNew.getId());
+                    userVo.setPhone(comUserNew.getPhone());
+
+                    String jsonString = JSONObject.toJSONString(userVo);
+
+                    redisUtil.set(CommonContants.LOGIN_NAME_SPACE + comUser.getId(), jsonString, 180);
+
+                    return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_BIND_PHONE_SUCCESS,
+                                                           ReturnResultContants.MSG_BIND_PHONE_SUCCESS, comUserNew.getId());
+                } else {
+
+                    //new插入redis的用户vo
+                    UserVo userVo = new UserVo();
+
+                    userVo.setUserID(comUser.getId());
+                    userVo.setPhone(comUser.getPhone());
+
+                    String jsonString = JSONObject.toJSONString(userVo);
+
+                    redisUtil.set(CommonContants.LOGIN_NAME_SPACE + comUser.getId(), jsonString, 180);
+
+                    return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_BIND_PHONE_SUCCESS,
+                                                           ReturnResultContants.MSG_BIND_PHONE_SUCCESS, comUser.getId());
+                }
             } else {
-                return ReturnResultUtils.returnFail(ReturnResultContants.CODE_BIND_PHONE_FAIL, ReturnResultContants.MSG_PHONE_IS_BIND);
+                return ReturnResultUtils.returnFail(ReturnResultContants.CODE_BIND_PHONE_FAIL,
+                                                    ReturnResultContants.MSG_PHONE_IS_BIND);
             }
         }
-        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_BIND_PHONE_FAIL, ReturnResultContants.MSG_BIND_PHONE_FAIL);
+        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_BIND_PHONE_FAIL,
+                                            ReturnResultContants.MSG_BIND_PHONE_FAIL);
     }
 }

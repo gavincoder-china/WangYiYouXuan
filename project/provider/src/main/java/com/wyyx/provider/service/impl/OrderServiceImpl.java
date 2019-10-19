@@ -64,22 +64,11 @@ public class OrderServiceImpl implements OrderService {
         return productOrderMapper.deleteByPrimaryKey(id);
     }
 
-    //删除回收站订单
-    @Override
-    public boolean selectIsDel(long id) {
-        ProductOrder productOrder = productOrderMapper.selectOrder(id);
-
-        if (productOrder == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     //kitty_zhu：查询订单状态
     @Override
     public byte selectOrderState(Long id) {
-        ProductOrder productOrder = productOrderMapper.selectOrder(id);
+        ProductOrder productOrder = productOrderMapper.selectById(id);
         if (productOrder == null) {
             return -1;
         } else {
@@ -93,4 +82,12 @@ public class OrderServiceImpl implements OrderService {
         productComment.setId(idWorker.nextId());
         return productCommentMapper.insertSelective(productComment);
     }
+
+    @Override
+    public ProductOrder selectOrder(long id) {
+
+        return productOrderMapper.selectById(id);
+    }
+
+
 }
