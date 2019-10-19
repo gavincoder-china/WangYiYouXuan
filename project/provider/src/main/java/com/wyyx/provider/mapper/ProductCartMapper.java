@@ -18,18 +18,15 @@ public interface ProductCartMapper {
 
     int updateByPrimaryKey(ProductCart record);
 
-    //查询用户购物车所有商品
+    //dkl:查询用户购物车所有商品
     List<ProductCart> queryAllByUserID(Long userId);
 
-    //通过商品id查询用户购物车中的商品
-    ProductCart selectByPid(Long pid);
+    //dkl:通过productId和userId查询用户购物车中的商品
+    ProductCart selectByPidAndUserId(Long productId, Long userId);
 
-    //修改购物车中商品数量
+    //dkl:修改购物车中商品数量
     int updateProductCount(Long productId, Long userId, Long productCount,BigDecimal totalPrice);
 
-    //购物车中商品数量+1
-    int addProductCount(Long pid);
-
-    //删除商品
-    int deleteProdectById(Long pid,Long userId);
+    //dkl:删除商品
+    int deleteProdectById(Long productId, Long userId);
 }

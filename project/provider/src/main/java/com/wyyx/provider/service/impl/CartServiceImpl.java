@@ -54,19 +54,14 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public ProductCart selectByPid(Long pid) {
-        return productCartMapper.selectByPid(pid);
+    public ProductCart selectByPidAndUserId(Long pID, Long userId) {
+        return productCartMapper.selectByPidAndUserId(pID,userId);
     }
 
     @Override
     public int updateProductCount(Long pID, Long userId, Long pCount) {
         BigDecimal totalPrice = comProductMapper.selectByPrimaryKey(pID).getSellPrice().multiply(new BigDecimal(pCount));
         return productCartMapper.updateProductCount(pID,userId,pCount,totalPrice);
-    }
-
-    @Override
-    public int addProductCount(Long pid) {
-        return productCartMapper.addProductCount(pid);
     }
 
     @Override

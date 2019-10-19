@@ -179,4 +179,9 @@
     where phone=#{phone,jdbcType=VARCHAR}
     limit 1
   </select>
+
+  <!--dkl:查询用户等级-->
+  <select id="selectRoleByUserId" resultMap="BaseResultMap">
+    SELECT `role` FROM com_user WHERE id = #{id,jdbcType=BIGINT}
+  </select>
 </mapper>

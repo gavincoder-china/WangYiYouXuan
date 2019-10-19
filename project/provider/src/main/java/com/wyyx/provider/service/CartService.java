@@ -15,14 +15,11 @@ public interface CartService {
     //查询用户购物车中的所有商品
     List<ProductCart> queryAllByUserID(Long userId);
 
-    //通过商品id查询用户购物车中的商品
-    ProductCart selectByPid(Long pid);
+    //通过商品id和用户id查询用户购物车中的商品
+    ProductCart selectByPidAndUserId(Long pID,Long userId);
 
     //修改购物车中商品的数量
     int updateProductCount(Long pID,Long userId,Long pCount );
-
-    //购物车中商品数量+1
-    int addProductCount(Long pid);
 
     //删除购物车商品
     int deleteProdectById(Long pid,Long userId);

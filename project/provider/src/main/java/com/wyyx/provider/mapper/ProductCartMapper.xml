@@ -116,9 +116,9 @@
     <select id="queryAllByUserID" resultMap="BaseResultMap">
     SELECT * FROM product_cart WHERE user_id = #{userId,jdbcType=BIGINT}
   </select>
-    <!--通过商品id查询购物车种商品-->
-    <select id="selectByPid" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    SELECT * FROM product_cart WHERE product_id = #{pid}
+    <!--通过商品id和用户userID查询购物车种商品-->
+    <select id="selectByPidAndUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT * FROM product_cart WHERE product_id = #{productId,jdbcType=BIGINT} and user_id = #{userId,jdbcType=BIGINT}
   </select>
     <!--修改购物车中商品数量-->
     <update id="updateProductCount" parameterType="com.wyyx.provider.dto.ProductCart">
@@ -129,12 +129,8 @@
     user_id = #{userId,jdbcType=BIGINT}
 
   </update>
-    <!--购物车中商品数量+1-->
-    <update id="addProductCount" parameterType="com.wyyx.provider.dto.ProductCart">
-    UPDATE product_cart SET product_count = product_count + 1 WHERE product_id = #{pid}
-  </update>
     <!--删除购物车商品-->
     <delete id="deleteProdectById" parameterType="java.lang.Long">
-    DELETE FROM product_cart WHERE product_id = #{pid} and user_id = #{userId,jdbcType=BIGINT}
+    DELETE FROM product_cart WHERE product_id = #{productId,jdbcType=BIGINT} and user_id = #{userId,jdbcType=BIGINT}
   </delete>
 </mapper>
