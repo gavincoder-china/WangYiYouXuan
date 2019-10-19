@@ -1,20 +1,18 @@
 package com.wyyx.provider.service;
 
 import com.wyyx.provider.dto.ComUser;
+import com.wyyx.provider.dto.OauthUser;
 
 /**
  * @author ltl
  * @date 2019/10/17 10:24
  */
-public interface UserService {
+public interface ComUserService {
 
-    //插入用户信息
+    //注册普通用户信息
     int register(ComUser comUser);
-
-    // 用户登录
+    // 普通用户登录
     ComUser login(String phone ,String password);
-
-
 
 }
 

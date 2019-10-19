@@ -15,12 +15,17 @@ public final class ReturnResultContants {
 
     public static final int SUCCESS = 0;
 
+    //未勾选"我同意"
+    public static final int CODE_IS_NOT_AGREE = 200;
+    public static final String MSG_IS_NOT_AGREE = "请勾选我同意";
+
     //登录失败
-    public static final int CODE_LOGIN_WRONG = 250;
-    public static final String MSG_WRONG_LOGIN = "登录失败";
+    public static final int CODE_LOGIN_WRONG = 260;
+    public static final String MSG_LOGIN_WRONG = "登录失败";
+    public static final String MSG_LOGIN_ERROR = "用户名或密码错误";
 
     //用户注销失败
-    public static final int CODE_DEL_WRONG = 251;
+    public static final int CODE_DEL_WRONG = 261;
     public static final String MSG_DEL_WRONG = "用户注销失败";
 
     //用户注册失败
@@ -43,12 +48,21 @@ public final class ReturnResultContants {
     public static final int CODE_SECKILL_CREATE_ORDER = 999;
     public static final String MSG_SECKILL_CREATE_ORDER = "恭喜您抢购成功,订单正在生成中";
 
-    //删除购物车提示
-    public static final int CODE_DEL_CART_WRONG = 252;
-    public static final String MSG_DEL_CART_WRONG = "删除失败，请重新删除";
+    //绑定手机号提示
+    public static final int CODE_BIND_PHONE = 10086;
+    public static final String MSG_BIND_PHONE = "请您先绑定手机号！";
 
-    //购物车为空时提示
-    public static final int CODE_CART_EMPTY = 000;
-    public static final String MSG_CART_EMPTY = "购物车暂无商品，请前去添加！";
+    //授权登录回调失败
+    public static final int CODE_CALL_BACK_FAIL = 000;
+    public static final String MSG_CALL_BACK_FAIL = "授权登录回调失败！";
+
+    //绑定手机号成功
+    public static final int CODE_BIND_PHONE_SUCCESS = 666;
+    public static final String MSG_BIND_PHONE_SUCCESS = "绑定手机号失败！";
+
+    //绑定手机号失败
+    public static final int CODE_BIND_PHONE_FAIL = 777;
+    public static final String MSG_BIND_PHONE_FAIL = "绑定手机号失败！";
+    public static final String MSG_PHONE_IS_BIND = "该用户已绑定手机";
 
 }

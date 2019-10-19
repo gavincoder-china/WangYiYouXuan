@@ -20,7 +20,8 @@
     from com_oauth_user
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--@mbg.generated-->
     delete from com_oauth_user
     where id = #{id,jdbcType=BIGINT}
@@ -64,6 +65,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.wyyx.provider.dto.ComOauthUser">
     <!--@mbg.generated-->
     update com_oauth_user
@@ -88,4 +90,13 @@
       phone = #{phone,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectPhone" parameterType="java.lang.String" resultType="java.lang.String">
+    select phone from com_oauth_user where oauth_user_id = #{oauthUserId}
+  </select>
+
+  <select id="selectId" resultType="java.lang.Long">
+    select oauth_user_id from com_oauth_user
+  </select>
+
 </mapper>

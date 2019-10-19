@@ -3,7 +3,7 @@ package com.wyyx.provider.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.wyyx.provider.dto.ComUser;
 import com.wyyx.provider.mapper.ComUserMapper;
-import com.wyyx.provider.service.UserService;
+import com.wyyx.provider.service.ComUserService;
 import com.wyyx.provider.util.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,13 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class ComUserServiceImpl implements ComUserService {
     @Autowired
-    ComUserMapper comUserMapper;    /*装配普通用户的mapper接口*/
+    ComUserMapper comUserMapper;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
-    //生成分布式id
     @Autowired
     private IdWorker idWorker;
 
@@ -47,5 +46,6 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
 
 }

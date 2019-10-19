@@ -14,4 +14,6 @@ public interface OauthUserMapper {
     int updateByPrimaryKeySelective(OauthUser record);
 
     int updateByPrimaryKey(OauthUser record);
+
+    OauthUser selectByOpenid(String openid);
 }

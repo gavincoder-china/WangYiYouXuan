@@ -212,8 +212,8 @@
     <select id="selectByName" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from com_product cp
-        where cp.name like binary concat('%',#{name,jdbcType=VARCHAR},'%')
+        from com_product
+        where `name` like concat('%',#{name,jdbcType=VARCHAR},'%')
         limit #{start,jdbcType=INTEGER} ,#{offset,jdbcType=INTEGER}
     </select>
 

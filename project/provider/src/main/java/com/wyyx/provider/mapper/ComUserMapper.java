@@ -19,5 +19,4 @@ public interface ComUserMapper {
 
     ComUser selectByPhone(@Param("phone")String phone);
 
-
 }

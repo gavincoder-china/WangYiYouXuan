@@ -3,8 +3,8 @@ package com.wyyx.provider.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.wyyx.provider.dto.ComProduct;
 import com.wyyx.provider.mapper.ComProductMapper;
+import com.wyyx.provider.service.SecKillService;
 import com.wyyx.provider.service.ShopService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +14,6 @@ import java.util.List;
  * @author kitty_zhu
  * @date 2019-10-17 12:08
  */
-@Slf4j
 @Service
 @Transactional
 public class ShopServiceImpl implements ShopService {
@@ -30,8 +29,8 @@ public class ShopServiceImpl implements ShopService {
 
     //kitty_zhu :根据商品类型查询商品
     @Override
-    public List<ComProduct> selectByClass(int p_type, int start, int offset) {
-        return comProductMapper.selectByClass(p_type, start, offset);
+    public List<ComProduct> selectByClass( int p_type, int start, int offset) {
+        return comProductMapper.selectByClass( p_type, start, offset);
     }
 
     @Override
@@ -40,9 +39,12 @@ public class ShopServiceImpl implements ShopService {
         return comProductMapper.selectByName(name, start, offset);
     }
 
-    @Override
-    public ComProduct selectByPrimaryKey(Long id) {
-
-        return comProductMapper.selectByPrimaryKey(id);
+    /**
+     * @author kitty_zhu
+     * @date 2019-10-17 15:11
+     */
+    @Service
+    @Transactional
+    public static class SecKillServiceImpl implements SecKillService {
     }
 }

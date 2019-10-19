@@ -30,7 +30,4 @@ public interface ComProductMapper {
     List<ComProduct> selectByName(@Param("name") String name, @Param("start") int start, @Param("offset") int offset);
 
 
-
-
-
 }

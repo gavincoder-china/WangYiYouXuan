@@ -26,7 +26,7 @@
     from oauth_user
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--@mbg.generated-->
     delete from oauth_user
     where id = #{id,jdbcType=BIGINT}
@@ -158,4 +158,7 @@
       platform = #{platform,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectByOpenid" parameterType="string" resultType="com.wyyx.provider.dto.OauthUser">
+    select * from oauth_user where openid = #{openid,jdbcType=VARCHAR}
+  </select>
 </mapper>

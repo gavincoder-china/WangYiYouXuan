@@ -14,4 +14,9 @@ public interface ComOauthUserMapper {
     int updateByPrimaryKeySelective(ComOauthUser record);
 
     int updateByPrimaryKey(ComOauthUser record);
+
+    String selectPhone(long oauthUserId);
+
+    Long selectId();
+
 }
