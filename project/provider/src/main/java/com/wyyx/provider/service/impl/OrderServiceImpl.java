@@ -1,9 +1,12 @@
 package com.wyyx.provider.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.wyyx.provider.dto.ProductComment;
 import com.wyyx.provider.dto.ProductOrder;
+import com.wyyx.provider.mapper.ProductCommentMapper;
 import com.wyyx.provider.mapper.ProductOrderMapper;
 import com.wyyx.provider.service.OrderService;
+import com.wyyx.provider.util.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +22,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ProductOrderMapper productOrderMapper;
+    @Autowired
+    private ProductCommentMapper productCommentMapper;
+    @Autowired
+    private IdWorker idWorker;
 
     //kitty_zhu：查询全部订单
     @Override
@@ -57,21 +64,33 @@ public class OrderServiceImpl implements OrderService {
         return productOrderMapper.deleteByPrimaryKey(id);
     }
 
+    //删除回收站订单
     @Override
     public boolean selectIsDel(long id) {
         ProductOrder productOrder = productOrderMapper.selectOrder(id);
 
-        if (productOrder==null){
+        if (productOrder == null) {
             return false;
-        }else {
+        } else {
             return true;
         }
-
     }
 
     //kitty_zhu：查询订单状态
     @Override
-    public  List<ProductOrder>selectOrderState(Long id) {
-        return productOrderMapper.selectOrderState(id);
+    public byte selectOrderState(Long id) {
+        ProductOrder productOrder = productOrderMapper.selectOrder(id);
+        if (productOrder == null) {
+            return -1;
+        } else {
+            return productOrder.getState();
+        }
+    }
+
+    //插入用户评价
+    @Override
+    public int insertSelective(ProductComment productComment) {
+        productComment.setId(idWorker.nextId());
+        return productCommentMapper.insertSelective(productComment);
     }
 }

@@ -1,5 +1,6 @@
 package com.wyyx.provider.service;
 
+import com.wyyx.provider.dto.ProductComment;
 import com.wyyx.provider.dto.ProductOrder;
 import com.wyyx.provider.mapper.ProductOrderMapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,10 +30,12 @@ public interface OrderService {
 
     //kitty_zhu:删除订单
     int delOrder(long id);
+
     //kitty_zhu:查询isdel
     boolean selectIsDel(long id);
 
     //kitty_zhu：查询订单状态
-    List<ProductOrder> selectOrderState(Long id);
-
+    byte selectOrderState(Long id);
+    //kitty_zhu：插入用户评价
+    int insertSelective(ProductComment productComment);
 }

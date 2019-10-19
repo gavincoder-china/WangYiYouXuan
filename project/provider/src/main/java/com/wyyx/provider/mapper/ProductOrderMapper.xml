@@ -206,6 +206,7 @@
         limit #{start,jdbcType=INTEGER} ,#{offset,jdbcType=INTEGER}
     </select>
 
+    <!--查询订单-->
     <select id="selectOrder" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -213,9 +214,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-
-
-<!--    kitty_zhu：查询订单状态 -->
+    <!--    kitty_zhu：查询订单状态 -->
     <select id="selectOrderState" resultMap="BaseResultMap">
         *
         state

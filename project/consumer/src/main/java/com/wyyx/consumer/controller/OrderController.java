@@ -1,11 +1,14 @@
 package com.wyyx.consumer.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.wyyx.consumer.contants.OrderStatus;
 import com.wyyx.consumer.contants.ReturnResultContants;
 import com.wyyx.consumer.result.ReturnResult;
 import com.wyyx.consumer.result.ReturnResultUtils;
+import com.wyyx.consumer.vo.CommentVo;
 import com.wyyx.consumer.vo.OrderVo;
 import com.wyyx.consumer.vo.PageVo;
+import com.wyyx.provider.dto.ProductComment;
 import com.wyyx.provider.dto.ProductOrder;
 import com.wyyx.provider.service.OrderService;
 import io.swagger.annotations.Api;
@@ -82,8 +85,8 @@ public class OrderController {
     @ApiOperation(value = "删除回收站")
     @GetMapping(value = "/delOrder")
     public ReturnResult delOrder(@ApiParam(value = "订单id") @RequestParam(value = "id") long id) {
-        //判断是否在回收站
 
+        //判断是否在回收站
         if (true == orderService.selectIsDel(id)) {
             orderService.delOrder(id);
             return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_DEL_ORDER_ORDERS, ReturnResultContants.MSG_DEL_ORDER_ORDERS);
@@ -93,9 +96,19 @@ public class OrderController {
 
     @ApiOperation(value = "订单打分")
     @GetMapping(value = "/orderGrade")
-    public ReturnResult orderGrade(@ApiParam(value = "id") @RequestParam(value = "id") long id) {
-        ProductOrder productOrder = new ProductOrder();
-        List<ProductOrder> productOrders = orderService.selectOrderState(id);
+    public ReturnResult orderGrade(@ApiParam(value = "订单id") @RequestParam(value = "id") long id, CommentVo commentVo) {
+
+        byte b = orderService.selectOrderState(id);
+
+        //判断订单状态是否已收货
+        if (OrderStatus.ORDER_HAVE_RECEIVE.getoStatus().equals(b)  ) {
+
+            ProductComment productComment = new ProductComment();
+            BeanUtils.copyProperties(commentVo, productComment);
+            orderService.insertSelective(productComment);
+
+            return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_USER_COMMENT, ReturnResultContants.MSGUSER_COMMENT_SUCCESS);
+        }
 
         return null;
     }

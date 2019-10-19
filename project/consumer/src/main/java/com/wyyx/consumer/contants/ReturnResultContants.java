@@ -84,4 +84,7 @@ public final class ReturnResultContants {
     public static final String MSG_BIND_PHONE_FAIL = "绑定手机号失败！";
     public static final String MSG_PHONE_IS_BIND = "该用户已绑定手机";
 
+    //评价成功
+    public static final int CODE_USER_COMMENT = 666;
+    public static final String MSGUSER_COMMENT_SUCCESS = "感谢您的评价！";
 }
