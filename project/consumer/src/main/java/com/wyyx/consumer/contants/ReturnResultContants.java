@@ -51,4 +51,7 @@ public final class ReturnResultContants {
     public static final int CODE_CART_EMPTY = 000;
     public static final String MSG_CART_EMPTY = "购物车暂无商品，请前去添加！";
 
+    //未勾选"我同意"
+    public static final int CODE_IS_NOT_AGREE = 200;
+    public static final String MSG_IS_NOT_AGREE = "请勾选我同意";
 }

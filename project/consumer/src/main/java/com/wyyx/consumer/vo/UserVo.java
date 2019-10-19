@@ -24,6 +24,7 @@ public class UserVo implements Serializable {
     private String userName;
     private String phone;
     private String password;
-
+    //是否同意,0标识不同意,其他数字表示同意
+    private int isAgree = 1;
 
 }
