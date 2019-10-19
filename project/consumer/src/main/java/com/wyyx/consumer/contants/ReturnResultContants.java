@@ -67,5 +67,21 @@ public final class ReturnResultContants {
     //zhuy:删除订单
     public static final int CODE_DEL_ORDER_ORDERS = 260;
     public static final String MSG_DEL_ORDER_ORDERS = "删除成功!";
+    //绑定手机号提示
+    public static final int CODE_BIND_PHONE = 10086;
+    public static final String MSG_BIND_PHONE = "请您先绑定手机号！";
+
+    //授权登录回调失败
+    public static final int CODE_CALL_BACK_FAIL = 000;
+    public static final String MSG_CALL_BACK_FAIL = "授权登录回调失败！";
+
+    //绑定手机号成功
+    public static final int CODE_BIND_PHONE_SUCCESS = 666;
+    public static final String MSG_BIND_PHONE_SUCCESS = "绑定手机号失败！";
+
+    //绑定手机号失败
+    public static final int CODE_BIND_PHONE_FAIL = 777;
+    public static final String MSG_BIND_PHONE_FAIL = "绑定手机号失败！";
+    public static final String MSG_PHONE_IS_BIND = "该用户已绑定手机";
 
 }
