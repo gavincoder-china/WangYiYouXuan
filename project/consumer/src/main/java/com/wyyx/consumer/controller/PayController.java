@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * **********************************************************
  *
- * @Project:  支付业务,获取支付码,回调修改订单信息
+ * @Project: 支付业务, 获取支付码, 回调修改订单信息
  * @Author : Gavincoder
  * @Mail : xunyegege@gmail.com
  * @Github : https://github.com/xunyegege
@@ -42,10 +42,10 @@ public class PayController {
     @ApiOperation("商品选购")
     @GetMapping(value = "/chooseToPay")
     public ReturnResult chooseToPay(@ApiParam(value = "商品Id") @RequestParam(value = "pID") Long pid,
-                                    @ApiParam(value = "用户Id") @RequestParam(value = "userId")Long userId){
+                                    @ApiParam(value = "用户Id") @RequestParam(value = "userId") Long userId) {
         //通过pId和userId查询用户购物车信息
         ProductCart productCart = cartService.selectByPidAndUserId(pid, userId);
         //通过pId从商品表中查出商品的数据（img，name，price...）
-        cartService.
+        return null;
     }
 }

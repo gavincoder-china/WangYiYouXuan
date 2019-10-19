@@ -1,11 +1,11 @@
-package com.wyyx.consumer.annotationCustom;
+package com.wyyx.consumer.annotationCustom.method;
 
 
 import com.alibaba.fastjson.JSONObject;
 import com.wyyx.consumer.contants.ReturnResultContants;
-import com.wyyx.consumer.vo.UserVo;
 import com.wyyx.consumer.result.ReturnResultUtils;
 import com.wyyx.consumer.util.RedisUtil;
+import com.wyyx.consumer.vo.UserVo;
 import com.wyyx.provider.contants.CommonContants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -19,7 +19,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Method;
 
 
-public class AnnotationLoginReqComplete implements HandlerInterceptor {
+public class RequireLoginMethodImpl implements HandlerInterceptor {
 
     @Autowired
     private RedisUtil redisUtils;
@@ -35,39 +35,27 @@ public class AnnotationLoginReqComplete implements HandlerInterceptor {
 
 
         // 判断方法是否添加了这个注解
-        AnnotationLoginRequired methodAnnotation = method.getAnnotation(AnnotationLoginRequired.class);
-
+        RequireLoginMethod methodAnnotation = method.getAnnotation(RequireLoginMethod.class);
 
         if (methodAnnotation != null) {
 
-
             // 从 http 请求头中取出 token
-            String userToken = request.getHeader("userToken");
-            // 从 http 请求头中取出 token
-            String wxToken = request.getHeader("wxToken");
+            String userToken = request.getHeader("token");
 
 
-            if (!StringUtils.isEmpty(userToken) || !StringUtils.isEmpty(wxToken)) {
-
-                String token = !StringUtils.isEmpty(userToken) ? userToken : wxToken;
-
-                String jsonStr = (String) redisUtils.get(CommonContants.LOGIN_NAME_SPACE + token);
-
+            if (!StringUtils.isEmpty(userToken)) {
+                String jsonStr = (String) redisUtils.get(CommonContants.LOGIN_NAME_SPACE + userToken);
                 if (!StringUtils.isEmpty(jsonStr)) {
 
                     //Todo 设置自定义注解
 
                     UserVo userVo = JSONObject.parseObject(jsonStr, UserVo.class);
 
-                    request.setAttribute("userToken", userVo);
+                    request.setAttribute("annotation", userVo);
 
                     return true;
                 }
-
             }
-
-
-
 
             response.setCharacterEncoding("UTF-8");
             PrintWriter pw = response.getWriter();

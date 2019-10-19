@@ -1,6 +1,4 @@
-package com.wyyx.consumer.annotationCustom;
-
-
+package com.wyyx.consumer.annotationCustom.parameter;
 
 
 import com.wyyx.consumer.vo.UserVo;
@@ -12,11 +10,11 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 //Todo 设置自定义注解
-public class AnnotationCurrentComplete implements HandlerMethodArgumentResolver {
+public class RequireLoginParamImpl implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.getParameterType().isAssignableFrom(UserVo.class)
-               && parameter.hasParameterAnnotation(AnnotationCurrentUser.class);
+               && parameter.hasParameterAnnotation(RequireLoginParam.class);
     }
 
     @Override
@@ -25,14 +23,12 @@ public class AnnotationCurrentComplete implements HandlerMethodArgumentResolver 
                                   NativeWebRequest webRequest,
                                   WebDataBinderFactory webDataBinderFactory) throws Exception {
 
-        UserVo userVo = (UserVo) webRequest.getAttribute("userToken", RequestAttributes.SCOPE_REQUEST);
+        UserVo userVo = (UserVo) webRequest.getAttribute("annotation", RequestAttributes.SCOPE_REQUEST);
 
         if (userVo != null) {
-
-            return userVo;
+            return userVo.getUserID();
         }
 
         return null;
-
     }
 }

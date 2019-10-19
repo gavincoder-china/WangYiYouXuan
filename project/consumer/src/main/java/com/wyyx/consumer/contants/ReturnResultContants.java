@@ -91,4 +91,12 @@ public final class ReturnResultContants {
     //评价失败
     public static final int CODE_USER_COMMENT_FAIL = 667;
     public static final String MSG_USER_COMMENT_FAIL = "评价失败！";
+
+    //加入购物车失败
+    public static final int CODE_INSERT_CART_FAIL = 668;
+    public static final String MSG_INSERT_CARTL_FAIL = "插入购物车失败！";
+
+    //修改数量失败
+    public static final int CODE_UPDATE_CART_FAIL = 669;
+    public static final String MSG_UPDATE_CART_FAIL = "修改数量失败！";
 }

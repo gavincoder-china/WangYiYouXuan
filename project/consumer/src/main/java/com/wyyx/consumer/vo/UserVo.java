@@ -20,12 +20,13 @@ public class UserVo implements Serializable {
 
     private static final long serialVersionUID = -567136965701406919L;
 
-    private long userID;
+    private Long userID;
     private String userName;
     private String phone;
     private String password;
     //是否同意,0标识不同意,其他数字表示同意
     private int isAgree = 1;
+    private String temp;
 
 
 }

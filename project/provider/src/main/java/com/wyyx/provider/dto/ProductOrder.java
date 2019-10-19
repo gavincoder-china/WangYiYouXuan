@@ -22,6 +22,7 @@ public class ProductOrder implements Serializable {
      */
     private Long productId;
 
+
     private String name;
 
     /**

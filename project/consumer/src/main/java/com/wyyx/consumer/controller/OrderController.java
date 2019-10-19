@@ -1,6 +1,7 @@
 package com.wyyx.consumer.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.wyyx.consumer.annotationCustom.method.RequireLoginMethod;
 import com.wyyx.consumer.contants.OrderStatus;
 import com.wyyx.consumer.contants.ReturnResultContants;
 import com.wyyx.consumer.result.ReturnResult;
@@ -35,6 +36,7 @@ public class OrderController {
     @Reference
     private OrderService orderService;
 
+    @RequireLoginMethod
     @ApiOperation(value = "查询全部订单")
     @GetMapping(value = "/selectOrderAll")
     public ReturnResult selectOrderAll(PageVo pageVo) {
@@ -42,6 +44,7 @@ public class OrderController {
         return ReturnResultUtils.returnSuccess(product_orders);
     }
 
+    @RequireLoginMethod
     @ApiOperation(value = "根据订单状态查询相应订单")
     @GetMapping(value = "/selectOrderByClass")
     public ReturnResult selectOrderByClass(@ApiParam(value = "商品订单状态码") @RequestParam(value = "state") int state,
@@ -55,6 +58,7 @@ public class OrderController {
         return ReturnResultUtils.returnSuccess(productOrders);
     }
 
+    @RequireLoginMethod
     @ApiOperation(value = "根据商品名称模糊查询相应订单")
     @GetMapping(value = "/selectByGoodsName")
     public ReturnResult selectByGoodsName(@ApiParam(value = "商品名称") @RequestParam(value = "name") String name,
@@ -68,6 +72,7 @@ public class OrderController {
         return ReturnResultUtils.returnSuccess(productOrders);
     }
 
+    @RequireLoginMethod
     @ApiOperation(value = "逻辑删除")
     @GetMapping(value = "/removeOrder")
     public boolean removeOrder(OrderVo orderVo) {
@@ -76,6 +81,7 @@ public class OrderController {
         return orderService.updateByPrimaryKeySelective(productOrder);
     }
 
+    @RequireLoginMethod
     @ApiOperation(value = "查询isdel的订单-加入回收站")
     @GetMapping(value = "/selectByIsDel")
     public ReturnResult selectByIsDel(@ApiParam(value = "是否逻辑删除") @RequestParam(value = "isDel") boolean isDelete, PageVo pageVo) {
@@ -84,6 +90,7 @@ public class OrderController {
 
     }
 
+    @RequireLoginMethod
     @ApiOperation(value = "删除回收站")
     @GetMapping(value = "/delOrder")
     public ReturnResult delOrder(@ApiParam(value = "订单id") @RequestParam(value = "id") long id) {
@@ -100,7 +107,7 @@ public class OrderController {
                                             ReturnResultContants.MSG_NOT_FIND_ORDERS);
     }
 
-
+    @RequireLoginMethod
     @ApiOperation(value = "订单打分")
     @GetMapping(value = "/orderGrade")
     public ReturnResult orderGrade(@ApiParam(value = "订单id") @RequestParam(value = "id") long id, CommentVo commentVo) {

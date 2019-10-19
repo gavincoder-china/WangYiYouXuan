@@ -64,5 +64,8 @@ public final class CommonContants {
     public static final String NOT_COM_IP_ADDRESS = "您的帐号未在常用地登录，请注意帐号安全";
     public static final String IS_COM_IP_ADDRESS = "欢迎登录";
 
+    //未登录状态时的临时购物车数据
+    public static final String TEMP_CART = "TEMP_CART:";
+
 
 }
