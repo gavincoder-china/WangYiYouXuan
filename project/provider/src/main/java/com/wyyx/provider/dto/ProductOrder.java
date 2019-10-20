@@ -22,7 +22,6 @@ public class ProductOrder implements Serializable {
      */
     private Long productId;
 
-
     private String name;
 
     /**
@@ -57,7 +56,15 @@ public class ProductOrder implements Serializable {
      */
     private String receiverName;
 
+    /**
+     * 实付金额
+     */
     private BigDecimal finalPrice;
+
+    /**
+     * 未优惠价格
+     */
+    private BigDecimal totalPrice;
 
     private static final long serialVersionUID = 1L;
 }

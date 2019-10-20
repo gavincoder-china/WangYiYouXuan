@@ -1,4 +1,6 @@
-package com.wyyx.consumer.contants;
+package com.wyyx.provider.contants;
+
+import java.util.Scanner;
 
 /**
  * **********************************************************
@@ -34,6 +36,7 @@ public enum OrderStatus {
         for(OrderStatus transactType : values()){
             if (transactType.getoStatus().equals(value)) {
                 return transactType;
+
             }
         }
         return null;

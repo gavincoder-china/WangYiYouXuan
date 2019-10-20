@@ -2,9 +2,8 @@ package com.wyyx.provider.service;
 
 import com.wyyx.provider.dto.ProductComment;
 import com.wyyx.provider.dto.ProductOrder;
-import com.wyyx.provider.mapper.ProductOrderMapper;
-import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,28 +13,40 @@ import java.util.List;
 public interface OrderService {
 
     //kitty_zhu：查询全部订单
-    List<ProductOrder> selectOrderAll(int start, int offset);
+    List<ProductOrder> selectOrderAll(long uId,int start, int offset);
 
     //kitty_zhu：查询订单状态 state:订单状态
-    List<ProductOrder> selectOrderByClass(int state, int start, int offset);
+    List<ProductOrder> selectOrderByClass(long uId,int state, int start, int offset);
 
     //kitty_zhu：根据商品名称查询订单
-    List<ProductOrder> selectByGoodsName(String name, byte state, int start, int offset);
+    List<ProductOrder> selectByGoodsName(long uId,String name, byte state, int start, int offset);
 
     //kitty_zhu:逻辑删除
-    boolean updateByPrimaryKeySelective(ProductOrder productOrder);
+    boolean delOrderTemp(long uId,long id);
 
     //kitty_zhu:查询is_del的订单（回收站）
-    List<ProductOrder> selectByIsDel(boolean isDelete, int start, int offset);
+    List<ProductOrder> selectByIsDel(long uId,boolean isDelete, int start, int offset);
 
     //kitty_zhu:删除订单
-    int delOrder(long id);
-
+    int delOrder(long uId,long id);
 
 
     //kitty_zhu：查询订单状态
-    byte selectOrderState(Long id);
+    byte selectOrderState(long uId,Long id);
+
     //kitty_zhu：插入用户评价
     int insertSelective(ProductComment productComment);
-    ProductOrder selectOrder(long id);
+
+    ProductOrder selectOrder(long uId,long id);
+
+    /**
+     * @description  创建订单
+     * @author Gavin
+     * @date 2019-10-20 09:41
+
+     * @return
+     * @throws
+     * @since
+    */
+    ProductOrder createOrder(HashMap<String,String> map,long uId);
 }

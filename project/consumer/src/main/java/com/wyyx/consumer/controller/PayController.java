@@ -1,5 +1,6 @@
 package com.wyyx.consumer.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.wyyx.consumer.result.ReturnResult;
 import com.wyyx.consumer.util.RedisUtil;
 import com.wyyx.provider.dto.ProductCart;
@@ -36,7 +37,7 @@ public class PayController {
      */
     @Autowired
     private RedisUtil redisUtil;
-    @Autowired
+    @Reference
     private CartService cartService;
 
     @ApiOperation("商品选购")
