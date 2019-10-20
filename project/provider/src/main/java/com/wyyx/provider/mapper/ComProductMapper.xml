@@ -212,9 +212,21 @@
     <select id="selectByName" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from com_product
-        where `name` like concat('%',#{name,jdbcType=VARCHAR},'%')
+        from com_product cp
+        where cp.name like concat('%',#{name,jdbcType=VARCHAR},'%')
         limit #{start,jdbcType=INTEGER} ,#{offset,jdbcType=INTEGER}
     </select>
 
+    <!--zhuy:搜索框最火爆商品-->
+    <select id="selectByHot" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from com_product
+        where sales = (select max(sales) from com_product)
+    </select>
+
+    <!--dkl:通过商品Id查询商品信息-->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM com_product WHERE id = #{id,jdbcType=BIGINT}
+    </select>
 </mapper>

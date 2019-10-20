@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.wyyx.provider.dto.OauthUser;
 import com.wyyx.provider.mapper.OauthUserMapper;
 import com.wyyx.provider.service.OauthUserService;
+import com.wyyx.provider.util.IdWorker;
 import com.wyyx.provider.util.wx.WxLoginModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,15 +18,19 @@ public class OauthUserServiceImpl implements OauthUserService {
     OauthUserMapper oauthUserMapper;
     @Autowired
     WxLoginModel wxLoginModel;
+    @Autowired
+    private IdWorker idWorker;
 
     @Override
     public int register(OauthUser oauthUser) {
+        oauthUser.setId(idWorker.nextId());
         return oauthUserMapper.insertSelective(oauthUser);
     }
 
     @Override
     public OauthUser selectByOpenId(String openid) {
-        return oauthUserMapper.selectByOpenid(openid);
+
+        return oauthUserMapper.selectAllByOpenid(openid);
     }
 
     @Override

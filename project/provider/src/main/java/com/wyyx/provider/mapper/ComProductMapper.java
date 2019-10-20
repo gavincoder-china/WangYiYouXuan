@@ -29,5 +29,11 @@ public interface ComProductMapper {
     //zy：模糊查询商品,带分页
     List<ComProduct> selectByName(@Param("name") String name, @Param("start") int start, @Param("offset") int offset);
 
+    //kitty_zhu:默认搜索框最火爆商品
+    List<ComProduct> selectByHot();
+
+    //dkl:通过商品id查询商品信息
+    ComProduct selectById(Long id);
+
 
 }

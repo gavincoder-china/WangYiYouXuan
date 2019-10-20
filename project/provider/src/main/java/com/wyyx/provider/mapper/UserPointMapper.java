@@ -14,4 +14,6 @@ public interface UserPointMapper {
     int updateByPrimaryKeySelective(UserPoint record);
 
     int updateByPrimaryKey(UserPoint record);
+    //通过用户id获取积分
+    UserPoint selectByUserId(Long userId);
 }

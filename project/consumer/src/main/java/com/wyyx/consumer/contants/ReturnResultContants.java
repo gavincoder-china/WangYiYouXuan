@@ -15,16 +15,12 @@ public final class ReturnResultContants {
 
     public static final int SUCCESS = 0;
 
-    //未勾选"我同意"
-    public static final int CODE_IS_NOT_AGREE = 200;
-    public static final String MSG_IS_NOT_AGREE = "请勾选我同意";
-
     //登录失败
-    public static final int CODE_LOGIN_WRONG = 260;
-    public static final String MSG_LOGIN_WRONG = "登录失败";
+    public static final int CODE_LOGIN_WRONG = 250;
+    public static final String MSG_WRONG_LOGIN = "登录失败";
 
     //用户注销失败
-    public static final int CODE_DEL_WRONG = 261;
+    public static final int CODE_DEL_WRONG = 251;
     public static final String MSG_DEL_WRONG = "用户注销失败";
 
     //用户注册失败
@@ -47,9 +43,33 @@ public final class ReturnResultContants {
     public static final int CODE_SECKILL_CREATE_ORDER = 999;
     public static final String MSG_SECKILL_CREATE_ORDER = "恭喜您抢购成功,订单正在生成中";
 
+
+    //删除购物车提示
+    public static final int CODE_DEL_CART_WRONG = 252;
+    public static final String MSG_DEL_CART_WRONG = "删除失败，请重新删除";
+
+    //购物车为空时提示
+    public static final int CODE_CART_EMPTY = 000;
+    public static final String MSG_CART_EMPTY = "购物车暂无商品，请前去添加！";
+
+    //未勾选"我同意"
+    public static final int CODE_IS_NOT_AGREE = 200;
+    public static final String MSG_IS_NOT_AGREE = "请勾选我同意";
+
+    //zhuy:查询商品不存在
+    public static final int CODE_NOT_FIND_GOODS = 220;
+    public static final String MSG_NOT_FIND_GOODS = "该商品不存在!";
+
+    //zhuy:查询订单不存在
+    public static final int CODE_NOT_FIND_ORDERS = 230;
+    public static final String MSG_NOT_FIND_ORDERS = "该订单不存在!";
+
+    //zhuy:删除订单
+    public static final int CODE_DEL_ORDER_ORDERS = 260;
+    public static final String MSG_DEL_ORDER_ORDERS = "删除成功!";
     //绑定手机号提示
     public static final int CODE_BIND_PHONE = 10086;
-    public static final String MSG_BIND_PHONE = "请您先绑定手机号！";
+    public static final String MSG_BIND_PHONE = "请您再绑定手机号！";
 
     //授权登录回调失败
     public static final int CODE_CALL_BACK_FAIL = 000;
@@ -64,4 +84,19 @@ public final class ReturnResultContants {
     public static final String MSG_BIND_PHONE_FAIL = "绑定手机号失败！";
     public static final String MSG_PHONE_IS_BIND = "该用户已绑定手机";
 
+    //评价成功
+    public static final int CODE_USER_COMMENT_SUCCESS = 666;
+    public static final String MSG_USER_COMMENT_SUCCESS = "感谢您的评价！";
+
+    //评价失败
+    public static final int CODE_USER_COMMENT_FAIL = 667;
+    public static final String MSG_USER_COMMENT_FAIL = "评价失败！";
+
+    //加入购物车失败
+    public static final int CODE_INSERT_CART_FAIL = 668;
+    public static final String MSG_INSERT_CARTL_FAIL = "插入购物车失败！";
+
+    //修改数量失败
+    public static final int CODE_UPDATE_CART_FAIL = 669;
+    public static final String MSG_UPDATE_CART_FAIL = "修改数量失败！";
 }

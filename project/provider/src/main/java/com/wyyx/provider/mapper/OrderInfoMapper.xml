@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyyx.provider.mapper.OrderInfoMapper">
+  <resultMap id="BaseResultMap" type="com.wyyx.provider.dto.OrderInfo">
+    <!--@mbg.generated-->
+    <!--@Table order_info-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="count" jdbcType="BIGINT" property="count" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, order_id, `count`, product_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from order_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from order_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.wyyx.provider.dto.OrderInfo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into order_info (order_id, `count`, product_id
+      )
+    values (#{orderId,jdbcType=BIGINT}, #{count,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.wyyx.provider.dto.OrderInfo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into order_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="count != null">
+        `count`,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wyyx.provider.dto.OrderInfo">
+    <!--@mbg.generated-->
+    update order_info
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null">
+        `count` = #{count,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wyyx.provider.dto.OrderInfo">
+    <!--@mbg.generated-->
+    update order_info
+    set order_id = #{orderId,jdbcType=BIGINT},
+      `count` = #{count,jdbcType=BIGINT},
+      product_id = #{productId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,12 +1,15 @@
-package com.wyyx.provider.dto;
+package com.wyyx.consumer.vo;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
 import lombok.Data;
 
+import java.util.Date;
+
+/**
+ * @author kitty_zhu
+ * @date 2019-10-18 16:20
+ */
 @Data
-public class ProductOrder implements Serializable {
+public class OrderVo {
     /**
      * 商品订单id
      */
@@ -21,7 +24,6 @@ public class ProductOrder implements Serializable {
      * 商品id
      */
     private Long productId;
-
 
     private String name;
 
@@ -56,8 +58,6 @@ public class ProductOrder implements Serializable {
      * 收货人姓名
      */
     private String receiverName;
-
-    private BigDecimal finalPrice;
 
     private static final long serialVersionUID = 1L;
 }

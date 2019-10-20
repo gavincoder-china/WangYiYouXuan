@@ -9,12 +9,15 @@ import com.wyyx.provider.dto.ComOauthUser;
  */
 @Service
 public interface ComOauthService {
-    //根据授权用户的oauthUserId从中间表中获取手机号
-    String selectPhone(Long oauthUserId);
+
+    //根据授权用户的oauthUserId从中间表中获取信息
+    ComOauthUser selectMiddleInfo(Long oauthUserId);
+
     //注册授权用户后向中间表中插入授权用户的id
-    public int insertId(ComOauthUser comOauthUser);
-    //查询userId
-    Long selectId();
+    int insertId(ComOauthUser comOauthUser);
+
+
+
     //绑定手机号
     int insertPhone(ComOauthUser comOauthUser);
 }

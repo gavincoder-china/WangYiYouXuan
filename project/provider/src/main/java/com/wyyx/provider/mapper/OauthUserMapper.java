@@ -1,8 +1,11 @@
 package com.wyyx.provider.mapper;
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
 import com.wyyx.provider.dto.OauthUser;
 
 public interface OauthUserMapper {
+
     int deleteByPrimaryKey(Long id);
 
     int insert(OauthUser record);
@@ -14,6 +17,7 @@ public interface OauthUserMapper {
     int updateByPrimaryKeySelective(OauthUser record);
 
     int updateByPrimaryKey(OauthUser record);
+    OauthUser selectAllByOpenid(@Param("openid")String openid);
 
-    OauthUser selectByOpenid(String openid);
+
 }

@@ -7,17 +7,20 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="product_id" jdbcType="BIGINT" property="productId" />
-    <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="receiver_phone" jdbcType="VARCHAR" property="receiverPhone" />
     <result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress" />
     <result column="state" jdbcType="TINYINT" property="state" />
-    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+    <result column="is_delete" jdbcType="BOOLEAN" property="isDelete" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+    <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
+    <result column="final_price" jdbcType="DECIMAL" property="finalPrice" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, user_id, product_id, receiver_name, receiver_phone, receiver_address, `state`, 
-    pay_type, create_time
+    id, user_id, product_id, `name`, receiver_phone, receiver_address, `state`, is_delete, 
+    create_time, pay_type, receiver_name, final_price
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -34,12 +37,14 @@
   <insert id="insert" parameterType="com.wyyx.provider.dto.ProductOrder">
     <!--@mbg.generated-->
     insert into product_order (id, user_id, product_id, 
-      receiver_name, receiver_phone, receiver_address, 
-      `state`, pay_type, create_time
+      `name`, receiver_phone, receiver_address, 
+      `state`, is_delete, create_time, 
+      pay_type, receiver_name, final_price
       )
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
-      #{receiverName,jdbcType=VARCHAR}, #{receiverPhone,jdbcType=VARCHAR}, #{receiverAddress,jdbcType=VARCHAR}, 
-      #{state,jdbcType=TINYINT}, #{payType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      #{name,jdbcType=VARCHAR}, #{receiverPhone,jdbcType=VARCHAR}, #{receiverAddress,jdbcType=VARCHAR}, 
+      #{state,jdbcType=TINYINT}, #{isDelete,jdbcType=BOOLEAN}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{payType,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, #{finalPrice,jdbcType=DECIMAL}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.wyyx.provider.dto.ProductOrder">
@@ -55,8 +60,8 @@
       <if test="productId != null">
         product_id,
       </if>
-      <if test="receiverName != null">
-        receiver_name,
+      <if test="name != null">
+        `name`,
       </if>
       <if test="receiverPhone != null">
         receiver_phone,
@@ -67,11 +72,20 @@
       <if test="state != null">
         `state`,
       </if>
-      <if test="payType != null">
-        pay_type,
+      <if test="isDelete != null">
+        is_delete,
       </if>
       <if test="createTime != null">
         create_time,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+      <if test="receiverName != null">
+        receiver_name,
+      </if>
+      <if test="finalPrice != null">
+        final_price,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -84,8 +98,8 @@
       <if test="productId != null">
         #{productId,jdbcType=BIGINT},
       </if>
-      <if test="receiverName != null">
-        #{receiverName,jdbcType=VARCHAR},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="receiverPhone != null">
         #{receiverPhone,jdbcType=VARCHAR},
@@ -96,11 +110,20 @@
       <if test="state != null">
         #{state,jdbcType=TINYINT},
       </if>
-      <if test="payType != null">
-        #{payType,jdbcType=VARCHAR},
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BOOLEAN},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null">
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="finalPrice != null">
+        #{finalPrice,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -114,8 +137,8 @@
       <if test="productId != null">
         product_id = #{productId,jdbcType=BIGINT},
       </if>
-      <if test="receiverName != null">
-        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="receiverPhone != null">
         receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
@@ -126,11 +149,20 @@
       <if test="state != null">
         `state` = #{state,jdbcType=TINYINT},
       </if>
-      <if test="payType != null">
-        pay_type = #{payType,jdbcType=VARCHAR},
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BOOLEAN},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payType != null">
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null">
+        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="finalPrice != null">
+        final_price = #{finalPrice,jdbcType=DECIMAL},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -140,12 +172,69 @@
     update product_order
     set user_id = #{userId,jdbcType=BIGINT},
       product_id = #{productId,jdbcType=BIGINT},
-      receiver_name = #{receiverName,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
       receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
       receiver_address = #{receiverAddress,jdbcType=VARCHAR},
       `state` = #{state,jdbcType=TINYINT},
+      is_delete = #{isDelete,jdbcType=BOOLEAN},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       pay_type = #{payType,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      receiver_name = #{receiverName,jdbcType=VARCHAR},
+      final_price = #{finalPrice,jdbcType=DECIMAL}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <!--    kitty_zhu：逻辑删除订单-->
+    <!--    kitty_zhu：查询全部订单-->
+    <select id="selectOrderAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from product_order
+        limit #{start,jdbcType=INTEGER} ,#{offset,jdbcType=INTEGER}
+    </select>
+
+    <!--kitty_zhu：根据订单状态查询 state:订单状态-->
+    <select id="selectOrderByClass" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from product_order
+        where state = #{state,jdbcType=TINYINT}
+        limit #{start,jdbcType=INTEGER} ,#{offset,jdbcType=INTEGER}
+    </select>
+
+    <!--    kitty_zhu：根据商品名称模糊查询订单-->
+    <select id="selectByGoodsName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from product_order po
+        where po.name like concat('%',#{name,jdbcType=VARCHAR},'%') and po.state = #{state,jdbcType=TINYINT}
+        limit #{start,jdbcType=INTEGER} ,#{offset,jdbcType=INTEGER}
+    </select>
+
+    <!--kitty_zhu:查询is_del 的订单（回收站）-->
+    <select id="selectByIsDel" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from product_order po
+        where po.is_delete = #{isDelete,jdbcType=BOOLEAN}
+        limit #{start,jdbcType=INTEGER} ,#{offset,jdbcType=INTEGER}
+    </select>
+
+
+
+    <!--    kitty_zhu：查询订单状态 -->
+    <select id="selectOrderState" resultMap="BaseResultMap">
+        select
+        state
+        from product_order
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+<!--auto generated by MybatisCodeHelper on 2019-10-19-->
+  <select id="selectById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from product_order
+    where id=#{id,jdbcType=BIGINT}
+    limit 1
+  </select>
 </mapper>

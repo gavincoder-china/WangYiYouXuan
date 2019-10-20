@@ -19,4 +19,8 @@ public interface ComUserMapper {
 
     ComUser selectByPhone(@Param("phone")String phone);
 
+    //dkl:查询用户等级
+    ComUser selectRoleByUserId(Long userId);
+
+
 }

@@ -1,8 +1,10 @@
 package com.wyyx.consumer.config;
 
 
-import com.wyyx.consumer.annotationCustom.AnnotationCurrentComplete;
-import com.wyyx.consumer.annotationCustom.AnnotationLoginReqComplete;
+import com.wyyx.consumer.annotationCustom.method.RequireLoginMethodImpl;
+import com.wyyx.consumer.annotationCustom.parameter.RequireLoginParamImpl;
+import com.wyyx.consumer.annotationCustom.parameter.TempLoginParamImpl;
+import com.wyyx.consumer.annotationCustom.method.TempLoginMethodImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -32,16 +34,29 @@ public class webConfiguration implements WebMvcConfigurer {
 
   //注入容器
   @Bean
-  public AnnotationLoginReqComplete loginReqComplete() {
+  public TempLoginMethodImpl tempLoginMethod() {
 
-    return new AnnotationLoginReqComplete();
+    return new TempLoginMethodImpl();
   }
 
   @Bean
-  public AnnotationCurrentComplete currentComplete() {
+  public TempLoginParamImpl tempLoginParam() {
 
-    return new AnnotationCurrentComplete();
+    return new TempLoginParamImpl();
   }
+  @Bean
+  public RequireLoginMethodImpl requireLoginMethod() {
+
+    return new RequireLoginMethodImpl();
+  }
+
+  @Bean
+  public RequireLoginParamImpl requireLoginParam() {
+
+    return new RequireLoginParamImpl();
+  }
+
+
 
   @Override
   public void configurePathMatch(PathMatchConfigurer pathMatchConfigurer) {
@@ -80,8 +95,9 @@ public class webConfiguration implements WebMvcConfigurer {
   @Override
   public void addInterceptors(InterceptorRegistry interceptorRegistry) {
     //Todo 设置拦截路径
-    interceptorRegistry.addInterceptor(loginReqComplete())
-                       .excludePathPatterns("/wx/**");
+    interceptorRegistry.addInterceptor(requireLoginMethod());
+
+    interceptorRegistry.addInterceptor(tempLoginMethod());
 
   }
 
@@ -115,7 +131,9 @@ public class webConfiguration implements WebMvcConfigurer {
   @Override
   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> list) {
 
-    list.add(currentComplete());
+    list.add(tempLoginParam());
+    list.add(requireLoginParam());
+
   }
 
   @Override
