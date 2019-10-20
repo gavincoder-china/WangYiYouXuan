@@ -12,6 +12,7 @@ import com.wyyx.provider.mapper.ProductCommentMapper;
 import com.wyyx.provider.mapper.ProductOrderMapper;
 import com.wyyx.provider.service.OrderService;
 import com.wyyx.provider.util.IdWorker;
+import com.wyyx.provider.util.TotalPriceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ComProductMapper comProductMapper;
 
+    @Autowired
+    private TotalPriceUtil priceUtil;
+
     //kitty_zhu：查询全部订单
     @Override
     public List<ProductOrder> selectOrderAll(long uId, int start, int offset) {
@@ -61,9 +65,9 @@ public class OrderServiceImpl implements OrderService {
 
     //kitty_zhu 逻辑删除
     @Override
-    public boolean delOrderTemp(long uId,long id) {
+    public boolean delOrderTemp(long uId, long id) {
 
-        return productOrderMapper.updateIsDeleteByProductIdAndUserId(true,id,uId) == 1 ? true : false;
+        return productOrderMapper.updateIsDeleteByProductIdAndUserId(true, id, uId) == 1 ? true : false;
     }
 
     //kitty_zhu:查询is_del的订单（回收站）
@@ -92,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 
     //插入用户评价
     @Override
-    public int insertSelective( ProductComment productComment) {
+    public int insertSelective(ProductComment productComment) {
         productComment.setId(idWorker.nextId());
         return productCommentMapper.insertSelective(productComment);
     }
@@ -104,7 +108,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ProductOrder createOrder(HashMap<String, String> map, long uId) {
+    public ProductOrder createOrder(HashMap<String, String> map, long uId, String name) {
+
         //生成订单号
         long oId = idWorker.nextId();
 
@@ -121,9 +126,9 @@ public class OrderServiceImpl implements OrderService {
         final BigDecimal[] totalPrice = {new BigDecimal(0)};
 
         map.forEach((k, v) -> {
+
             //往info中插值
             OrderInfo orderInfo = new OrderInfo();
-
             orderInfo.setOrderId(oId);
             orderInfo.setProductId(Long.parseLong(k));
             orderInfo.setCount(Long.parseLong(v));
@@ -139,17 +144,48 @@ public class OrderServiceImpl implements OrderService {
 
         });
 
+
         ProductOrder order = new ProductOrder();
         order.setId(oId);
-        order.setTotalPrice(totalPrice[0]);
+
+        //得到计算过积分的价格
+        BigDecimal priceTemp = priceUtil.finalPrice(uId, totalPrice[0]);
+        //得到计算过运费的金额
+        BigDecimal finalPrice = priceUtil.goodsFinalPrice(uId, priceTemp);
+
+        order.setTotalPrice(finalPrice);
+
         order.setUserId(uId);
         order.setCreateTime(new Date());
         order.setState(OrderStatus.ORDER_TO_PAY.getoStatus());
+        order.setName(name);
 
-        //插入订单
+        //生成订单
         productOrderMapper.insertSelective(order);
 
         return order;
+    }
+
+    @Override
+    public int updateOrderState(Byte updatedState, Long id) {
+
+        return productOrderMapper.updatestateBYidAndUserId(updatedState, id);
+    }
+
+    @Override
+    public List<OrderInfo> selectByOrderId(Long orderId) {
+
+        return orderInfoMapper.selectByOrderId(orderId);
+    }
+
+    @Override
+    public long getProCount(long id) {
+
+        List<OrderInfo> orderInfos = orderInfoMapper.selectByOrderId(id);
+
+        long sum = orderInfos.stream().mapToLong(k -> k.getCount()).sum();
+
+        return sum;
     }
 
 

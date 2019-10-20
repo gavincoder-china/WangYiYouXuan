@@ -57,4 +57,19 @@ public class ComUserServiceImpl implements ComUserService {
     }
 
 
+    @Override
+    public int updateRole(ComUser comUser) {
+        return comUserMapper.updateByPrimaryKeySelective(comUser);
+    }
+
+    @Override
+    public ComUser selectByUserId(Long userId) {
+        return comUserMapper.selectByPrimaryKey(userId);
+    }
+
+    @Override
+    public int updateUserInfo(ComUser comUser) {
+        return comUserMapper.updateByPrimaryKeySelective(comUser);
+    }
+
 }

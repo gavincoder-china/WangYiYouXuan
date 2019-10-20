@@ -1,13 +1,17 @@
 package com.wyyx.provider.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.wyyx.provider.contants.OrderStatus;
 import com.wyyx.provider.dto.ProductOrder;
+import com.wyyx.provider.mapper.ComProductMapper;
+import com.wyyx.provider.mapper.ProductOrderMapper;
 import com.wyyx.provider.service.WxService;
 import com.wyyx.provider.util.CommonUtil;
 import com.wyyx.provider.util.UrlUtils;
 import com.wyyx.provider.util.wx.WXPayUtil;
 import com.wyyx.provider.util.wx.WxPayModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.SortedMap;
@@ -25,11 +29,18 @@ import java.util.TreeMap;
  * @description:
  ************************************************************/
 @Service
+@Transactional
 public class WxServiceImpl implements WxService {
 
 
     @Autowired
     private WxPayModel wxPayModel;
+
+    @Autowired
+    private ProductOrderMapper productOrderMapper;
+
+    @Autowired
+    private ComProductMapper comProductMapper;
 
     @Override
     public String wxPay(ProductOrder productOrder) throws Exception {
@@ -46,7 +57,6 @@ public class WxServiceImpl implements WxService {
         param.put("trade_type", wxPayModel.getType());
 
         //生成签名
-
         String sign = WXPayUtil.generateSignature(param, wxPayModel.getKey());
         param.put("sign", sign);
 
@@ -84,6 +94,14 @@ public class WxServiceImpl implements WxService {
                 e.printStackTrace();
             }
             if (isCheckSign) {
+                //修改订单状态
+                productOrderMapper.updatestateBYidAndUserId(OrderStatus.ORDER_PAY_SUCCESS.getoStatus(),
+                                                            Long.parseLong(resultMap.get("out_trade_no")));
+
+                //减库存,加销量
+                comProductMapper.updateInventoryAndSalesbyid(Long.parseLong(resultMap.get("out_trade_no")));
+
+
 
                 return true;
             }

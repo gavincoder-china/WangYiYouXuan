@@ -44,16 +44,17 @@ public interface ProductOrderMapper {
                                      @Param("offset") int offset);
 
     //kitty_zhu:查询订单状态
-    ProductOrder selectOrderState(@Param("userId") long userId,@Param("id") Long id);
+    ProductOrder selectOrderState(@Param("userId") long userId, @Param("id") Long id);
 
     //kitty_zhu:查询 isdel
-    ProductOrder selectById(@Param("userId") long userId,@Param("id") Long id);
+    ProductOrder selectById(@Param("userId") long userId, @Param("id") Long id);
 
     //zmx 逻辑删除订单
-    int updateIsDeleteByProductIdAndUserId(@Param("updatedIsDelete")Boolean updatedIsDelete,@Param("productId")Long productId,@Param("userId")Long userId);
+    int updateIsDeleteByProductIdAndUserId(@Param("updatedIsDelete") Boolean updatedIsDelete, @Param("productId") Long productId, @Param("userId") Long userId);
 
-
-
+    //zmx 修改订单状态
+    int updatestateBYidAndUserId(@Param("updatedState") Byte updatedState,
+                                 @Param("id") Long id);
 
 
 }

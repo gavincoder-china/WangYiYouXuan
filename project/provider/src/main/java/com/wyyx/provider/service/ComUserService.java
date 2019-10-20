@@ -14,7 +14,16 @@ public interface ComUserService {
     // 普通用户登录
     ComUser login(String phone ,String password);
 
-    ComUser selectByPhone(String phone);
 
+    //根据手机号查询用户对象
+    ComUser selectByPhone(String phone);
+    //更新用户为会员
+    int updateRole(ComUser comUser);
+
+    //根据用户id获取用户对象
+    ComUser selectByUserId(Long userId);
+
+    //修改用户信息
+    int updateUserInfo(ComUser comUser);
 }
 

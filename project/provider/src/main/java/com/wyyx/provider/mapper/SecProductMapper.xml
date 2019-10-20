@@ -1,186 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wyyx.provider.mapper.SecProductMapper">
-  <resultMap id="BaseResultMap" type="com.wyyx.provider.dto.SecProduct">
-    <!--@mbg.generated-->
-    <!--@Table sec_product-->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="imgurl" jdbcType="VARCHAR" property="imgurl" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="buy_price" jdbcType="DECIMAL" property="buyPrice" />
-    <result column="sell_price" jdbcType="DECIMAL" property="sellPrice" />
-    <result column="discount" jdbcType="INTEGER" property="discount" />
-    <result column="inventory" jdbcType="BIGINT" property="inventory" />
-    <result column="sales" jdbcType="BIGINT" property="sales" />
-    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
-    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, `name`, imgurl, description, buy_price, sell_price, discount, inventory, sales, 
-    start_time, end_time, create_time
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from sec_product
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    <!--@mbg.generated-->
-    delete from sec_product
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.wyyx.provider.dto.SecProduct">
-    <!--@mbg.generated-->
-    insert into sec_product (id, `name`, imgurl, 
-      description, buy_price, sell_price, 
-      discount, inventory, sales, 
-      start_time, end_time, create_time
-      )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{buyPrice,jdbcType=DECIMAL}, #{sellPrice,jdbcType=DECIMAL}, 
-      #{discount,jdbcType=INTEGER}, #{inventory,jdbcType=BIGINT}, #{sales,jdbcType=BIGINT}, 
-      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.wyyx.provider.dto.SecProduct">
-    <!--@mbg.generated-->
-    insert into sec_product
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        `name`,
-      </if>
-      <if test="imgurl != null">
-        imgurl,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="buyPrice != null">
-        buy_price,
-      </if>
-      <if test="sellPrice != null">
-        sell_price,
-      </if>
-      <if test="discount != null">
-        discount,
-      </if>
-      <if test="inventory != null">
-        inventory,
-      </if>
-      <if test="sales != null">
-        sales,
-      </if>
-      <if test="startTime != null">
-        start_time,
-      </if>
-      <if test="endTime != null">
-        end_time,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="imgurl != null">
-        #{imgurl,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="buyPrice != null">
-        #{buyPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="sellPrice != null">
-        #{sellPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="discount != null">
-        #{discount,jdbcType=INTEGER},
-      </if>
-      <if test="inventory != null">
-        #{inventory,jdbcType=BIGINT},
-      </if>
-      <if test="sales != null">
-        #{sales,jdbcType=BIGINT},
-      </if>
-      <if test="startTime != null">
-        #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wyyx.provider.dto.SecProduct">
-    <!--@mbg.generated-->
-    update sec_product
-    <set>
-      <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="imgurl != null">
+    <resultMap id="BaseResultMap" type="com.wyyx.provider.dto.SecProduct">
+        <!--@mbg.generated-->
+        <!--@Table sec_product-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="imgurl" jdbcType="VARCHAR" property="imgurl"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="buy_price" jdbcType="DECIMAL" property="buyPrice"/>
+        <result column="sell_price" jdbcType="DECIMAL" property="sellPrice"/>
+        <result column="discount" jdbcType="INTEGER" property="discount"/>
+        <result column="inventory" jdbcType="BIGINT" property="inventory"/>
+        <result column="sales" jdbcType="BIGINT" property="sales"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, `name`, imgurl, description, buy_price, sell_price, discount, inventory, sales,
+        start_time, end_time, create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from sec_product
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete from sec_product
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wyyx.provider.dto.SecProduct">
+        <!--@mbg.generated-->
+        insert into sec_product (id, `name`, imgurl,
+        description, buy_price, sell_price,
+        discount, inventory, sales,
+        start_time, end_time, create_time
+        )
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR},
+        #{description,jdbcType=VARCHAR}, #{buyPrice,jdbcType=DECIMAL}, #{sellPrice,jdbcType=DECIMAL},
+        #{discount,jdbcType=INTEGER}, #{inventory,jdbcType=BIGINT}, #{sales,jdbcType=BIGINT},
+        #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.wyyx.provider.dto.SecProduct">
+        <!--@mbg.generated-->
+        insert into sec_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="imgurl != null">
+                imgurl,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="buyPrice != null">
+                buy_price,
+            </if>
+            <if test="sellPrice != null">
+                sell_price,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="inventory != null">
+                inventory,
+            </if>
+            <if test="sales != null">
+                sales,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="imgurl != null">
+                #{imgurl,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="buyPrice != null">
+                #{buyPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="sellPrice != null">
+                #{sellPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=INTEGER},
+            </if>
+            <if test="inventory != null">
+                #{inventory,jdbcType=BIGINT},
+            </if>
+            <if test="sales != null">
+                #{sales,jdbcType=BIGINT},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wyyx.provider.dto.SecProduct">
+        <!--@mbg.generated-->
+        update sec_product
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="imgurl != null">
+                imgurl = #{imgurl,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="buyPrice != null">
+                buy_price = #{buyPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="sellPrice != null">
+                sell_price = #{sellPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="discount != null">
+                discount = #{discount,jdbcType=INTEGER},
+            </if>
+            <if test="inventory != null">
+                inventory = #{inventory,jdbcType=BIGINT},
+            </if>
+            <if test="sales != null">
+                sales = #{sales,jdbcType=BIGINT},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wyyx.provider.dto.SecProduct">
+        <!--@mbg.generated-->
+        update sec_product
+        set `name` = #{name,jdbcType=VARCHAR},
         imgurl = #{imgurl,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="buyPrice != null">
         buy_price = #{buyPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="sellPrice != null">
         sell_price = #{sellPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="discount != null">
         discount = #{discount,jdbcType=INTEGER},
-      </if>
-      <if test="inventory != null">
         inventory = #{inventory,jdbcType=BIGINT},
-      </if>
-      <if test="sales != null">
         sales = #{sales,jdbcType=BIGINT},
-      </if>
-      <if test="startTime != null">
         start_time = #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
         end_time = #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.wyyx.provider.dto.SecProduct">
-    <!--@mbg.generated-->
+        create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--auto generated by MybatisCodeHelper on 2019-10-20-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sec_product
+        limit #{start,jdbcType=INTEGER} ,#{offset,jdbcType=INTEGER}
+    </select>
+
+    <!--auto generated by MybatisCodeHelper on 2019-10-20-->
+    <select id="count" resultType="java.lang.Long">
+    select count(1)
+    from sec_product
+  </select>
+
+    <!--auto generated by MybatisCodeHelper on 2019-10-20-->
+    <select id="selectInventoryById" resultType="java.lang.Long">
+        select inventory
+        from sec_product
+        where id=#{id,jdbcType=BIGINT}
+        limit
+        1
+    </select>
+
+    <!--auto generated by MybatisCodeHelper on 2019-10-20-->
+    <select id="selectById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sec_product
+        where id=#{id,jdbcType=BIGINT}
+        limit
+        1
+    </select>
+
+<!--auto generated by MybatisCodeHelper on 2019-10-20-->
+    <update id="updateInventorybyid">
     update sec_product
-    set `name` = #{name,jdbcType=VARCHAR},
-      imgurl = #{imgurl,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      buy_price = #{buyPrice,jdbcType=DECIMAL},
-      sell_price = #{sellPrice,jdbcType=DECIMAL},
-      discount = #{discount,jdbcType=INTEGER},
-      inventory = #{inventory,jdbcType=BIGINT},
-      sales = #{sales,jdbcType=BIGINT},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
+    set inventory=inventory -1
+    where id=#{id,jdbcType=BIGINT}
   </update>
+
+
 </mapper>

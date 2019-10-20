@@ -16,7 +16,7 @@ public final class ReturnResultContants {
     public static final int SUCCESS = 0;
 
     //登录失败
-    public static final int CODE_LOGIN_WRONG = 250;
+    public static final int CODE_LOGIN_WRONG = 249;
     public static final String MSG_WRONG_LOGIN = "登录失败";
 
     //用户注销失败
@@ -64,6 +64,10 @@ public final class ReturnResultContants {
     public static final int CODE_NOT_FIND_ORDERS = 230;
     public static final String MSG_NOT_FIND_ORDERS = "该订单不存在!";
 
+    //zhuy:查询订单过期失效
+    public static final int CODE_ORDER_EXPIRE = 231;
+    public static final String MSG_ORDER_EXPIRE = "该订单已过期失效!";
+
     //zhuy:删除订单
     public static final int CODE_DEL_ORDER_ORDERS = 260;
     public static final String MSG_DEL_ORDER_ORDERS = "删除成功!";
@@ -99,4 +103,25 @@ public final class ReturnResultContants {
     //修改数量失败
     public static final int CODE_UPDATE_CART_FAIL = 669;
     public static final String MSG_UPDATE_CART_FAIL = "修改数量失败！";
+
+    //生成支付码失败
+    public static final int CODE_CREATE_PAY_QCODE_FAIL = 670;
+    public static final String MSG_CREATE_PAY_QCODE_FAIL = "生成支付码失败！";
+
+    //库存不足
+    public static final int CODE_NO_INVENTORY = 671;
+    public static final String MSG_NO_INVENTORY = "库存不足！";
+
+    //秒杀失败
+    public static final int CODE_SEC_KILL_FAIL = 672;
+    public static final String MSG_SEC_KILL_FAIL = "秒杀失败！";
+
+    //修改个人信息成功
+    public static final int CODE_MODIFY_USER_INFO_SUCCESS = 670;
+    public static final String MSG_MODIFY_USER_INFO_SUCCESS = "修改个人信息成功";
+
+    //修改个人信息失败
+    public static final int CODE_MODIFY_USER_INFO_FAIL = 671;
+    public static final String MSG_MODIFY_USER_INFO_FAIL = "修改个人信息失败";
+
 }

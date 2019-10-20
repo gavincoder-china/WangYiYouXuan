@@ -1,10 +1,16 @@
 package com.wyyx.consumer.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.wyyx.consumer.annotationCustom.method.RequireLoginMethod;
+import com.wyyx.consumer.annotationCustom.parameter.RequireLoginParam;
 import com.wyyx.consumer.result.ReturnResult;
 import com.wyyx.consumer.util.RedisUtil;
+import com.wyyx.consumer.vo.UserVo;
 import com.wyyx.provider.dto.ProductCart;
+import com.wyyx.provider.dto.ProductOrder;
 import com.wyyx.provider.service.CartService;
+import com.wyyx.provider.service.OrderService;
+import com.wyyx.provider.service.WxService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -40,6 +46,11 @@ public class PayController {
     @Reference
     private CartService cartService;
 
+    @Reference
+    private OrderService orderService;
+    @Reference
+    private WxService wxService;
+
     @ApiOperation("商品选购")
     @GetMapping(value = "/chooseToPay")
     public ReturnResult chooseToPay(@ApiParam(value = "商品Id") @RequestParam(value = "pID") Long pid,
@@ -49,4 +60,22 @@ public class PayController {
         //通过pId从商品表中查出商品的数据（img，name，price...）
         return null;
     }
+
+    @RequireLoginMethod
+    @ApiOperation("订单支付")
+    @GetMapping(value = "/payOrder")
+    public ReturnResult payOrder(@ApiParam(value = "订单id") @RequestParam(value = "oID") Long oID,
+                                 @RequireLoginParam UserVo userVo) {
+        ProductOrder productOrder = orderService.selectOrder(userVo.getUserID(), oID);
+        try {
+            wxService.wxPay(productOrder);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
 }

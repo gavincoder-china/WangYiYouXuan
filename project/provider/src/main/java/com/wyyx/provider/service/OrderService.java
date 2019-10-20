@@ -1,7 +1,10 @@
 package com.wyyx.provider.service;
 
+import com.wyyx.provider.dto.OrderInfo;
 import com.wyyx.provider.dto.ProductComment;
 import com.wyyx.provider.dto.ProductOrder;
+import org.apache.ibatis.annotations.Param;
+import org.apache.zookeeper.data.Id;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,5 +51,21 @@ public interface OrderService {
      * @throws
      * @since
     */
-    ProductOrder createOrder(HashMap<String,String> map,long uId);
+    ProductOrder createOrder(HashMap<String,String> map,long uId,String name);
+
+
+    //修改订单状态
+    int updateOrderState(Byte updatedState, Long id);
+
+    //查看订单详情表
+    List<OrderInfo> selectByOrderId(Long orderId);
+
+
+    long getProCount(long id);
+
+
+
+
+
+
 }

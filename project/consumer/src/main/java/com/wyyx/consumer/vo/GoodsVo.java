@@ -1,13 +1,24 @@
-package com.wyyx.provider.dto;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
+package com.wyyx.consumer.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+/**
+ * **********************************************************
+ *
+ * @Project:
+ * @Author : Gavincoder
+ * @Mail : xunyegege@gmail.com
+ * @Github : https://github.com/xunyegege
+ * @ver : version 1.0
+ * @Date : 2019-10-20 17:18
+ * @description:
+ ************************************************************/
 @Data
-public class ComProduct implements Serializable {
+public class GoodsVo implements Serializable {
+    private static final long serialVersionUID = -8507429991795677793L;
     /**
      * 普通商品id
      */
@@ -34,9 +45,10 @@ public class ComProduct implements Serializable {
     private Integer goodratio;
 
     /**
-     * 普通商品的进价
+     * 好评率颜色分类
      */
-    private BigDecimal buyPrice;
+
+    private String color;
 
     /**
      * 普通商品的售价
@@ -47,27 +59,19 @@ public class ComProduct implements Serializable {
      * 普通商品的库存
      */
     private Long inventory;
+    /**
+     * 库存文字说明
+     */
+    private String inventoryDesc;
 
     /**
      * 普通商品的销量
      */
     private Long sales;
 
-    /**
-     * 普通商品的状态(-1代表已删除;0代表已下架;1代表已上架)
-     */
-    private Byte status;
-
-    /**
-     * 该条记录创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 商品分类
-     */
-    private Integer pType;
 
 
-    private static final long serialVersionUID = 1L;
+
+
+
 }

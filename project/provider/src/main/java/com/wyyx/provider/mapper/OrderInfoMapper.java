@@ -1,4 +1,6 @@
 package com.wyyx.provider.mapper;
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
 import com.wyyx.provider.dto.OrderInfo;
 
@@ -14,4 +16,8 @@ public interface OrderInfoMapper {
     int updateByPrimaryKeySelective(OrderInfo record);
 
     int updateByPrimaryKey(OrderInfo record);
+
+    List<OrderInfo> selectByOrderId(@Param("orderId")Long orderId);
+
+
 }

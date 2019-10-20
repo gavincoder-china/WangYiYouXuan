@@ -1,7 +1,6 @@
 package com.wyyx.consumer.util;
 
 import org.springframework.stereotype.Component;
-
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;

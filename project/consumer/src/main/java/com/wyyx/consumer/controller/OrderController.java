@@ -6,21 +6,29 @@ import com.wyyx.consumer.annotationCustom.parameter.RequireLoginParam;
 import com.wyyx.consumer.contants.ReturnResultContants;
 import com.wyyx.consumer.result.ReturnResult;
 import com.wyyx.consumer.result.ReturnResultUtils;
-import com.wyyx.consumer.vo.CommentVo;
-import com.wyyx.consumer.vo.PageVo;
-import com.wyyx.consumer.vo.UserVo;
+import com.wyyx.consumer.util.RedisUtil;
+import com.wyyx.consumer.util.UserUtil;
+import com.wyyx.consumer.vo.*;
+import com.wyyx.provider.contants.CommonContants;
 import com.wyyx.provider.contants.OrderStatus;
+import com.wyyx.provider.dto.ComProduct;
+import com.wyyx.provider.dto.OrderInfo;
 import com.wyyx.provider.dto.ProductComment;
 import com.wyyx.provider.dto.ProductOrder;
+import com.wyyx.provider.service.GoodsService;
 import com.wyyx.provider.service.OrderService;
+import com.wyyx.provider.service.PerCenterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +44,16 @@ public class OrderController {
     @Reference
     private OrderService orderService;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Reference
+    private GoodsService goodsService;
+
+    @Autowired
+    private UserUtil userUtil;
+    @Reference
+    private PerCenterService perCenterService;
 
     @RequireLoginMethod
     @ApiOperation(value = "查询全部订单")
@@ -163,11 +181,92 @@ public class OrderController {
     @PostMapping(value = "/createOrder")
     public ReturnResult createOrder(@RequireLoginParam UserVo userVo,
                                     @ApiParam(value = "选种商品的id与件数")
-                                    @RequestParam HashMap<String, String> map) {
+                                    @RequestParam HashMap<String, String> map,
+                                    @ApiParam(value = "订单描述")
+                                    @RequestParam(value = "name") String name) {
 
-        ProductOrder order = orderService.createOrder(map, userVo.getUserID());
+        boolean inventory = goodsService.checkInventory(map);
+        if (inventory) {
+            ProductOrder order = orderService.createOrder(map, userVo.getUserID(), name);
 
-        return ReturnResultUtils.returnSuccess(order);
+            //订单超时
+            redisUtil.set(CommonContants.ORDER_EXPIRE + order.getId(), 1, 10);
+
+            HashMap<Object, Object> returnMap = new HashMap<>();
+            returnMap.put("订单信息", order);
+            returnMap.put("订单状态", "订单请尽快支付");
+
+            return ReturnResultUtils.returnSuccess(returnMap);
+
+        } else {
+            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_NO_INVENTORY,
+                                                ReturnResultContants.MSG_NO_INVENTORY);
+
+        }
     }
 
+
+    @RequireLoginMethod
+    @ApiOperation(value = "查看订单")
+    @GetMapping(value = "/checkOrder")
+    public ReturnResult checkOrder(@RequireLoginParam UserVo userVo,
+                                   @ApiParam(value = "订单id")
+                                   @RequestParam(value = "id") long id) {
+
+        ProductOrder order = orderService.selectOrder(userVo.getUserID(), id);
+        List<OrderInfo> infos = orderService.selectByOrderId(id);
+
+        OrderDescVo orderDescVo = new OrderDescVo();
+
+        ArrayList<OrderInfoVo> lists = new ArrayList<>();
+
+        //遍历订单详情表,获取信息
+        infos.forEach(list -> {
+            OrderInfoVo orderInfoVo = new OrderInfoVo();
+
+            ComProduct product = goodsService.selectById(list.getProductId());
+
+            BeanUtils.copyProperties(product, orderInfoVo);
+
+            orderInfoVo.setCount(list.getCount());
+
+            lists.add(orderInfoVo);
+
+        });
+
+        orderDescVo.setList(lists);
+        orderDescVo.setFinalPrice(order.getFinalPrice());
+        orderDescVo.setTotalPrice(order.getTotalPrice());
+        orderDescVo.setName(order.getName());
+        orderDescVo.setId(id);
+
+        return ReturnResultUtils.returnSuccess(orderDescVo);
+    }
+
+
+    @RequireLoginMethod
+    @ApiOperation(value = "收货")
+    @GetMapping(value = "/takeGoods")
+    public ReturnResult takeGoods(@RequireLoginParam UserVo userVo,
+                                  @ApiParam(value = "订单id")
+                                  @RequestParam(value = "id") long id) {
+
+        int result = orderService.updateOrderState(OrderStatus.ORDER_HAVE_RECEIVE.getoStatus(), id);
+        //加经验+加积分
+        //找订单中商品总数
+        long proCount = orderService.getProCount(id);
+        //拿到最终实付价格
+        ProductOrder order = orderService.selectOrder(userVo.getUserID(), id);
+        BigDecimal finalPrice = order.getFinalPrice();
+
+        int point = userUtil.getPayPoint(finalPrice);
+        int expValue = userUtil.getPayExpValue((int) proCount, finalPrice);
+
+        //插积分经验
+        perCenterService.updatePointsAndExperiencebyid(point,expValue,userVo.getUserID());
+
+
+        return ReturnResultUtils.returnSuccess(result);
+
+    }
 }

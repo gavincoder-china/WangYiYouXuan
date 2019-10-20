@@ -19,11 +19,13 @@ public class ActiveMQConsumer {
 
     @JmsListener(destination = "seckill")
     public void receiveQueue(String message) {
-        //收到通道的消息之后执行秒杀操作(超卖)“““
+        //收到通道的消息之后执行秒杀操作(超卖)“““  pid  uid
         String[] array = message.split("@");
 
         //进行生成订单操作
-      //  secKillService.createOrder(Long.parseLong(array[0]), Long.parseLong(array[1]));
+        secKillService.createOrder(Long.parseLong(array[0]), Long.parseLong(array[1]));
+
+        //todo 发送邮件/短信
 
     }
 }

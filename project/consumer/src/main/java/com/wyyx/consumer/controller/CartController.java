@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  */
 @Api(tags = "购物车")
 @RestController
-@RequestMapping(value = "cart")
+@RequestMapping(value = "/cart")
 public class CartController {
 
     @Autowired

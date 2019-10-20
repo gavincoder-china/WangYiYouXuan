@@ -1,14 +1,26 @@
 package com.wyyx.consumer.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.gavin.provider.model.OrderInfo;
-import com.gavin.provider.service.WxService;
-import com.gavin.provider.util.wx.WXPayUtil;
 import com.google.common.collect.Maps;
+import com.wyyx.consumer.annotationCustom.method.RequireLoginMethod;
+import com.wyyx.consumer.annotationCustom.parameter.RequireLoginParam;
+import com.wyyx.consumer.contants.ReturnResultContants;
+import com.wyyx.consumer.result.ReturnResult;
+import com.wyyx.consumer.result.ReturnResultUtils;
+import com.wyyx.consumer.util.RedisUtil;
+import com.wyyx.consumer.vo.OrderVo;
+import com.wyyx.consumer.vo.UserVo;
+import com.wyyx.provider.contants.CommonContants;
+import com.wyyx.provider.contants.OrderStatus;
+import com.wyyx.provider.dto.ProductOrder;
+import com.wyyx.provider.service.OrderService;
 import com.wyyx.provider.service.WxService;
+import com.wyyx.provider.util.wx.WXPayUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,21 +54,58 @@ public class WxPayController {
     @Reference
     private WxService wxService;
 
+    @Reference
+    private OrderService orderService;
 
-  //  private WxPayModel wxPayModel;
 
-    @ApiOperation(value = "支付")
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @RequireLoginMethod
+    @ApiOperation("订单支付")
     @PostMapping(value = "/pay")
-    public String wxPay(@Valid OrderInfo orderInfo) throws Exception {
+    public ReturnResult wxPay(@Valid OrderVo orderVo,
+                              @RequireLoginParam UserVo userVo) {
 
-        String resultStr = wxService.wxPay(orderInfo);
+
+        ProductOrder productOrder = orderService.selectOrder(userVo.getUserID(), orderVo.getId());
 
 
-        if (!StringUtils.isEmpty(resultStr)) {
-            return resultStr;
-        } else {
-            return "no";
+        if (null != productOrder) {
+
+            if (redisUtil.hasKey(CommonContants.ORDER_EXPIRE + orderVo.getId())) {
+
+                //拿其收件人信息
+                BeanUtils.copyProperties(orderVo, productOrder);
+
+                productOrder.setUserId(userVo.getUserID());
+
+
+                try {
+                    String resultStr = wxService.wxPay(productOrder);
+
+                    if (!StringUtils.isEmpty(resultStr)) {
+                        return ReturnResultUtils.returnSuccess(resultStr);
+                    } else {
+                        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CREATE_PAY_QCODE_FAIL,
+                                                            ReturnResultContants.MSG_CREATE_PAY_QCODE_FAIL);
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                //修改订单状态
+                orderService.updateOrderState(OrderStatus.ORDER_CANCELED.getoStatus(), orderVo.getId());
+                //返回订单失效通知
+                return ReturnResultUtils.returnFail(ReturnResultContants.CODE_ORDER_EXPIRE,
+                                                    ReturnResultContants.MSG_ORDER_EXPIRE);
+            }
         }
+        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CREATE_PAY_QCODE_FAIL,
+                                            ReturnResultContants.MSG_CREATE_PAY_QCODE_FAIL);
+
+
     }
 
 
@@ -79,12 +128,13 @@ public class WxPayController {
         Map<String, String> resultMap = WXPayUtil.xmlToMap(sb.toString());
 
 
-
         //检验并且修改订单状态
         boolean checkResult = wxService.wxPayNotify(resultMap);
 
 
         if (checkResult) {
+
+
             Map<String, String> returnMap = Maps.newHashMap();
             returnMap.put("return_code", "SUCCESS");
             returnMap.put("return_msg", "OK");

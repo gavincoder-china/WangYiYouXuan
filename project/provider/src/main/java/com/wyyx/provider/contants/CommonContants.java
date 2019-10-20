@@ -66,6 +66,29 @@ public final class CommonContants {
 
     //未登录状态时的临时购物车数据
     public static final String TEMP_CART = "TEMP_CART:";
+    //订单超时支付
+    public static final String ORDER_EXPIRE = "ORDER_EXPIRE:";
+    //库存
+    public static final String INVENTORY_FULL = "库存充足!";
+    public static final String INVENTORY_HALF = "库存即将殆尽,请尽快抢购!";
+    public static final String INVENTORY_ZERO = "库存不足!";
+
+    //好评颜色
+    public static final String NICE_90_RED = "RED";
+    public static final String NICE_70_GREED = "GREED";
+    public static final String NICE_60_ORANGE = "ORANGE";
+    public static final String NICE_50_BLACK = "BLACK";
+
+    //修改生日锁定
+    public static final String IS_MODIFY_BIRTHDAY = "IS_MODIFY_BIRTHDAY:";
+
+    //"购买商品"
+    public static final String BUY_GOODS = "购买商品";
+
+
+
+
+
 
 
 }

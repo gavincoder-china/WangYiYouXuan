@@ -32,6 +32,10 @@ public class ShopServiceImpl implements ShopService {
         return comProductMapper.selectByClass(p_type, start, offset);
     }
 
+    @Override
+    public long selectByClassCount(int p_type) {
+        return comProductMapper.selectByClassCount(p_type);
+    }
     //kitty_zhu : 模糊查询
     @Override
     public List<ComProduct> selectByName(String name, int start, int offset) {
@@ -39,6 +43,11 @@ public class ShopServiceImpl implements ShopService {
         return comProductMapper.selectByName(name, start, offset);
     }
 
+    @Override
+    public long selectByNameCount(String name) {
+
+        return comProductMapper.selectByNameCount(name);
+    }
 
     @Override
     public ComProduct selectByPrimaryKey(Long id) {

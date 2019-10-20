@@ -14,4 +14,6 @@ public interface UserPointMapper {
     int updateByPrimaryKeySelective(UserPoint record);
 
     int updateByPrimaryKey(UserPoint record);
+
+
 }
