@@ -78,6 +78,7 @@ public class WxPayController {
 
                 productOrder.setUserId(userVo.getUserID());
 
+
                 try {
                     String resultStr = wxService.wxPay(productOrder);
 

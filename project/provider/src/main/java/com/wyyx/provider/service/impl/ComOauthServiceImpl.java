@@ -6,6 +6,7 @@ import com.wyyx.provider.mapper.ComOauthUserMapper;
 import com.wyyx.provider.service.ComOauthService;
 import com.wyyx.provider.util.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -14,6 +15,7 @@ import java.util.Date;
  * @date 2019/10/18 11:44
  */
 @Service
+@Transactional
 public class ComOauthServiceImpl implements ComOauthService {
     @Autowired
     ComOauthUserMapper comOauthUserMapper;

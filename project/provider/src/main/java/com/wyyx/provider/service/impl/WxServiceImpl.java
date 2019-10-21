@@ -51,7 +51,8 @@ public class WxServiceImpl implements WxService {
         param.put("nonce_str", CommonUtil.CreateUUID(32));
         param.put("body", productOrder.getName());
         param.put("out_trade_no", productOrder.getId().toString());
-        param.put("total_fee", String.valueOf(productOrder.getFinalPrice()));
+        // 修改价格 param.put("total_fee", String.valueOf(productOrder.getFinalPrice()));
+        param.put("total_fee", String.valueOf(1));
         param.put("spbill_create_ip", "192.168.1.142");
         param.put("notify_url", wxPayModel.getNotifyurl());
         param.put("trade_type", wxPayModel.getType());
@@ -100,7 +101,6 @@ public class WxServiceImpl implements WxService {
 
                 //减库存,加销量
                 comProductMapper.updateInventoryAndSalesbyid(Long.parseLong(resultMap.get("out_trade_no")));
-
 
 
                 return true;

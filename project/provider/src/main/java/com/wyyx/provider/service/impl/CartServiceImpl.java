@@ -42,7 +42,7 @@ public class CartServiceImpl implements CartService {
         cart.setProductCount(pCount);
         cart.setCreateTime(new Date());
 
-        cart.setTotalPrice( comProductMapper.selectByPrimaryKey(pID).getSellPrice().multiply(new BigDecimal(pCount)));
+        cart.setTotalPrice(comProductMapper.selectByPrimaryKey(pID).getSellPrice().multiply(new BigDecimal(pCount)));
         cart.setId(idWorker.nextId());
 
         return productCartMapper.insert(cart);
@@ -55,20 +55,20 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public ProductCart selectByPidAndUserId(Long pID, Long userId) {
-        return productCartMapper.selectByPidAndUserId(pID,userId);
+        return productCartMapper.selectByPidAndUserId(pID, userId);
     }
 
     @Override
     public int updateProductCount(Long pID, Long userId, Long pCount) {
         BigDecimal totalPrice = comProductMapper.selectByPrimaryKey(pID).getSellPrice().multiply(new BigDecimal(pCount));
 
-        return productCartMapper.updateProductCount(pID,userId,pCount,totalPrice);
+        return productCartMapper.updateProductCount(pID, userId, pCount, totalPrice);
 
     }
 
     @Override
-    public int deleteProdectById(Long pid,Long userId) {
-        return productCartMapper.deleteProdectById(pid,userId);
+    public int deleteProdectById(Long pid, Long userId) {
+        return productCartMapper.deleteProdectById(pid, userId);
     }
 
 }

@@ -202,7 +202,6 @@ public class CartController {
             return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
         }
         return ReturnResultUtils.returnFail(ReturnResultContants.CODE_DEL_CART_WRONG, ReturnResultContants.MSG_DEL_CART_WRONG);
-
     }
 
     @TempLoginMethod
