@@ -1,6 +1,8 @@
 package com.wyyx.consumer.vo;
 
 import com.wyyx.provider.dto.OrderInfo;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,24 +21,23 @@ import java.util.List;
  * @description:
  ************************************************************/
 @Data
+@ApiModel(value = "订单详情vo")
 public class OrderDescVo implements Serializable {
     private static final long serialVersionUID = 7810870199434388986L;
+
+    @ApiModelProperty(value = "订单描述")
     private String name;
+
+    @ApiModelProperty(value = "订单号")
     private long id;
-    /**
-     * 实付金额
-     */
+
+    @ApiModelProperty(value = "实付金额")
     private BigDecimal finalPrice;
 
-    /**
-     * 未优惠价格
-     */
+    @ApiModelProperty(value = "未优惠价格")
     private BigDecimal totalPrice;
 
-
-    /**
-     * 商品列表详情
-     */
+    @ApiModelProperty(value = "商品列表详情")
     List<OrderInfoVo> list;
 
 }

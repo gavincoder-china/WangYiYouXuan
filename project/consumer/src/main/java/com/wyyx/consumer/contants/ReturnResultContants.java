@@ -71,6 +71,10 @@ public final class ReturnResultContants {
     //zhuy:删除订单
     public static final int CODE_DEL_ORDER_ORDERS = 260;
     public static final String MSG_DEL_ORDER_ORDERS = "删除成功!";
+
+    //zhuy:删除订单
+    public static final int CODE_DEL_ORDER_FAIL = 261;
+    public static final String MSG_DEL_ORDER_FAIL = "删除失败!";
     //绑定手机号提示
     public static final int CODE_BIND_PHONE = 10086;
     public static final String MSG_BIND_PHONE = "请您再绑定手机号！";

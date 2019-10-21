@@ -33,12 +33,10 @@ public class UserVo implements Serializable {
     @ApiModelProperty(value = "缓存用户密码")
     private String password;
 
-    //是否同意,0标识不同意,其他数字表示同意
-    @ApiModelProperty(value = "是否同意(0-不同意，1-同意)")
+    @ApiModelProperty(value = "是否同意登录(0-不同意，1-同意)")
     private int isAgree = 1;
 
     @ApiModelProperty(value = "临时token")
     private String temp;
-
 
 }

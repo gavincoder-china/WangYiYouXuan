@@ -1,5 +1,7 @@
 package com.wyyx.consumer.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -9,13 +11,19 @@ import java.io.Serializable;
  * @date 2019/10/19 14:06
  */
 @Data
+@ApiModel(value = "个人中心")
 public class PerCenterVo implements Serializable {
-    //用户id
+    private static final long serialVersionUID = -7212664987076927385L;
+
+    @ApiModelProperty(value = "用户id")
     private Long userId;
-    //用户的积分
+
+    @ApiModelProperty(value = "用户积分")
     private int userPoint;
-    //用户的经验值
+
+    @ApiModelProperty(value = "用户经验值")
     private int userExperience;
-    //用户的角色(0代表普通用户，1的代表会员,2代表超级会员)
+
+    @ApiModelProperty(value = "用户角色(0-普通用户,1-会员,2-超级会员)")
     private int userRole;
 }

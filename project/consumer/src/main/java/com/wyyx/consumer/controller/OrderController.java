@@ -24,6 +24,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -113,10 +114,17 @@ public class OrderController {
     @RequireLoginMethod
     @ApiOperation(value = "逻辑删除")
     @GetMapping(value = "/removeOrder")
-    public boolean removeOrder(@ApiParam(value = "订单id") @RequestParam(value = "id") long id,
-                               @RequireLoginParam UserVo userVo) {
+    public ReturnResult removeOrder(@ApiParam(value = "订单id") @RequestParam(value = "id") long id,
+                                    @RequireLoginParam UserVo userVo) {
 
-        return orderService.delOrderTemp(userVo.getUserID(), id);
+        boolean result = orderService.delOrderTemp(userVo.getUserID(), id);
+        if (result) {
+            return ReturnResultUtils.returnSuccess();
+        } else {
+
+            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_DEL_ORDER_FAIL,
+                                                ReturnResultContants.MSG_DEL_ORDER_FAIL);
+        }
     }
 
     @RequireLoginMethod
@@ -142,12 +150,13 @@ public class OrderController {
 
         ProductOrder order = orderService.selectOrder(userVo.getUserID(), id);
 
-
-        //判断是否在回收站
-        if (order.getIsDelete()) {
-            orderService.delOrder(userVo.getUserID(), id);
-            return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_DEL_ORDER_ORDERS,
-                                                   ReturnResultContants.MSG_DEL_ORDER_ORDERS);
+        if (!ObjectUtils.isEmpty(order)) {
+            //判断是否在回收站
+            if (!ObjectUtils.isEmpty(order.getIsDelete())) {
+                orderService.delOrder(userVo.getUserID(), id);
+                return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_DEL_ORDER_ORDERS,
+                                                       ReturnResultContants.MSG_DEL_ORDER_ORDERS);
+            }
         }
         return ReturnResultUtils.returnFail(ReturnResultContants.CODE_NOT_FIND_GOODS,
                                             ReturnResultContants.MSG_NOT_FIND_ORDERS);
