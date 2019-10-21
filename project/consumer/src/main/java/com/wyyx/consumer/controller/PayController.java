@@ -51,7 +51,7 @@ public class PayController {
     @Reference
     private WxService wxService;
 
-    @ApiOperation("商品选购")
+    //@ApiOperation("商品选购")
     @GetMapping(value = "/chooseToPay")
     public ReturnResult chooseToPay(@ApiParam(value = "商品Id") @RequestParam(value = "pID") Long pid,
                                     @ApiParam(value = "用户Id") @RequestParam(value = "userId") Long userId) {
@@ -62,7 +62,7 @@ public class PayController {
     }
 
     @RequireLoginMethod
-    @ApiOperation("订单支付")
+    //@ApiOperation("订单支付")
     @GetMapping(value = "/payOrder")
     public ReturnResult payOrder(@ApiParam(value = "订单id") @RequestParam(value = "oID") Long oID,
                                  @RequireLoginParam UserVo userVo) {

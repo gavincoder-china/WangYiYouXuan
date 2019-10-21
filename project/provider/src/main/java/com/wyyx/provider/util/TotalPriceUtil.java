@@ -56,10 +56,10 @@ public class TotalPriceUtil {
         //获得用户等级
         BigDecimal userRole = new BigDecimal(comUserMapper.selectRoleByUserId(userId));
         if (userRole.intValue() == 0){
-            BigDecimal finalPrice = new BigDecimal(price.intValue()-10);
+            BigDecimal finalPrice = new BigDecimal(price.intValue()+10);
             return finalPrice;
         }else if (userRole.intValue() == 1){
-            BigDecimal finalPrice = new BigDecimal(price.intValue()-5);
+            BigDecimal finalPrice = new BigDecimal(price.intValue()+5);
             return finalPrice;
         }else if (userRole.intValue() == 2){
             BigDecimal finalPrice = price;
@@ -67,4 +67,6 @@ public class TotalPriceUtil {
         }
         return null;
     }
+
+
 }

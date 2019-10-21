@@ -14,13 +14,14 @@ package com.wyyx.provider.contants;
 
 public enum GoodsCategory {
 
-    SHOES(1, "鞋子"),
-    CLOTHES(2, "衣服"),
-    HAT(3, "帽子"),
-    COMPUTER(4, "电子设备"),
-    KITCHEN(5, "厨房用品");
 
 
+
+    SHOES(5, "鞋子"),
+    CLOTHES(2, "水果"),
+    HAT(3, "衣服"),
+    COMPUTER(4, "家电"),
+    KITCHEN(1, "厨房用品");
 
     Integer category;
     String desc;

@@ -64,6 +64,7 @@ public class OrderController {
         List<ProductOrder> product_orders = orderService.selectOrderAll(userVo.getUserID(),
                                                                         pageVo.getStart(),
                                                                         pageVo.getPageSize());
+
         return ReturnResultUtils.returnSuccess(product_orders);
     }
 
@@ -99,6 +100,7 @@ public class OrderController {
                                                                           state,
                                                                           pageVo.getStart(),
                                                                           pageVo.getPageSize());
+
         //如果查询的订单不存在
         if (0 == productOrders.size()) {
             return ReturnResultUtils.returnFail(ReturnResultContants.CODE_NOT_FIND_ORDERS,
@@ -140,6 +142,7 @@ public class OrderController {
 
         ProductOrder order = orderService.selectOrder(userVo.getUserID(), id);
 
+
         //判断是否在回收站
         if (order.getIsDelete()) {
             orderService.delOrder(userVo.getUserID(), id);
@@ -180,7 +183,7 @@ public class OrderController {
     @ApiOperation(value = "商品选购,生成订单")
     @PostMapping(value = "/createOrder")
     public ReturnResult createOrder(@RequireLoginParam UserVo userVo,
-                                    @ApiParam(value = "选种商品的id与件数")
+                                    @ApiParam(value = "选商品的id与件数")
                                     @RequestParam HashMap<String, String> map) {
 
         boolean inventory = goodsService.checkInventory(map);
@@ -205,7 +208,7 @@ public class OrderController {
 
 
     @RequireLoginMethod
-    @ApiOperation(value = "查看订单")
+    @ApiOperation(value = "商品选购订单生成后的查看订单")
     @GetMapping(value = "/checkOrder")
     public ReturnResult checkOrder(@RequireLoginParam UserVo userVo,
                                    @ApiParam(value = "订单id")
@@ -261,10 +264,8 @@ public class OrderController {
         int expValue = userUtil.getPayExpValue((int) proCount, finalPrice);
 
         //插积分经验
-        perCenterService.updatePointsAndExperiencebyid(point,expValue,userVo.getUserID());
-
+        perCenterService.updatePointsAndExperiencebyid(point, expValue, userVo.getUserID());
 
         return ReturnResultUtils.returnSuccess(result);
-
     }
 }

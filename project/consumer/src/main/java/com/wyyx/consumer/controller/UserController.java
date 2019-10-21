@@ -87,7 +87,7 @@ public class UserController {
                     String userJsonStr = JSONObject.toJSONString(userVo);
 
                     //并在redis中存登用录户的用户的信息,实现注册完登录(三分钟过期)
-                    if (redisUtil.set(CommonContants.LOGIN_NAME_SPACE + userToken, userJsonStr, 180)) {
+                    if (redisUtil.set(CommonContants.LOGIN_NAME_SPACE + userToken, userJsonStr, 1800)) {
                         //返回token
                         return ReturnResultUtils.returnSuccess(userToken);
                     }
