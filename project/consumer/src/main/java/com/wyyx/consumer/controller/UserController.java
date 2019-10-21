@@ -19,6 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -105,9 +106,14 @@ public class UserController {
     @ApiOperation(value = "用户登录")
     @GetMapping(value = "/login")
     public ReturnResult UserLogin(@Valid UserVo userVo, HttpServletRequest request) {
-        //未勾选"我同意",提示勾选
-        if (0 == userVo.getIsAgree()) {
+        //未勾选"我同意",提示勾选 0 不同意,1同意
+        if (ObjectUtils.isEmpty(userVo.getIsAgree()) ) {
+
             return ReturnResultUtils.returnFail(ReturnResultContants.CODE_IS_NOT_AGREE, ReturnResultContants.MSG_IS_NOT_AGREE);
+
+        }else if (0==userVo.getIsAgree()){
+            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_IS_NOT_AGREE, ReturnResultContants.MSG_IS_NOT_AGREE);
+
         }
 
         //通过手机号和密码去数据库查出用户对象

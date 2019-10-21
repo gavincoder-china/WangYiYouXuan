@@ -9,7 +9,6 @@ import com.wyyx.consumer.vo.UserVo;
 import com.wyyx.provider.contants.CommonContants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,10 +40,12 @@ public class RequireLoginMethodImpl implements HandlerInterceptor {
         if (methodAnnotation != null) {
 
             // 从 http 请求头中取出 token
-            String userToken = request.getHeader("token");
+            Object token = request.getHeader("token");
 
 
-            if (!ObjectUtils.isEmpty(userToken)) {
+            if (!ObjectUtils.isEmpty(token)) {
+
+                Long userToken = Long.parseLong(token.toString());
                 String jsonStr = (String) redisUtils.get(CommonContants.LOGIN_NAME_SPACE + userToken);
                 if (!ObjectUtils.isEmpty(jsonStr)) {
 

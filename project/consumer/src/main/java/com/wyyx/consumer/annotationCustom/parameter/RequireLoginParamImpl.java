@@ -26,7 +26,7 @@ public class RequireLoginParamImpl implements HandlerMethodArgumentResolver {
         UserVo userVo = (UserVo) webRequest.getAttribute("annotation", RequestAttributes.SCOPE_REQUEST);
 
         if (userVo != null) {
-            return userVo.getUserID();
+            return userVo;
         }
 
         return null;

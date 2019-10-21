@@ -115,34 +115,35 @@ public class CartController {
 
         if (!ObjectUtils.isEmpty(userVo.getUserID())) {
 
-            if (cartService.queryAllByUserID(userVo.getUserID()) != null) {
-                List<ProductCart> carts = cartService.queryAllByUserID(userVo.getUserID());
-                ArrayList<CartVo> cartVos = new ArrayList<>();
-                carts.stream().forEach(cart -> {
-                    CartVo cartVo = new CartVo();
-                    //通过商品pid查询商品售价
-                    ComProduct comProduct = shopService.selectByPrimaryKey(cart.getProductId());
-                    BigDecimal sellPrice = comProduct.getSellPrice();
-                    //计算金额
-                    BigDecimal totalPrice = sellPrice.multiply(new BigDecimal(cart.getProductCount()));
-                    //塞值
-                    cartVo.setProductId(comProduct.getId());
-                    cartVo.setName(comProduct.getName());
-                    cartVo.setCount(cart.getProductCount());
-                    cartVo.setDescription(comProduct.getDescription());
-                    cartVo.setImgurl(comProduct.getImgurl());
-                    cartVo.setTotalPrice(totalPrice);
-                    cartVo.setId(comProduct.getId());
-                    //把cartvo塞到cartvos中
-                    cartVos.add(cartVo);
+            List<ProductCart> carts = cartService.queryAllByUserID(userVo.getUserID());
 
-                });
-                return ReturnResultUtils.returnSuccess(cartVos);
-            } else {
-                return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CART_EMPTY,
-                                                    ReturnResultContants.MSG_CART_EMPTY);
+                if (carts.size() != 0) {
+                    ArrayList<CartVo> cartVos = new ArrayList<>();
+                    carts.stream().forEach(cart -> {
+                        CartVo cartVo = new CartVo();
+                        //通过商品pid查询商品售价
+                        ComProduct comProduct = shopService.selectByPrimaryKey(cart.getProductId());
+                        BigDecimal sellPrice = comProduct.getSellPrice();
+                        //计算金额
+                        BigDecimal totalPrice = sellPrice.multiply(new BigDecimal(cart.getProductCount()));
+                        //塞值
+                        cartVo.setProductId(comProduct.getId());
+                        cartVo.setName(comProduct.getName());
+                        cartVo.setCount(cart.getProductCount());
+                        cartVo.setDescription(comProduct.getDescription());
+                        cartVo.setImgurl(comProduct.getImgurl());
+                        cartVo.setTotalPrice(totalPrice);
+                        cartVo.setId(comProduct.getId());
+                        //把cartvo塞到cartvos中
+                        cartVos.add(cartVo);
 
-            }
+                    });
+                    return ReturnResultUtils.returnSuccess(cartVos);
+
+                } else {
+                    return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CART_EMPTY,
+                                                        ReturnResultContants.MSG_CART_EMPTY);
+                }
 
         } else if (!ObjectUtils.isEmpty(userVo.getTemp())) {
             //未登录时的购物车
@@ -150,7 +151,7 @@ public class CartController {
             HashMap<Object, Object> cartTemp = (HashMap<Object, Object>) redisUtil.hmget(
                     CommonContants.TEMP_CART + userVo.getTemp());
 
-            if (null != cartTemp) {
+            if (cartTemp.size() != 0) {
                 //k为商品pid，v为商品数量
                 cartTemp.forEach((k, v) -> {
                     long tempID = Long.parseLong(k.toString());
@@ -170,6 +171,7 @@ public class CartController {
                     cartVo.setTotalPrice(totalPrice);
                     //把cartvo塞到cartvos中
                     cartVos.add(cartVo);
+
                 });
                 return ReturnResultUtils.returnSuccess(cartVos);
             }

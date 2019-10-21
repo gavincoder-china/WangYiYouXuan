@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @description:
  ************************************************************/
 @Slf4j
-@Api(value = "支付业务")
+//@Api(value = "支付业务")
 @RestController
 @RequestMapping(value = "/pay")
 public class PayController {

@@ -67,9 +67,7 @@ public class WxPayController {
     public ReturnResult wxPay(@Valid OrderVo orderVo,
                               @RequireLoginParam UserVo userVo) {
 
-
         ProductOrder productOrder = orderService.selectOrder(userVo.getUserID(), orderVo.getId());
-
 
         if (null != productOrder) {
 
@@ -79,7 +77,6 @@ public class WxPayController {
                 BeanUtils.copyProperties(orderVo, productOrder);
 
                 productOrder.setUserId(userVo.getUserID());
-
 
                 try {
                     String resultStr = wxService.wxPay(productOrder);
@@ -104,7 +101,6 @@ public class WxPayController {
         }
         return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CREATE_PAY_QCODE_FAIL,
                                             ReturnResultContants.MSG_CREATE_PAY_QCODE_FAIL);
-
 
     }
 
@@ -131,9 +127,7 @@ public class WxPayController {
         //检验并且修改订单状态
         boolean checkResult = wxService.wxPayNotify(resultMap);
 
-
         if (checkResult) {
-
 
             Map<String, String> returnMap = Maps.newHashMap();
             returnMap.put("return_code", "SUCCESS");

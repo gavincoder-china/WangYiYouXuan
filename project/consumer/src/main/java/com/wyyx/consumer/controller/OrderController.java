@@ -177,17 +177,15 @@ public class OrderController {
     }
 
     @RequireLoginMethod
-    @ApiOperation(value = "生成订单")
+    @ApiOperation(value = "商品选购,生成订单")
     @PostMapping(value = "/createOrder")
     public ReturnResult createOrder(@RequireLoginParam UserVo userVo,
                                     @ApiParam(value = "选种商品的id与件数")
-                                    @RequestParam HashMap<String, String> map,
-                                    @ApiParam(value = "订单描述")
-                                    @RequestParam(value = "name") String name) {
+                                    @RequestParam HashMap<String, String> map) {
 
         boolean inventory = goodsService.checkInventory(map);
         if (inventory) {
-            ProductOrder order = orderService.createOrder(map, userVo.getUserID(), name);
+            ProductOrder order = orderService.createOrder(map, userVo.getUserID(), "buy");
 
             //订单超时
             redisUtil.set(CommonContants.ORDER_EXPIRE + order.getId(), 1, 10);

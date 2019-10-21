@@ -44,7 +44,7 @@ public class PerCenterController {
     PerInfoUtil perInfoUtil;
 
     @RequireLoginMethod
-    @ApiOperation(value = "/查看个人信息")
+    @ApiOperation(value = "查看个人信息")
     @GetMapping(value = "/getPerInfo")
     public ReturnResult getPerInfo(@RequireLoginParam UserVo userVo) {
 
@@ -88,6 +88,7 @@ public class PerCenterController {
         //将userInfoVo赋给comUser
         BeanUtils.copyProperties(userInfoVo, comUser);
 
+        comUser.setId(userVo.getUserID());
 
         if (null != comUser) {    //输入用户信息不为空时候可以修改个人信息
 

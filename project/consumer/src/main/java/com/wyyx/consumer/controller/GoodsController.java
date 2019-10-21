@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +37,7 @@ public class GoodsController {
 
     @TempLoginMethod
     @ApiOperation(value = "商品详情展示")
+    @GetMapping(value = "/showGood")
     public ReturnResult showGood(@ApiParam(value = "商品id")
                                  @RequestParam(value = "pId") long pId,
                                  @TempLoginParam UserVo userVo) {
