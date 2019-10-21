@@ -55,7 +55,7 @@ public class PerCenterController {
         /*获取经验值*/
         int expValue = perCenterService.getUserExperience(userId);
 
-        if (3 == perInfoUtil.getLevel(expValue)) {  //调用计算等级的工具类计算经验值对应的等级
+        if (4 == perInfoUtil.getLevel(expValue)) {  //调用计算等级的工具类计算经验值对应的等级
             //等级为3时更新该用户为会员
             ComUser comUser = new ComUser();
             comUser.setId(userId);
@@ -74,6 +74,7 @@ public class PerCenterController {
         perCenterVo.setUserPoint(point);
         perCenterVo.setUserExperience(expValue);
         perCenterVo.setUserRole(role);
+
 
         return ReturnResultUtils.returnSuccess(perCenterVo);
     }

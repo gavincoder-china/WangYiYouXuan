@@ -199,7 +199,7 @@ public class OrderController {
             ProductOrder order = orderService.createOrder(map, userVo.getUserID(), "buy");
 
             //订单超时
-            redisUtil.set(CommonContants.ORDER_EXPIRE + order.getId(), 1, 10);
+            redisUtil.set(CommonContants.ORDER_EXPIRE + order.getId(), 1, 1000);
 
             HashMap<Object, Object> returnMap = new HashMap<>();
             returnMap.put("订单信息", order);

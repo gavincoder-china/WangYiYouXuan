@@ -51,8 +51,8 @@ public interface ProductOrderMapper {
 
     //zmx 逻辑删除订单
     int updateIsDeleteByProductIdAndUserId(@Param("updatedIsDelete") Boolean updatedIsDelete,
-                                           @Param("productId") Long productId,
-                                           @Param("userId") Long userId);
+
+                                           @Param("userId") Long userId, @Param("id") Long id);
 
     //zmx 修改订单状态
     int updatestateBYidAndUserId(@Param("updatedState") Byte updatedState,

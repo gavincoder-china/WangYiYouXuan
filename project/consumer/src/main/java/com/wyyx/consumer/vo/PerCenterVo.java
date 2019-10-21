@@ -25,5 +25,34 @@ public class PerCenterVo implements Serializable {
     private int userExperience;
 
     @ApiModelProperty(value = "用户角色(0-普通用户,1-会员,2-超级会员)")
+    private Byte role;
+
+    @ApiModelProperty(value = "用户手机号")
+    private String phone;
+
+    @ApiModelProperty(value = "用户昵称")
+    private String nickname;
+
+    @ApiModelProperty(value = "用户姓名")
+    private String name;
+
+    /**
+     * 普通用户性别(1代表男;2代表女,0是未确定)
+     */
+    private Byte sex;
+
+    /**
+     * 普通用户地址
+     */
+    private String address;
+
+
+    /**
+     * 普通用户积分
+     */
+    private Integer points;
+
+
+    private Integer experience;
     private int userRole;
 }

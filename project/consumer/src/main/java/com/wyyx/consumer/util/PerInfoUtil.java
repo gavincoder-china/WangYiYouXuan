@@ -22,8 +22,11 @@ public class PerInfoUtil {
         } else if (60 <= expValue && expValue < 90) {
             level = 2;
             return level;
-        } else {
+        } else if(90<= expValue && expValue < 120){
             level = 3;
+            return level;
+        }else{
+            level = 4;
             return level;
         }
     }

@@ -66,8 +66,13 @@ public class OrderServiceImpl implements OrderService {
     //kitty_zhu 逻辑删除
     @Override
     public boolean delOrderTemp(long uId, long id) {
+        int result = productOrderMapper.updateIsDeleteByProductIdAndUserId(true, uId, id);
+        if (result==1){
+            return true;
+        }else {
+            return false;
+        }
 
-        return productOrderMapper.updateIsDeleteByProductIdAndUserId(true, id, uId) == 1 ? true : false;
     }
 
     //kitty_zhu:查询is_del的订单（回收站）

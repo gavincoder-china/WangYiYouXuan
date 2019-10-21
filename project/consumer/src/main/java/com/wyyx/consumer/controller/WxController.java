@@ -193,7 +193,7 @@ public class WxController {
 
                     String jsonString = JSONObject.toJSONString(userVo);
 
-                    redisUtil.set(CommonContants.LOGIN_NAME_SPACE + comUser.getId(), jsonString, 180);
+                    redisUtil.set(CommonContants.LOGIN_NAME_SPACE + comUser.getId(), jsonString, 1800);
 
                     //加经验,上锁
                     if (redisUtil.lock(CommonContants.LOCK_LOGIN_EXP + comUser.getId(), 1, DateUtils.getLeftSecond())) {
