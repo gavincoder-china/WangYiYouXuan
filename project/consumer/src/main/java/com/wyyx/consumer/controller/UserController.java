@@ -92,7 +92,8 @@ public class UserController {
                         return ReturnResultUtils.returnSuccess(userToken);
                     }
                 } else {
-                    return ReturnResultUtils.returnFail(ReturnResultContants.CODE_REGISTER_WRONG, ReturnResultContants.MSG_REGISTER_WRONG);
+                    return ReturnResultUtils.returnFail(ReturnResultContants.CODE_REGISTER_WRONG,
+                                                        ReturnResultContants.MSG_REGISTER_WRONG);
                 }
             }
             catch (Exception e) {
@@ -100,7 +101,8 @@ public class UserController {
                 e.printStackTrace();
             }
         }
-        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_REGISTER_ALREADY_EXIST, ReturnResultContants.MSG_REGISTER_ALREADY_EXIST);
+        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_REGISTER_ALREADY_EXIST,
+                                            ReturnResultContants.MSG_REGISTER_ALREADY_EXIST);
     }
 
     @ApiOperation(value = "用户登录")
@@ -109,10 +111,12 @@ public class UserController {
         //未勾选"我同意",提示勾选 0 不同意,1同意
         if (ObjectUtils.isEmpty(userVo.getIsAgree()) ) {
 
-            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_IS_NOT_AGREE, ReturnResultContants.MSG_IS_NOT_AGREE);
+            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_IS_NOT_AGREE,
+                                                ReturnResultContants.MSG_IS_NOT_AGREE);
 
         }else if (0==userVo.getIsAgree()){
-            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_IS_NOT_AGREE, ReturnResultContants.MSG_IS_NOT_AGREE);
+            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_IS_NOT_AGREE,
+                                                ReturnResultContants.MSG_IS_NOT_AGREE);
 
         }
 
@@ -122,10 +126,10 @@ public class UserController {
             String address = CommonContants.IS_COM_IP_ADDRESS;
             //获取当前位置的ip地址
             String curIpAddr = request.getLocalAddr();
-            if (!curIpAddr.equals(redisUtil.get(CommonContants.COM_IP_ADDRESS))) {  //检测是否为常用地登录
+            if (!curIpAddr.equals(redisUtil.get(CommonContants.COM_IP_ADDRESS+comUser.getId()))) {  //检测是否为常用地登录
                 log.error(CommonContants.NOT_COM_IP_ADDRESS);
                 address = CommonContants.NOT_COM_IP_ADDRESS;
-                redisUtil.set(CommonContants.COM_IP_ADDRESS, curIpAddr);
+                redisUtil.set(CommonContants.COM_IP_ADDRESS+comUser.getId(), curIpAddr);
             }
 
             //获取用户信息并转为Json字符串
@@ -141,13 +145,10 @@ public class UserController {
                 map.put("address", address);
                 map.put("token", userToken.toString());
 
-
-                //加经验,上锁
-                if (redisUtil.lock(CommonContants.LOCK_LOGIN_EXP + comUser.getId(), 1, DateUtils.getLeftSecond())) {
-
+                //加经验,可上锁
+               // if (redisUtil.lock(CommonContants.LOCK_LOGIN_EXP + comUser.getId(), 1, DateUtils.getLeftSecond())) {
                     perCenterService.updateExp(10, comUser.getId());
-
-                }
+               // }
                 return ReturnResultUtils.returnSuccess(map);
             }
         } else {

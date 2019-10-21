@@ -195,12 +195,12 @@ public class WxController {
 
                     redisUtil.set(CommonContants.LOGIN_NAME_SPACE + comUser.getId(), jsonString, 1800);
 
-                    //加经验,上锁
-                    if (redisUtil.lock(CommonContants.LOCK_LOGIN_EXP + comUser.getId(), 1, DateUtils.getLeftSecond())) {
+                    //加经验,可上锁
+                    //if (redisUtil.lock(CommonContants.LOCK_LOGIN_EXP + comUser.getId(), 1, DateUtils.getLeftSecond())) {
 
                         perCenterService.updateExp(10, comUser.getId());
 
-                    }
+                    //}
 
                     return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_BIND_PHONE_SUCCESS,
                                                            ReturnResultContants.MSG_BIND_PHONE_SUCCESS, comUser.getId());
