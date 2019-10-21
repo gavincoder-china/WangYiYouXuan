@@ -52,7 +52,7 @@ public class CartController {
     @TempLoginMethod
     @ApiOperation("加入购物车")
     @GetMapping(value = "addCart")
-    //Todo 修改检测登录的方法
+
     public ReturnResult addCart(@ApiParam(value = "商品ID") @RequestParam(value = "pID") Long pID,
                                 @ApiParam(value = "选购商品数量") @RequestParam(value = "pNum") Long pNum,
                                 @TempLoginParam UserVo userVo) {

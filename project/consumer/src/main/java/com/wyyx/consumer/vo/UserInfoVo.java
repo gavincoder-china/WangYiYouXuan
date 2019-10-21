@@ -32,5 +32,5 @@ public class UserInfoVo implements Serializable {
 
     //用户生日(只可修改一次)
     @ApiModelProperty(value = "用户生日", example = "用户生日")
-    private Date birthday;
+    private String birthday;
 }

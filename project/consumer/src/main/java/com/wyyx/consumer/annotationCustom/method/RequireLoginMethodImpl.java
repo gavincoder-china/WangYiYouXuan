@@ -49,7 +49,7 @@ public class RequireLoginMethodImpl implements HandlerInterceptor {
                 String jsonStr = (String) redisUtils.get(CommonContants.LOGIN_NAME_SPACE + userToken);
                 if (!ObjectUtils.isEmpty(jsonStr)) {
 
-                    //Todo 设置自定义注解
+
 
                     UserVo userVo = JSONObject.parseObject(jsonStr, UserVo.class);
 

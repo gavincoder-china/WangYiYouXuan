@@ -119,7 +119,6 @@ public class OrderServiceImpl implements OrderService {
         //生成订单号
         long oId = idWorker.nextId();
 
-
         /**
          * 为什么 Lambda 表达式(匿名类) 不能访问非 final 的局部变量呢？
          * 因为实例变量存在堆中，而局部变量是在栈上分配，

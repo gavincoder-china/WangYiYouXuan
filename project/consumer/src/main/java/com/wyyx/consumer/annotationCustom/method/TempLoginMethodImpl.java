@@ -53,7 +53,7 @@ public class TempLoginMethodImpl implements HandlerInterceptor {
                     String jsonStr = (String) redisUtils.get(CommonContants.LOGIN_NAME_SPACE + userToken);
                     if (!ObjectUtils.isEmpty(jsonStr)) {
 
-                        //Todo 设置自定义注解
+
                         userVo = JSONObject.parseObject(jsonStr, UserVo.class);
                         request.setAttribute("annotation", userVo);
                     }

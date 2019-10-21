@@ -94,7 +94,7 @@ public class webConfiguration implements WebMvcConfigurer {
   */
   @Override
   public void addInterceptors(InterceptorRegistry interceptorRegistry) {
-    //Todo 设置拦截路径
+
     interceptorRegistry.addInterceptor(requireLoginMethod());
 
     interceptorRegistry.addInterceptor(tempLoginMethod());

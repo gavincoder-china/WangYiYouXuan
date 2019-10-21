@@ -19,11 +19,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author ltl
@@ -88,6 +92,20 @@ public class PerCenterController {
         ComUser comUser = new ComUser();
         //将userInfoVo赋给comUser
         BeanUtils.copyProperties(userInfoVo, comUser);
+        Date date = new Date();
+        //修改日期
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if (!ObjectUtils.isEmpty(userInfoVo.getBirthday())) {
+
+            try {
+                date = dateFormat.parse(userInfoVo.getBirthday());
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        comUser.setBirthday(date);
+
 
         comUser.setId(userVo.getUserID());
 
