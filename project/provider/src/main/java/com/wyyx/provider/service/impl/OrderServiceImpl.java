@@ -66,7 +66,8 @@ public class OrderServiceImpl implements OrderService {
     //kitty_zhu 逻辑删除
     @Override
     public boolean delOrderTemp(long uId, long id) {
-        int result = productOrderMapper.updateIsDeleteByProductIdAndUserId(true, uId, id);
+
+        int result = productOrderMapper.updateIsDeleteByProductIdAndUserId( uId, id);
         if (result==1){
             return true;
         }else {
