@@ -1,5 +1,7 @@
 package com.wyyx.consumer.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,18 +12,25 @@ import java.util.Date;
  * @date 2019/10/19 13:46
  */
 @Data
+@ApiModel(value = "用户信息")
 public class UserInfoVo implements Serializable {
-    /*用于修改个人信息*/
-    //用户的id
+
+    @ApiModelProperty(value = "用户id", example = "123123")
     private Long userId;
-    //用户昵称
+
+    @ApiModelProperty(value = "用户昵称", example = "小张")
     private String nickName;
-    //用户姓名
+
+    @ApiModelProperty(value = "用户姓名", example = "张三")
     private String name;
-    //用户性别
+
+    @ApiModelProperty(value = "性别", example = "1")
     private int sex;
-    //收获地址
+
+    @ApiModelProperty(value = "收获地址", example = "南京江宁")
     private String address;
+
     //用户生日(只可修改一次)
+    @ApiModelProperty(value = "用户生日", example = "用户生日")
     private Date birthday;
 }

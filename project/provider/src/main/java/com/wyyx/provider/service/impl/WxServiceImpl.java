@@ -63,7 +63,6 @@ public class WxServiceImpl implements WxService {
 
 
         //map转成xml
-
         String xml = WXPayUtil.mapToXml(param);
 
         //请求post
