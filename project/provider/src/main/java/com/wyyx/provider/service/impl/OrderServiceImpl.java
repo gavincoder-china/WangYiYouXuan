@@ -188,5 +188,11 @@ public class OrderServiceImpl implements OrderService {
         return sum;
     }
 
+    @Override
+    public int updateById(ProductOrder updated, Long id) {
+
+        return   productOrderMapper.updateById(updated, id);
+    }
+
 
 }

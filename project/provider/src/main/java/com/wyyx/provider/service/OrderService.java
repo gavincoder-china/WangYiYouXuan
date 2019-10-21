@@ -63,6 +63,14 @@ public interface OrderService {
 
     long getProCount(long id);
 
+    /**
+     * 修改订单信息
+     * @param updated
+     * @param id
+     * @return
+     */
+    int updateById(ProductOrder updated,Long id);
+
 
 
 

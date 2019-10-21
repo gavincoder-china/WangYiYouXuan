@@ -124,4 +124,7 @@ public final class ReturnResultContants {
     public static final int CODE_MODIFY_USER_INFO_FAIL = 671;
     public static final String MSG_MODIFY_USER_INFO_FAIL = "修改个人信息失败";
 
+    //修改订单收件人信息失败
+    public static final int CODE_UPDATE_ORDER_INFO_FAIL = 672;
+    public static final String MSG_UPDATE_ORDER_INFO_FAIL = "修改订单收件人信息失败";
 }

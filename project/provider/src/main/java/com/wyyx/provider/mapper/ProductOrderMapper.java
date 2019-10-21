@@ -56,5 +56,8 @@ public interface ProductOrderMapper {
     int updatestateBYidAndUserId(@Param("updatedState") Byte updatedState,
                                  @Param("id") Long id);
 
+    int updateById(@Param("updated")ProductOrder updated,@Param("id")Long id);
+
+
 
 }

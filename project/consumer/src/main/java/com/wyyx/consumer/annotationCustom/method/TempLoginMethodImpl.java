@@ -54,20 +54,15 @@ public class TempLoginMethodImpl implements HandlerInterceptor {
                     if (!ObjectUtils.isEmpty(jsonStr)) {
 
                         //Todo 设置自定义注解
-
                         userVo = JSONObject.parseObject(jsonStr, UserVo.class);
-
                         request.setAttribute("annotation", userVo);
-
                     }
                 }
                 if (!ObjectUtils.isEmpty(tempToken)) {
 
 
                     userVo.setTemp(tempToken);
-
                     request.setAttribute("annotation", userVo);
-
                 }
 
                 return true;

@@ -173,7 +173,6 @@ public class OrderController {
             return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_USER_COMMENT_SUCCESS,
                                                    ReturnResultContants.MSG_USER_COMMENT_SUCCESS);
         }
-
         return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_USER_COMMENT_FAIL,
                                                ReturnResultContants.MSG_USER_COMMENT_FAIL);
 
@@ -268,4 +267,24 @@ public class OrderController {
 
         return ReturnResultUtils.returnSuccess(result);
     }
+
+    @RequireLoginMethod
+    @ApiOperation(value = "修改订单收货人信息")
+    @GetMapping(value = "/updateReceiver")
+    public ReturnResult updateReceiver(@Valid OrderVo orderVo) {
+
+        ProductOrder order = new ProductOrder();
+
+        BeanUtils.copyProperties(orderVo, order);
+
+        int result = orderService.updateById(order, orderVo.getId());
+
+        if (result == 1) {
+            return ReturnResultUtils.returnSuccess();
+        } else {
+            return ReturnResultUtils.returnFail(ReturnResultContants.CODE_UPDATE_ORDER_INFO_FAIL,
+                                                ReturnResultContants.MSG_UPDATE_ORDER_INFO_FAIL);
+        }
+    }
+
 }

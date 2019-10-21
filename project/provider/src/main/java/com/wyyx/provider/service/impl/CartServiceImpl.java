@@ -61,7 +61,9 @@ public class CartServiceImpl implements CartService {
     @Override
     public int updateProductCount(Long pID, Long userId, Long pCount) {
         BigDecimal totalPrice = comProductMapper.selectByPrimaryKey(pID).getSellPrice().multiply(new BigDecimal(pCount));
+
         return productCartMapper.updateProductCount(pID,userId,pCount,totalPrice);
+
     }
 
     @Override

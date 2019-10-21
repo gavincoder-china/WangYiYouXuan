@@ -31,6 +31,5 @@ public class TempLoginParamImpl implements HandlerMethodArgumentResolver {
         }
 
         return null;
-
     }
 }

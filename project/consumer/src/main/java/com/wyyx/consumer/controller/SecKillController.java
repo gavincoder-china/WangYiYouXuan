@@ -132,7 +132,6 @@ public class SecKillController {
         }
 
         return ReturnResultUtils.returnFail(ReturnResultContants.CODE_SEC_KILL_FAIL, ReturnResultContants.MSG_SEC_KILL_FAIL);
-
     }
 
 
