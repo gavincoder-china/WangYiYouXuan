@@ -54,7 +54,7 @@ public class PerCenterServiceImpl implements PerCenterService {
         userPoint.setCreateTime(new Date());
         userPoint.setType((byte) 1);
         userPoint.setPoint(updatedPoints);
-        userPoint.setReason(CommonContants.BUY_GOODS);
+        userPoint.setReason(CommonContants.BUY_GOODS_EXP);
         userPointMapper.insertSelective(userPoint);
 
 
@@ -63,9 +63,27 @@ public class PerCenterServiceImpl implements PerCenterService {
         userExperience.setType((byte) 1);
         userExperience.setCreateTime(new Date());
         userExperience.setExpValue(updatedExperience);
-        userExperience.setReason(CommonContants.BUY_GOODS);
+        userExperience.setReason(CommonContants.BUY_GOODS_EXP);
         userExperienceMapper.insertSelective(userExperience);
 
         return comUserMapper.updatePointsAndExperiencebyid(updatedPoints, updatedExperience, id);
+    }
+
+    @Override
+    public int updateExp(Integer updatedExperience, Long id) {
+
+        //经验表中加数据
+        UserExperience userExperience = new UserExperience();
+        userExperience.setId(idWorker.nextId());
+        userExperience.setType((byte) 1);
+        userExperience.setCreateTime(new Date());
+        userExperience.setExpValue(updatedExperience);
+        userExperience.setReason(CommonContants.LOGIN_EXP);
+        userExperienceMapper.insertSelective(userExperience);
+
+        //用户经验表中加数据
+
+        comUserMapper.updateExperienceByid(updatedExperience, id);
+        return 0;
     }
 }

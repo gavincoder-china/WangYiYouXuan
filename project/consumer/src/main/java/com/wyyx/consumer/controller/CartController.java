@@ -18,7 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,18 +55,37 @@ public class CartController {
                                 @ApiParam(value = "选购商品数量") @RequestParam(value = "pNum") Long pNum,
                                 @TempLoginParam UserVo userVo) {
         //登录的
-        if (!StringUtils.isEmpty(userVo.getUserID().toString())) {
+//        if (!StringUtils.isEmpty(userVo.getUserID().toString())) {
+        if (!ObjectUtils.isEmpty(userVo.getUserID())) {
 
-            if (!StringUtils.isEmpty(userVo.getTemp())) {
+            cartService.insert(pID, userVo.getUserID(), pNum);
+            return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
 
-                HashMap<Object, Object> cartTemp = (HashMap<Object, Object>) redisUtil.hmget(CommonContants.TEMP_CART + userVo.getTemp());
+        } else if (!ObjectUtils.isEmpty(userVo.getTemp())) {
+            //未登录的,设置个300秒过期
+            redisUtil.hset(CommonContants.TEMP_CART + userVo.getTemp(), pID.toString(), pNum, 300);
+            return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
+        }
+        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_INSERT_CART_FAIL,
+                                            ReturnResultContants.MSG_INSERT_CARTL_FAIL);
 
-                if (cartTemp.isEmpty()) {
+    }
 
-                    cartService.insert(pID, userVo.getUserID(), pNum);
-                    return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
 
-                } else {
+    @TempLoginMethod
+    @ApiOperation("查看购物车")
+    @GetMapping(value = "/allCart")
+    public ReturnResult allCart(@TempLoginParam UserVo userVo) {
+
+        if (!ObjectUtils.isEmpty(userVo.getUserID())) {
+
+            if (!ObjectUtils.isEmpty(userVo.getTemp())) {
+
+                HashMap<Object, Object> cartTemp = (HashMap<Object, Object>)
+                        redisUtil.hmget(CommonContants.TEMP_CART + userVo.getTemp());
+
+                if (!cartTemp.isEmpty()) {
+
                     //查该用户的购物车
                     List<ProductCart> productCarts = cartService.queryAllByUserID(userVo.getUserID());
                     //拿数据,已经存的商品的id
@@ -88,31 +107,14 @@ public class CartController {
                             cartService.insert(tempID, userVo.getUserID(), Long.parseLong(v.toString()));
                         }
                     });
-                    return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
+                    redisUtil.hdel(CommonContants.TEMP_CART + userVo.getTemp());
                 }
-            } else {
-                cartService.insert(pID, userVo.getUserID(), pNum);
-                return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
             }
-
-        } else if (!StringUtils.isEmpty(userVo.getTemp())) {
-            //未登录的
-            redisUtil.hset(CommonContants.TEMP_CART + userVo.getTemp(), pID.toString(), pNum);
-            return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
         }
-        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_INSERT_CART_FAIL,
-                                            ReturnResultContants.MSG_INSERT_CARTL_FAIL);
-
-    }
 
 
-    @TempLoginMethod
-    @ApiOperation("查看购物车")
-    @GetMapping(value = "/allCart")
-    public ReturnResult allCart(@TempLoginParam UserVo userVo) {
+        if (!ObjectUtils.isEmpty(userVo.getUserID())) {
 
-
-        if (!StringUtils.isEmpty(userVo.getUserID().toString())) {
             if (cartService.queryAllByUserID(userVo.getUserID()) != null) {
                 List<ProductCart> carts = cartService.queryAllByUserID(userVo.getUserID());
                 ArrayList<CartVo> cartVos = new ArrayList<>();
@@ -142,7 +144,7 @@ public class CartController {
 
             }
 
-        } else if (!StringUtils.isEmpty(userVo.getTemp())) {
+        } else if (!ObjectUtils.isEmpty(userVo.getTemp())) {
             //未登录时的购物车
             ArrayList<CartVo> cartVos = new ArrayList<>();
             HashMap<Object, Object> cartTemp = (HashMap<Object, Object>) redisUtil.hmget(
@@ -171,9 +173,7 @@ public class CartController {
                 });
                 return ReturnResultUtils.returnSuccess(cartVos);
             }
-
         }
-
         return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CART_EMPTY, ReturnResultContants.MSG_CART_EMPTY);
     }
 
@@ -181,34 +181,34 @@ public class CartController {
     @ApiOperation("删除商品")
     @GetMapping(value = "/delCart")
     public ReturnResult delCart(@ApiParam(value = "商品Id") @RequestParam(value = "pID") Long pid,
-                                @TempLoginParam UserVo userVo ) {
-        if (!StringUtils.isEmpty(userVo.getUserID().toString())){
+                                @TempLoginParam UserVo userVo) {
+        if (!ObjectUtils.isEmpty(userVo.getUserID())) {
             int result = cartService.deleteProdectById(pid, userVo.getUserID());
             if (result != 1) {
                 return ReturnResultUtils.returnFail(ReturnResultContants.CODE_DEL_CART_WRONG, ReturnResultContants.MSG_DEL_CART_WRONG);
             }
             return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
-        }else if (!StringUtils.isEmpty(userVo.getTemp())) {
-             redisUtil.hdel(CommonContants.TEMP_CART + userVo.getTemp(), pid.toString());
+        } else if (!ObjectUtils.isEmpty(userVo.getTemp())) {
+            redisUtil.hdel(CommonContants.TEMP_CART + userVo.getTemp(), pid.toString());
             return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
         }
         return ReturnResultUtils.returnFail(ReturnResultContants.CODE_DEL_CART_WRONG, ReturnResultContants.MSG_DEL_CART_WRONG);
 
     }
 
-
+    @TempLoginMethod
     @ApiOperation("修改购物车商品数量并计算价格")
     @GetMapping(value = "/updateCart")
     public ReturnResult updateCart(@ApiParam(value = "商品ID") @RequestParam(value = "pID") Long pID,
                                    @ApiParam(value = "选购商品数量") @RequestParam(value = "pNum") Long pNum,
                                    @TempLoginParam UserVo userVo) {
-        if (!StringUtils.isEmpty(userVo.getUserID().toString())){
-            cartService.updateProductCount(pID,pNum,userVo.getUserID());
+        if (!ObjectUtils.isEmpty(userVo.getUserID())) {
+            cartService.updateProductCount(pID, pNum, userVo.getUserID());
             return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
-        }else if (!StringUtils.isEmpty(userVo.getTemp())){
+        } else if (!ObjectUtils.isEmpty(userVo.getTemp())) {
             redisUtil.hset(CommonContants.TEMP_CART + userVo.getTemp(), pID.toString(), pNum);
             return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
         }
-        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_UPDATE_CART_FAIL,ReturnResultContants.MSG_UPDATE_CART_FAIL);
+        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_UPDATE_CART_FAIL, ReturnResultContants.MSG_UPDATE_CART_FAIL);
     }
 }

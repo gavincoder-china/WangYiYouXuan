@@ -26,6 +26,13 @@ public interface ComUserMapper {
 
      int updatePointsAndExperiencebyid(@Param("updatedPoints")Integer updatedPoints,@Param("updatedExperience")Integer updatedExperience,@Param("id")Long id);
 
+     //增加积分
+int updatepointsById(@Param("updatedPoints")Integer updatedPoints,@Param("id")Long id);
+
+//增加经验
+    int updateExperienceByid(@Param("updatedExperience")Integer updatedExperience,@Param("id")Long id);
+
+
 
 
 }

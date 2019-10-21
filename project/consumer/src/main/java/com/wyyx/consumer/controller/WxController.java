@@ -26,6 +26,8 @@ import com.wyyx.provider.dto.OauthUser;
 import com.wyyx.provider.service.ComOauthService;
 import com.wyyx.provider.service.ComUserService;
 import com.wyyx.provider.service.OauthUserService;
+import com.wyyx.provider.service.PerCenterService;
+import com.wyyx.provider.util.DateUtils;
 import com.wyyx.provider.util.UrlUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,6 +58,9 @@ public class WxController {
     private ComOauthService comOauthService;
     @Reference
     private ComUserService comUserService;
+
+    @Reference
+    private PerCenterService perCenterService;
 
     //获取code
     @ApiOperation(value = "获取微信登录的链接")
@@ -189,6 +194,13 @@ public class WxController {
                     String jsonString = JSONObject.toJSONString(userVo);
 
                     redisUtil.set(CommonContants.LOGIN_NAME_SPACE + comUser.getId(), jsonString, 180);
+
+                    //加经验,上锁
+                    if (redisUtil.lock(CommonContants.LOCK_LOGIN_EXP + comUser.getId(), 1, DateUtils.getLeftSecond())) {
+
+                        perCenterService.updateExp(10, comUser.getId());
+
+                    }
 
                     return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_BIND_PHONE_SUCCESS,
                                                            ReturnResultContants.MSG_BIND_PHONE_SUCCESS, comUser.getId());

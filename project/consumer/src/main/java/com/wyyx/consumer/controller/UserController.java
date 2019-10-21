@@ -12,6 +12,8 @@ import com.wyyx.consumer.vo.UserVo;
 import com.wyyx.provider.contants.CommonContants;
 import com.wyyx.provider.dto.ComUser;
 import com.wyyx.provider.service.ComUserService;
+import com.wyyx.provider.service.PerCenterService;
+import com.wyyx.provider.util.DateUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -48,12 +50,13 @@ public class UserController {
      */
 
     @Autowired
-    RedisUtil redisUtil;    /*装配redis缓存工具类*/
+    private RedisUtil redisUtil;    /*装配redis缓存工具类*/
     @Autowired
-    GetIpAddressUtil getIpAddressUtil;  /*装配获取ip地址工具类*/
+    private GetIpAddressUtil getIpAddressUtil;  /*装配获取ip地址工具类*/
     @Reference
-    ComUserService comUserService;
-
+    private ComUserService comUserService;
+    @Reference
+    private PerCenterService perCenterService;
 
     @ApiOperation(value = "用户注册")
     @GetMapping(value = "/register")
@@ -90,7 +93,8 @@ public class UserController {
                 } else {
                     return ReturnResultUtils.returnFail(ReturnResultContants.CODE_REGISTER_WRONG, ReturnResultContants.MSG_REGISTER_WRONG);
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error(ReturnResultContants.MSG_REGISTER_WRONG);
                 e.printStackTrace();
             }
@@ -109,13 +113,13 @@ public class UserController {
         //通过手机号和密码去数据库查出用户对象
         ComUser comUser = comUserService.login(userVo.getPhone(), userVo.getPassword());
         if (null != comUser) {
-             String address=CommonContants.IS_COM_IP_ADDRESS;
+            String address = CommonContants.IS_COM_IP_ADDRESS;
             //获取当前位置的ip地址
             String curIpAddr = request.getLocalAddr();
             if (!curIpAddr.equals(redisUtil.get(CommonContants.COM_IP_ADDRESS))) {  //检测是否为常用地登录
                 log.error(CommonContants.NOT_COM_IP_ADDRESS);
-                address=CommonContants.NOT_COM_IP_ADDRESS;
-                redisUtil.set(CommonContants.COM_IP_ADDRESS,curIpAddr);
+                address = CommonContants.NOT_COM_IP_ADDRESS;
+                redisUtil.set(CommonContants.COM_IP_ADDRESS, curIpAddr);
             }
 
             //获取用户信息并转为Json字符串
@@ -126,10 +130,18 @@ public class UserController {
             //将用户id作为token
             Long userToken = comUser.getId();
             //将用户信息存入redis，并设置三分钟过期
-            if (redisUtil.set(CommonContants.LOGIN_NAME_SPACE + userToken, userStr,180)) {
+            if (redisUtil.set(CommonContants.LOGIN_NAME_SPACE + userToken, userStr, 180)) {
                 HashMap<String, String> map = new HashMap<>();
-                map.put("address",address);
-                map.put("token",userToken.toString());
+                map.put("address", address);
+                map.put("token", userToken.toString());
+
+
+                //加经验,上锁
+                if (redisUtil.lock(CommonContants.LOCK_LOGIN_EXP + comUser.getId(), 1, DateUtils.getLeftSecond())) {
+
+                    perCenterService.updateExp(10, comUser.getId());
+
+                }
                 return ReturnResultUtils.returnSuccess(map);
             }
         } else {

@@ -83,7 +83,13 @@ public final class CommonContants {
     public static final String IS_MODIFY_BIRTHDAY = "IS_MODIFY_BIRTHDAY:";
 
     //"购买商品"
-    public static final String BUY_GOODS = "购买商品";
+    public static final String BUY_GOODS_EXP = "购买商品经验";
+    //登陆增加经验
+    public static final String LOGIN_EXP = "登陆经验";
+
+    //每日登陆加经验
+    public static final String LOCK_LOGIN_EXP = "LOGIN_EXP:";
+
 
 
 

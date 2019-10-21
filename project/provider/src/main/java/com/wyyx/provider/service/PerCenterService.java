@@ -17,4 +17,7 @@ public interface PerCenterService {
     //更新积分,经验
     int updatePointsAndExperiencebyid(Integer updatedPoints,Integer updatedExperience,Long id);
 
+    //每日登陆加经验
+   int updateExp(Integer updatedExperience,Long id);
+
 }

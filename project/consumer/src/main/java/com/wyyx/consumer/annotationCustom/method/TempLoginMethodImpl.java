@@ -8,6 +8,7 @@ import com.wyyx.consumer.util.RedisUtil;
 import com.wyyx.consumer.vo.UserVo;
 import com.wyyx.provider.contants.CommonContants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -46,11 +47,11 @@ public class TempLoginMethodImpl implements HandlerInterceptor {
             // 从 http 请求头中取出 token
             String tempToken = request.getHeader("tempToken");
 
-            if (!StringUtils.isEmpty(userToken) || !StringUtils.isEmpty(tempToken)) {
+            if (!ObjectUtils.isEmpty(userToken) || !StringUtils.isEmpty(tempToken)) {
                 UserVo userVo = new UserVo();
-                if (!StringUtils.isEmpty(userToken)) {
+                if (!ObjectUtils.isEmpty(userToken)) {
                     String jsonStr = (String) redisUtils.get(CommonContants.LOGIN_NAME_SPACE + userToken);
-                    if (!StringUtils.isEmpty(jsonStr)) {
+                    if (!ObjectUtils.isEmpty(jsonStr)) {
 
                         //Todo 设置自定义注解
 
@@ -60,7 +61,7 @@ public class TempLoginMethodImpl implements HandlerInterceptor {
 
                     }
                 }
-                if (!StringUtils.isEmpty(tempToken)) {
+                if (!ObjectUtils.isEmpty(tempToken)) {
 
 
                     userVo.setTemp(tempToken);

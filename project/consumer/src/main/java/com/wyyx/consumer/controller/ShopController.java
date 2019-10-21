@@ -6,6 +6,7 @@ import com.wyyx.consumer.result.ReturnResult;
 import com.wyyx.consumer.result.ReturnResultUtils;
 import com.wyyx.consumer.vo.GoodsVo;
 import com.wyyx.consumer.vo.HomeVo;
+import com.wyyx.consumer.vo.IndexVo;
 import com.wyyx.consumer.vo.PageVo;
 import com.wyyx.provider.contants.GoodsCategory;
 import com.wyyx.provider.dto.ComProduct;
@@ -20,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -52,12 +55,25 @@ public class ShopController {
     @ApiOperation(value = "展示首页分类商品")
     @GetMapping(value = "/selectAllByClass")
     public ReturnResult selectAllByClass(@ApiParam(value = "每个分类你需要的个数")
-                                         @RequestParam(value = "num") int num) {
+                                         @RequestParam(value = "num") int num,
+                                         HttpServletRequest request) {
 
+        IndexVo indexVo = new IndexVo();
+        indexVo.setTempToken(request.getSession().getId());
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put(GoodsCategory.SHOES.getCategory(),GoodsCategory.SHOES.getDesc());
+        map.put(GoodsCategory.CLOTHES.getCategory(),GoodsCategory.CLOTHES.getDesc());
+        map.put(GoodsCategory.HAT.getCategory(),GoodsCategory.HAT.getDesc());
+        map.put(GoodsCategory.COMPUTER.getCategory(),GoodsCategory.COMPUTER.getDesc());
+        map.put(GoodsCategory.KITCHEN.getCategory(),GoodsCategory.KITCHEN.getDesc());
 
+        //每类的销量前几个
         List<ComProduct> comProducts = shopService.selectAll(num);
+        indexVo.setMap(map);
+        indexVo.setList(comProducts);
 
-        return ReturnResultUtils.returnSuccess(comProducts);
+
+        return ReturnResultUtils.returnSuccess(indexVo);
     }
 
     /**
