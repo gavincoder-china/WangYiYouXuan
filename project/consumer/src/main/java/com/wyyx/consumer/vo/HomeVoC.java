@@ -23,7 +23,8 @@ public class HomeVoC implements Serializable {
     private static final long serialVersionUID = -3003715721059946225L;
 
 
-
+    @ApiModelProperty(value = "临时token")
+    private String tempToken;
 
     @ApiModelProperty(value = "用户ip")
     private String ip;

@@ -57,16 +57,15 @@ public class ShopControllerC {
     @Autowired
     private RandomGoodUtil randomGoodUtil;
 
+
     @ApiOperation(value = "首页")
     @GetMapping(value = "/selectIndex")
-    public ReturnResult selectIndex( HttpServletRequest request) {
-
+    public ReturnResult selectIndex(HttpServletRequest request) {
 
 
         HomeVoC homeVoC = new HomeVoC();
 
         homeVoC.setIp(getIpAddressUtil.getIpAddr(request));
-
 
 
         HashMap<Object, Object> map = new HashMap<>();
@@ -80,7 +79,7 @@ public class ShopControllerC {
         homeVoC.setCategory(map);
 
         homeVoC.setDefaultProduct(shopService.randomProduct().getName());
-
+        homeVoC.setTempToken(request.getSession().getId());
 
         return ReturnResultUtils.returnSuccess(homeVoC);
 
@@ -90,8 +89,8 @@ public class ShopControllerC {
     @ApiOperation(value = "根据商品类型查询")
     @GetMapping(value = "/selectByType")
     public ReturnResult selectByType(@ApiParam(value = "查询商品的分类")
-                                      @RequestParam(value = "p_type") int p_type,
-                                      @Valid PageVo pageVo) {
+                                     @RequestParam(value = "p_type") int p_type,
+                                     @Valid PageVo pageVo) {
 
         List<ComProduct> comProducts = shopService.selectByClass(p_type, pageVo.getStart(),
                                                                  pageVo.getPageSize());
@@ -110,7 +109,6 @@ public class ShopControllerC {
 
 
         GoodsVoC goodsVoC = new GoodsVoC();
-
 
 
         goodsVoC.setGoodsList(listTemp);
