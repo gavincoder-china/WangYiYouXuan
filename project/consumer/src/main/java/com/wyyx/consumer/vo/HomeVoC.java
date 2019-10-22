@@ -22,26 +22,16 @@ import java.util.HashMap;
 public class HomeVoC implements Serializable {
     private static final long serialVersionUID = -3003715721059946225L;
 
-    @ApiModelProperty(value = "总页数")
-    private Long totalSize;
-
-    @ApiModelProperty(value = "起始页")
-    private int startPage;
-
-    @ApiModelProperty(value = "每页条数")
-    private int pageSize;
 
 
-    @ApiModelProperty(value = "商品列表")
-    private ArrayList list;
 
     @ApiModelProperty(value = "用户ip")
     private String ip;
 
     @ApiModelProperty(value = "分类数据")
-    private HashMap map;
+    private HashMap category;
 
-    @ApiModelProperty(value = "分类数据")
+    @ApiModelProperty(value = "搜索框默认数据")
     private String defaultProduct;
 
 

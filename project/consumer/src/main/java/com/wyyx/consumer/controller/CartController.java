@@ -61,12 +61,12 @@ public class CartController {
         if (!ObjectUtils.isEmpty(userVo.getUserID())) {
 
             cartService.insert(pID, userVo.getUserID(), pNum);
-            return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
+            return ReturnResultUtils.returnSuccess();
 
         } else if (!ObjectUtils.isEmpty(userVo.getTemp())) {
             //未登录的,设置个300秒过期
             redisUtil.hset(CommonContants.TEMP_CART + userVo.getTemp(), pID.toString(), pNum, 300);
-            return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
+            return ReturnResultUtils.returnSuccess();
         }
         return ReturnResultUtils.returnFail(ReturnResultContants.CODE_INSERT_CART_FAIL,
                                             ReturnResultContants.MSG_INSERT_CARTL_FAIL);
@@ -183,7 +183,8 @@ public class CartController {
                 return ReturnResultUtils.returnSuccess(cartVos);
             }
         }
-        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CART_EMPTY, ReturnResultContants.MSG_CART_EMPTY);
+        return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CART_EMPTY,
+                                            ReturnResultContants.MSG_CART_EMPTY);
     }
 
     @TempLoginMethod
@@ -194,7 +195,8 @@ public class CartController {
         if (!ObjectUtils.isEmpty(userVo.getUserID())) {
             int result = cartService.deleteProdectById(pid, userVo.getUserID());
             if (result != 1) {
-                return ReturnResultUtils.returnFail(ReturnResultContants.CODE_DEL_CART_WRONG, ReturnResultContants.MSG_DEL_CART_WRONG);
+                return ReturnResultUtils.returnFail(ReturnResultContants.CODE_DEL_CART_WRONG,
+                                                    ReturnResultContants.MSG_DEL_CART_WRONG);
             }
             return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
         } else if (!ObjectUtils.isEmpty(userVo.getTemp())) {

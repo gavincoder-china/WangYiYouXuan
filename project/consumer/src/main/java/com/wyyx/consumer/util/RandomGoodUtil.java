@@ -29,9 +29,7 @@ public class RandomGoodUtil {
 
       return product;
 
-
   }
-
 
 
 }

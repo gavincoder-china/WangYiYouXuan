@@ -59,25 +59,15 @@ public class ShopControllerC {
 
     @ApiOperation(value = "首页")
     @GetMapping(value = "/selectIndex")
-    public ReturnResult selectIndex(@Valid PageVo pageVo, HttpServletRequest request) {
-
-        List<ComProduct> products = shopService.selectAllC(pageVo.getStart(), pageVo.getPageSize());
+    public ReturnResult selectIndex( HttpServletRequest request) {
 
 
-        ArrayList<IndexGoodsVo> listTemp = new ArrayList<>();
 
-        products.forEach(list -> {
-            IndexGoodsVo indexGoodsVo = new IndexGoodsVo();
-
-            BeanUtils.copyProperties(list, indexGoodsVo);
-            listTemp.add(indexGoodsVo);
-        });
         HomeVoC homeVoC = new HomeVoC();
-        homeVoC.setPageSize(pageVo.getPageSize());
-        homeVoC.setStartPage(pageVo.getStartPage());
+
         homeVoC.setIp(getIpAddressUtil.getIpAddr(request));
-        homeVoC.setList(listTemp);
-        homeVoC.setTotalSize(shopService.selectAllCCount());
+
+
 
         HashMap<Object, Object> map = new HashMap<>();
         map.put(CommonContants.INDEX_IP + GoodsCategory.SHOES.getCategory(), GoodsCategory.SHOES.getDesc());
@@ -87,7 +77,7 @@ public class ShopControllerC {
         map.put(CommonContants.INDEX_IP + GoodsCategory.KITCHEN.getCategory(), GoodsCategory.KITCHEN.getDesc());
 
 
-        homeVoC.setMap(map);
+        homeVoC.setCategory(map);
 
         homeVoC.setDefaultProduct(shopService.randomProduct().getName());
 
@@ -123,7 +113,7 @@ public class ShopControllerC {
 
 
 
-        goodsVoC.setList(listTemp);
+        goodsVoC.setGoodsList(listTemp);
         goodsVoC.setDefaultProduct(defaultPro.getName());
         goodsVoC.setStartPage(pageVo.getStartPage());
         goodsVoC.setPageSize(pageVo.getPageSize());

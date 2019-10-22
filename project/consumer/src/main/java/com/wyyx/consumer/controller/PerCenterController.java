@@ -99,12 +99,12 @@ public class PerCenterController {
 
             try {
                 date = dateFormat.parse(userInfoVo.getBirthday());
+                comUser.setBirthday(date);
             }
             catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-        comUser.setBirthday(date);
 
 
         comUser.setId(userVo.getUserID());
