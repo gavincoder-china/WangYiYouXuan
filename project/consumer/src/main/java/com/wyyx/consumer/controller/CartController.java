@@ -56,11 +56,31 @@ public class CartController {
     public ReturnResult addCart(@ApiParam(value = "商品ID") @RequestParam(value = "pID") Long pID,
                                 @ApiParam(value = "选购商品数量") @RequestParam(value = "pNum") Long pNum,
                                 @TempLoginParam UserVo userVo) {
-        //登录的
-//        if (!StringUtils.isEmpty(userVo.getUserID().toString())) {
+
         if (!ObjectUtils.isEmpty(userVo.getUserID())) {
 
-            cartService.insert(pID, userVo.getUserID(), pNum);
+            //查该用户的购物车
+            List<ProductCart> productCarts = cartService.queryAllByUserID(userVo.getUserID());
+            //拿数据,已经存的商品的id
+            List<Long> collect = productCarts.stream().map(p -> p.getProductId()).collect(Collectors.toList());
+
+
+            if (collect.contains(pID)) {
+
+                List<ProductCart> carts = productCarts.stream().filter(p -> pID.longValue() == p.getProductId().longValue())
+                                                      .collect(Collectors.toList());
+
+                long finalCount = carts.get(0).getProductCount() + pNum;
+                //修改
+                cartService.updateProductCount(pID, userVo.getUserID(), finalCount);
+
+
+
+            } else {
+                cartService.insert(pID, userVo.getUserID(), pNum);
+            }
+
+
             return ReturnResultUtils.returnSuccess();
 
         } else if (!ObjectUtils.isEmpty(userVo.getTemp())) {
@@ -83,8 +103,7 @@ public class CartController {
 
             if (!ObjectUtils.isEmpty(userVo.getTemp())) {
 
-                HashMap<Object, Object> cartTemp = (HashMap<Object, Object>)
-                        redisUtil.hmget(CommonContants.TEMP_CART + userVo.getTemp());
+                HashMap<Object, Object> cartTemp = (HashMap<Object, Object>) redisUtil.hmget(CommonContants.TEMP_CART + userVo.getTemp());
 
                 if (!cartTemp.isEmpty()) {
 
@@ -92,7 +111,8 @@ public class CartController {
                     List<ProductCart> productCarts = cartService.queryAllByUserID(userVo.getUserID());
                     //拿数据,已经存的商品的id
                     List<Long> collect = productCarts.stream().map(p -> p.getProductId()).collect(Collectors.toList());
-                    cartTemp.forEach((k, v) -> {
+
+                    cartTemp.forEach((k, v)->{
 
                         Long tempID = Long.parseLong(k.toString());
                         //调用service方法，实现数据插入购物车表
@@ -108,13 +128,9 @@ public class CartController {
                         } else {
                             cartService.insert(tempID, userVo.getUserID(), Long.parseLong(v.toString()));
                         }
+                        redisUtil.hdel(CommonContants.TEMP_CART + userVo.getTemp(), k);
                     });
-                    try {
-                        redisUtil.hdel(CommonContants.TEMP_CART + userVo.getTemp());
-                    }
-                    catch (Exception e) {
-                        log.info("redis/expire");
-                    }
+
                 }
             }
         }
@@ -190,17 +206,17 @@ public class CartController {
     @TempLoginMethod
     @ApiOperation("删除商品")
     @GetMapping(value = "/delCart")
-    public ReturnResult delCart(@ApiParam(value = "商品Id") @RequestParam(value = "pID") Long pid,
+    public ReturnResult delCart(@ApiParam(value = "商品Id") @RequestParam(value = "pId") Long pId,
                                 @TempLoginParam UserVo userVo) {
         if (!ObjectUtils.isEmpty(userVo.getUserID())) {
-            int result = cartService.deleteProdectById(pid, userVo.getUserID());
-            if (result != 1) {
+            int result = cartService.deleteProdectById(pId, userVo.getUserID());
+            if (result == 0) {
                 return ReturnResultUtils.returnFail(ReturnResultContants.CODE_DEL_CART_WRONG,
                                                     ReturnResultContants.MSG_DEL_CART_WRONG);
             }
             return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
         } else if (!ObjectUtils.isEmpty(userVo.getTemp())) {
-            redisUtil.hdel(CommonContants.TEMP_CART + userVo.getTemp(), pid.toString());
+            redisUtil.hdel(CommonContants.TEMP_CART + userVo.getTemp(), pId.toString());
             return ReturnResultUtils.returnSuccess(ReturnResultContants.SUCCESS);
         }
         return ReturnResultUtils.returnFail(ReturnResultContants.CODE_DEL_CART_WRONG, ReturnResultContants.MSG_DEL_CART_WRONG);

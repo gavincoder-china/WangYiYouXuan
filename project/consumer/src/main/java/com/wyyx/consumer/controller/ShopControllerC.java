@@ -127,5 +127,4 @@ public class ShopControllerC {
         return ReturnResultUtils.returnSuccess(goodsVoC);
     }
 
-
 }

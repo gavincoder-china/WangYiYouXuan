@@ -140,7 +140,7 @@ public class UserController {
             //将用户id作为token
             Long userToken = comUser.getId();
             //将用户信息存入redis，并设置三分钟过期
-            if (redisUtil.set(CommonContants.LOGIN_NAME_SPACE + userToken, userStr, 180)) {
+            if (redisUtil.set(CommonContants.LOGIN_NAME_SPACE + userToken, userStr, 1800)) {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("address", address);
                 map.put("token", userToken.toString());

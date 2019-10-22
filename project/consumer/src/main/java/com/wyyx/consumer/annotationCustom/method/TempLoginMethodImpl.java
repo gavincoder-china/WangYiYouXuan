@@ -60,7 +60,7 @@ public class TempLoginMethodImpl implements HandlerInterceptor {
                 }
                 if (!ObjectUtils.isEmpty(tempToken)) {
 
-
+  
                     userVo.setTemp(tempToken);
                     request.setAttribute("annotation", userVo);
                 }
