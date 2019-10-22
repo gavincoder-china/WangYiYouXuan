@@ -60,6 +60,7 @@ public class ShopController {
 
         IndexVo indexVo = new IndexVo();
         indexVo.setTempToken(request.getSession().getId());
+
         HashMap<Object, Object> map = new HashMap<>();
         map.put(GoodsCategory.SHOES.getCategory(),GoodsCategory.SHOES.getDesc());
         map.put(GoodsCategory.CLOTHES.getCategory(),GoodsCategory.CLOTHES.getDesc());
@@ -75,6 +76,9 @@ public class ShopController {
 
         return ReturnResultUtils.returnSuccess(indexVo);
     }
+
+
+
 
     /**
      * @author kitty_zhu

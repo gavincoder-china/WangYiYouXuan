@@ -90,6 +90,10 @@ public final class CommonContants {
     //每日登陆加经验
     public static final String LOCK_LOGIN_EXP = "LOGIN_EXP:";
 
+    //ip
+    public static final String INDEX_IP = "127.0.0.1:9004/shopC?type=";
+
+
 
 
 

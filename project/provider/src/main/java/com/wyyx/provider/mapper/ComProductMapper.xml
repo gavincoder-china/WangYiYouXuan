@@ -254,4 +254,18 @@
     </update>
 
 
+    <!--dkl:分页查询所有商品-->
+    <select id="selectAllC" resultMap="BaseResultMap">
+        SELECT *
+        FROM com_product
+
+        limit #{start,jdbcType=INTEGER} ,#{offset,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAllCCount" resultType="java.lang.Long">
+        SELECT count(0)
+        FROM com_product
+
+
+    </select>
 </mapper>

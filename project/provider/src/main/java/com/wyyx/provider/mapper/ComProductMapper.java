@@ -44,6 +44,9 @@ public interface ComProductMapper {
     int updateInventoryAndSalesbyid(@Param("id") Long id);
 
 
+    List<ComProduct> selectAllC(@Param("start") int start, @Param("offset") int offset);
+    long selectAllCCount();
+
 
 
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author kitty_zhu
@@ -24,6 +25,16 @@ public class ShopServiceImpl implements ShopService {
     public List<ComProduct> selectAll(int num) {
 
         return comProductMapper.selectAll(num);
+    }
+
+
+    @Override
+    public ComProduct randomProduct() {
+        List<ComProduct> products = selectAll(1);
+        Random random = new Random();
+        ComProduct product = products.get(random.nextInt(products.size()));
+
+        return product;
     }
 
     //kitty_zhu :根据商品类型查询商品
@@ -60,5 +71,15 @@ public class ShopServiceImpl implements ShopService {
     public List<ComProduct> selectByHot() {
         return comProductMapper.selectByHot();
 
+    }
+
+    @Override
+    public List<ComProduct> selectAllC(int start, int offset) {
+        return comProductMapper.selectAllC(start,offset);
+    }
+
+    @Override
+    public long selectAllCCount() {
+        return comProductMapper.selectAllCCount();
     }
 }

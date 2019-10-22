@@ -12,6 +12,9 @@ public interface ShopService {
      */
     List<ComProduct> selectAll(int num);
 
+    //返回一个随机的元素
+    ComProduct randomProduct();
+
     /**
      * @author kitty_zhu
      * 根据商品类型查询商品
@@ -32,5 +35,8 @@ public interface ShopService {
     //kitty_zhu：：默认最火爆商品在搜索框
     List<ComProduct> selectByHot();
 
+    List<ComProduct> selectAllC( int start,  int offset);
+
+    long selectAllCCount();
 
 }
