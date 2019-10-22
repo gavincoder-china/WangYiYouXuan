@@ -10,6 +10,7 @@ import com.wyyx.provider.mapper.ComProductMapper;
 import com.wyyx.provider.mapper.OrderInfoMapper;
 import com.wyyx.provider.mapper.ProductCommentMapper;
 import com.wyyx.provider.mapper.ProductOrderMapper;
+import com.wyyx.provider.model.OrderGoodsInfo;
 import com.wyyx.provider.service.OrderService;
 import com.wyyx.provider.util.IdWorker;
 import com.wyyx.provider.util.TotalPriceUtil;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -67,10 +69,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean delOrderTemp(long uId, long id) {
 
-        int result = productOrderMapper.updateIsDeleteByProductIdAndUserId( uId, id);
-        if (result==1){
+        int result = productOrderMapper.updateIsDeleteByProductIdAndUserId(uId, id);
+        if (result == 1) {
             return true;
-        }else {
+        } else {
             return false;
         }
 
@@ -196,7 +198,32 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int updateById(ProductOrder updated, Long id) {
 
-        return   productOrderMapper.updateById(updated, id);
+        return productOrderMapper.updateById(updated, id);
+    }
+
+    @Override
+    public List<OrderGoodsInfo> getOrderGoods(Long id) {
+        List<OrderInfo> lists = orderInfoMapper.selectByOrderId(id);
+        ArrayList<OrderGoodsInfo> goodsInfos = new ArrayList<>();
+        lists.stream().forEach(list -> {
+            OrderGoodsInfo info = new OrderGoodsInfo();
+            ComProduct comProduct = comProductMapper.selectById(list.getProductId());
+            info.setId(list.getProductId());
+            info.setName(comProduct.getName());
+            info.setImgUrl(comProduct.getImgurl());
+            info.setPrice(comProduct.getSellPrice());
+            info.setCount(list.getCount());
+            BigDecimal count = new BigDecimal(list.getCount());
+            info.setTotalPrice(count.multiply(comProduct.getSellPrice()));
+            goodsInfos.add(info);
+        });
+        return goodsInfos;
+    }
+
+    //总个数
+    @Override
+    public long selectOrderAllCount(long userId) {
+        return productOrderMapper.selectOrderAllCount(userId);
     }
 
 

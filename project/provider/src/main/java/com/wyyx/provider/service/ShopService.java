@@ -22,11 +22,13 @@ public interface ShopService {
     List<ComProduct> selectByClass(int p_type, int start, int offset);
 
     public long selectByClassCount(int p_type);
+
     /**
      * @author kitty_zhu
      * 模糊查询-分页
      */
     List<ComProduct> selectByName(String name, int start, int offset);
+
     public long selectByNameCount(String name);
 
     //dkl 通过商品id查询商品全部信息
@@ -35,8 +37,10 @@ public interface ShopService {
     //kitty_zhu：：默认最火爆商品在搜索框
     List<ComProduct> selectByHot();
 
-    List<ComProduct> selectAllC( int start,  int offset);
+    List<ComProduct> selectAllC(int start, int offset);
 
     long selectAllCCount();
+
+
 
 }

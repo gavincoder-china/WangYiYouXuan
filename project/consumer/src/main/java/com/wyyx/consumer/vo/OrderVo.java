@@ -37,7 +37,5 @@ public class OrderVo implements Serializable {
     @ApiModelProperty(value = "收获人地址")
     private String receiverAddress;
 
-
-
     private static final long serialVersionUID = 1L;
 }

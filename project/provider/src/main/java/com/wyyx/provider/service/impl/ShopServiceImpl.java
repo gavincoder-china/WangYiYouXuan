@@ -47,6 +47,7 @@ public class ShopServiceImpl implements ShopService {
     public long selectByClassCount(int p_type) {
         return comProductMapper.selectByClassCount(p_type);
     }
+
     //kitty_zhu : 模糊查询
     @Override
     public List<ComProduct> selectByName(String name, int start, int offset) {
@@ -75,11 +76,13 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<ComProduct> selectAllC(int start, int offset) {
-        return comProductMapper.selectAllC(start,offset);
+        return comProductMapper.selectAllC(start, offset);
     }
 
     @Override
     public long selectAllCCount() {
         return comProductMapper.selectAllCCount();
     }
+
+
 }

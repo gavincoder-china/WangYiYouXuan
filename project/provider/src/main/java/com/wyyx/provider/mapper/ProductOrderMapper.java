@@ -24,6 +24,9 @@ public interface ProductOrderMapper {
                                       @Param("offset") int offset
                                      );
 
+    //总个数
+    long selectOrderAllCount(@Param("userId") long userId);
+
     //kitty_zhu：根据订单状态查询 state:订单状态
     List<ProductOrder> selectOrderByClass(@Param("userId") long userId,
                                           @Param("state") int state,
