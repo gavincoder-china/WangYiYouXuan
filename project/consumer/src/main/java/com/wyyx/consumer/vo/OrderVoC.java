@@ -21,7 +21,7 @@ public class OrderVoC implements Serializable {
      * 商品订单id
      */
     @ApiModelProperty(value = "订单id")
-    private Long id;
+    private String id;
 
     @ApiModelProperty(value = "订单状态")
     private byte state;

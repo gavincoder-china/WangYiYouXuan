@@ -62,7 +62,7 @@ public class OrderControllerC {
             OrderVoC orderVoC = new OrderVoC();
             List<OrderGoodsInfo> orderGoods = orderService.getOrderGoods(list.getId());
             orderVoC.setGoods(orderGoods);
-            orderVoC.setId(list.getId());
+            orderVoC.setId(list.getId().toString());
             orderVoC.setState(list.getState());
             orderVoC.setTotalPrice(list.getTotalPrice());
             listTemp.add(orderVoC);
