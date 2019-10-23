@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
     public boolean delOrderTemp(long uId, long id) {
 
         int result = productOrderMapper.updateIsDeleteByProductIdAndUserId(uId, id);
-        if (result == 1) {
+        if (result != 0) {
             return true;
         } else {
             return false;

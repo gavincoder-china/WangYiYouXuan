@@ -16,10 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * **********************************************************
@@ -52,7 +49,7 @@ public class PayController {
     private WxService wxService;
 
     //@ApiOperation("商品选购")
-    @GetMapping(value = "/chooseToPay")
+    @PostMapping(value = "/chooseToPay")
     public ReturnResult chooseToPay(@ApiParam(value = "商品Id") @RequestParam(value = "pID") Long pid,
                                     @ApiParam(value = "用户Id") @RequestParam(value = "userId") Long userId) {
         //通过pId和userId查询用户购物车信息
@@ -63,7 +60,7 @@ public class PayController {
 
     @RequireLoginMethod
     //@ApiOperation("订单支付")
-    @GetMapping(value = "/payOrder")
+    @PostMapping(value = "/payOrder")
     public ReturnResult payOrder(@ApiParam(value = "订单id") @RequestParam(value = "oID") Long oID,
                                  @RequireLoginParam UserVo userVo) {
         ProductOrder productOrder = orderService.selectOrder(userVo.getUserID(), oID);

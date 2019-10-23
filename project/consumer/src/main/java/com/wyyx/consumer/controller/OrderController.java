@@ -113,7 +113,7 @@ public class OrderController {
 
     @RequireLoginMethod
     @ApiOperation(value = "逻辑删除")
-    @GetMapping(value = "/removeOrder")
+    @PostMapping(value = "/removeOrder")
     public ReturnResult removeOrder(@ApiParam(value = "订单id") @RequestParam(value = "id") long id,
                                     @RequireLoginParam UserVo userVo) {
 
@@ -144,7 +144,7 @@ public class OrderController {
 
     @RequireLoginMethod
     @ApiOperation(value = "删除回收站")
-    @GetMapping(value = "/delOrder")
+    @PostMapping(value = "/delOrder")
     public ReturnResult delOrder(@ApiParam(value = "订单id") @RequestParam(value = "id") long id,
                                  @RequireLoginParam UserVo userVo) {
 
@@ -164,7 +164,7 @@ public class OrderController {
 
     @RequireLoginMethod
     @ApiOperation(value = "订单打分")
-    @GetMapping(value = "/orderGrade")
+    @PostMapping(value = "/orderGrade")
     public ReturnResult orderGrade(@ApiParam(value = "订单id") @RequestParam(value = "id") long id,
                                    @Valid CommentVo commentVo,
                                    @RequireLoginParam UserVo userVo) {
@@ -255,7 +255,7 @@ public class OrderController {
 
     @RequireLoginMethod
     @ApiOperation(value = "收货")
-    @GetMapping(value = "/takeGoods")
+    @PostMapping(value = "/takeGoods")
     public ReturnResult takeGoods(@RequireLoginParam UserVo userVo,
                                   @ApiParam(value = "订单id")
                                   @RequestParam(value = "id") long id) {
@@ -279,7 +279,7 @@ public class OrderController {
 
     @RequireLoginMethod
     @ApiOperation(value = "修改订单收货人信息")
-    @GetMapping(value = "/updateReceiver")
+    @PostMapping(value = "/updateReceiver")
     public ReturnResult updateReceiver(@Valid OrderVo orderVo) {
 
         ProductOrder order = new ProductOrder();

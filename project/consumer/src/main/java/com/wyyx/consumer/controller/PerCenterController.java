@@ -21,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -85,7 +86,7 @@ public class PerCenterController {
 
     @RequireLoginMethod
     @ApiOperation(value = "修改个人信息")
-    @GetMapping(value = "/modifyUserInfo")
+    @PostMapping(value = "/modifyUserInfo")
     public ReturnResult modifyUserInfo(@Valid UserInfoVo userInfoVo,
                                        @RequireLoginParam UserVo userVo) {
         //新建普通用户对象

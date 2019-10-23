@@ -21,10 +21,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -100,7 +97,7 @@ public class SecKillController {
 
     @RequireLoginMethod
     @ApiOperation(value = "选择商品,使用消息队列完成订单生成操作")
-    @GetMapping("/buyProductByQueue")
+    @PostMapping("/buyProductByQueue")
     public ReturnResult buyProductByQueue(@ApiParam(value = "商品id", required = true)
                                           @RequestParam(value = "pID") Long pID,
                                           @RequireLoginParam UserVo userVo) {

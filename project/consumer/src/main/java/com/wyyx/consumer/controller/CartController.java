@@ -20,10 +20,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -51,7 +48,7 @@ public class CartController {
 
     @TempLoginMethod
     @ApiOperation("加入购物车")
-    @GetMapping(value = "addCart")
+    @PostMapping(value = "addCart")
 
     public ReturnResult addCart(@ApiParam(value = "商品ID") @RequestParam(value = "pID") Long pID,
                                 @ApiParam(value = "选购商品数量") @RequestParam(value = "pNum") Long pNum,
@@ -205,7 +202,7 @@ public class CartController {
 
     @TempLoginMethod
     @ApiOperation("删除商品")
-    @GetMapping(value = "/delCart")
+    @PostMapping(value = "/delCart")
     public ReturnResult delCart(@ApiParam(value = "商品Id") @RequestParam(value = "pId") Long pId,
                                 @TempLoginParam UserVo userVo) {
         if (!ObjectUtils.isEmpty(userVo.getUserID())) {
@@ -224,7 +221,7 @@ public class CartController {
 
     @TempLoginMethod
     @ApiOperation("修改购物车商品数量并计算价格")
-    @GetMapping(value = "/updateCart")
+    @PostMapping(value = "/updateCart")
     public ReturnResult updateCart(@ApiParam(value = "商品ID") @RequestParam(value = "pID") Long pID,
                                    @ApiParam(value = "选购商品数量") @RequestParam(value = "pNum") Long pNum,
                                    @TempLoginParam UserVo userVo) {

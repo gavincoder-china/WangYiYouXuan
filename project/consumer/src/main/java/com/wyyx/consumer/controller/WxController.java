@@ -34,10 +34,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -147,7 +144,7 @@ public class WxController {
     }
 
     @ApiOperation(value = "/绑定手机号")
-    @GetMapping(value = "/bindPhone")
+    @PostMapping(value = "/bindPhone")
     public ReturnResult bindPhone(@ApiParam(value = "授权用户表id") @RequestParam(value = "userId") Long userId,
                                   @ApiParam(value = "要绑定的手机号") @RequestParam(value = "phone") String phone) {
 

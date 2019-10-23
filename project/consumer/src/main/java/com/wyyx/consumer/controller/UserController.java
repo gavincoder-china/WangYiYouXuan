@@ -21,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -60,7 +61,7 @@ public class UserController {
     private PerCenterService perCenterService;
 
     @ApiOperation(value = "用户注册")
-    @GetMapping(value = "/register")
+    @PostMapping(value = "/register")
     public ReturnResult UserRegister(@Valid UserRegisterVo userRegisterVo) {
 
         //先检测该用户是否注册,若redis中没有该手机号对应的值进行注册
@@ -106,7 +107,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "用户登录")
-    @GetMapping(value = "/login")
+    @PostMapping(value = "/login")
     public ReturnResult UserLogin(@Valid UserVo userVo, HttpServletRequest request) {
         //未勾选"我同意",提示勾选 0 不同意,1同意
         if (ObjectUtils.isEmpty(userVo.getIsAgree()) ) {
