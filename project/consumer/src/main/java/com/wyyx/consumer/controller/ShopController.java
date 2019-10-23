@@ -47,7 +47,6 @@ public class ShopController {
     @Reference
     private ShopService shopService;
 
-
     /**
      * @author kitty_zhu
      * @date 2019-10-17 12:11

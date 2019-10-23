@@ -24,14 +24,19 @@ public final class CommonContants {
     //redis分布式锁
     public static final String HOT_LOCK = "HOT_LOCK:";
     //未登录时存入redis中的购物车
-    public static final String NO_LOGIN_CART_SPACE = "NO_LOGIN_SPACE";
+    public static final String NO_LOGIN_CART_SPACE = "NO_LOGIN_SPACE:";
     //用户购物车
-    public static final String USER_CART = "USER_CART";
+    public static final String USER_CART = "USER_CART:";
 
     //秒杀业务中已经购买过的用户id保存,保存 1
     public static final String SECKILL_IS = "SECKILL_IS:";
 
-
+    //注册错误
+    public static final String REGISTER_ERROR = "REGISTER_ERROR";
+    //经常用的ip地址
+    public static final String COM_IP_ADDRESS = "COM_IP_ADDRESS:";
+    //异地登录提醒
+    public static final String NOT_COM_IP_ADDRESS = "您的帐号未在常用地登录，请注意帐号安全";
 
     public static final String HAVE_BUY = "您已购买过,请把机会让给别人!";
 

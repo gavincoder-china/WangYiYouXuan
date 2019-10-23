@@ -14,4 +14,7 @@ public interface UserExperienceMapper {
     int updateByPrimaryKeySelective(UserExperience record);
 
     int updateByPrimaryKey(UserExperience record);
+
+    //根据经验值获取用户经验值等信息
+    UserExperience selectByUserId(Long userId);
 }
