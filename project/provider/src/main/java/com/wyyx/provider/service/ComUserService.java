@@ -16,7 +16,7 @@ public interface ComUserService {
     //根据手机号查询用户对象
     ComUser selectByPhone(String phone);
     //更新用户为会员
-    int updateRole(ComUser comUser);
+    int loupdateRole(ComUser comUser);
 
     //根据用户id获取用户对象
     ComUser selectByUserId(Long userId);
