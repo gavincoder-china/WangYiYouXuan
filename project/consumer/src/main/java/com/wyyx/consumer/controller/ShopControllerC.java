@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.wyyx.consumer.contants.ReturnResultContants;
 import com.wyyx.consumer.result.ReturnResult;
 import com.wyyx.consumer.result.ReturnResultUtils;
+import com.wyyx.consumer.util.CartCountsIndexUtil;
 import com.wyyx.consumer.util.GetIpAddressUtil;
 import com.wyyx.consumer.util.RandomGoodUtil;
 import com.wyyx.consumer.vo.GoodsVoC;
@@ -57,6 +58,8 @@ public class ShopControllerC {
     @Autowired
     private RandomGoodUtil randomGoodUtil;
 
+    @Autowired
+    private CartCountsIndexUtil cartCountsIndexUtil;
 
     @ApiOperation(value = "首页")
     @GetMapping(value = "/selectIndex")
@@ -80,6 +83,7 @@ public class ShopControllerC {
 
         homeVoC.setDefaultProduct(shopService.randomProduct().getName());
         homeVoC.setTempToken(request.getSession().getId());
+
 
         return ReturnResultUtils.returnSuccess(homeVoC);
 

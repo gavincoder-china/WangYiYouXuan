@@ -53,10 +53,11 @@ public class OrderControllerC {
     public ReturnResult selectMyOrder(@Valid PageVo pageVo,
                                       @RequireLoginParam UserVo userVo) {
 
-
+        //把自己的订单全部查出
         List<ProductOrder> productOrders = orderService.selectOrderAll(userVo.getUserID(), pageVo.getStart(), pageVo.getPageSize());
 
         ArrayList<Object> listTemp = new ArrayList<>();
+        //遍历删选敏感字段
         productOrders.stream().forEach(list -> {
             OrderVoC orderVoC = new OrderVoC();
             List<OrderGoodsInfo> orderGoods = orderService.getOrderGoods(list.getId());
@@ -66,6 +67,7 @@ public class OrderControllerC {
             orderVoC.setTotalPrice(list.getTotalPrice());
             listTemp.add(orderVoC);
         });
+        //创建返回vo,并赋值
         ReturnOrderVoC returnOrderVoC = new ReturnOrderVoC();
         returnOrderVoC.setOrderList(listTemp);
         returnOrderVoC.setPageSize(pageVo.getPageSize());

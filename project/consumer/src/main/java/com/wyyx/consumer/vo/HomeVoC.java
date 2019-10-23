@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -35,7 +34,8 @@ public class HomeVoC implements Serializable {
     @ApiModelProperty(value = "搜索框默认数据")
     private String defaultProduct;
 
-
+    @ApiModelProperty(value = "购物车数量")
+    private int cartNum=0;
 
 
 }

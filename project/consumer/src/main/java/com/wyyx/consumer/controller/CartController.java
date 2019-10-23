@@ -6,8 +6,10 @@ import com.wyyx.consumer.annotationCustom.parameter.TempLoginParam;
 import com.wyyx.consumer.contants.ReturnResultContants;
 import com.wyyx.consumer.result.ReturnResult;
 import com.wyyx.consumer.result.ReturnResultUtils;
+import com.wyyx.consumer.util.CartCountsIndexUtil;
 import com.wyyx.consumer.util.RedisUtil;
 import com.wyyx.consumer.vo.CartVo;
+import com.wyyx.consumer.vo.ReturnCartVo;
 import com.wyyx.consumer.vo.UserVo;
 import com.wyyx.provider.contants.CommonContants;
 import com.wyyx.provider.dto.ComProduct;
@@ -44,6 +46,9 @@ public class CartController {
     private CartService cartService;
     @Reference
     private ShopService shopService;
+
+    @Autowired
+    private CartCountsIndexUtil cartCountsIndexUtil;
 
 
     @TempLoginMethod
@@ -138,6 +143,7 @@ public class CartController {
             List<ProductCart> carts = cartService.queryAllByUserID(userVo.getUserID());
 
             if (carts.size() != 0) {
+
                 ArrayList<CartVo> cartVos = new ArrayList<>();
                 carts.stream().forEach(cart -> {
                     CartVo cartVo = new CartVo();
@@ -158,7 +164,10 @@ public class CartController {
                     cartVos.add(cartVo);
 
                 });
-                return ReturnResultUtils.returnSuccess(cartVos);
+                ReturnCartVo returnCartVo = new ReturnCartVo();
+                returnCartVo.setCartGoods(cartVos);
+                returnCartVo.setCartNum(cartCountsIndexUtil.cartCounts(userVo));
+                return ReturnResultUtils.returnSuccess(returnCartVo);
 
             } else {
                 return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CART_EMPTY,
@@ -193,7 +202,10 @@ public class CartController {
                     cartVos.add(cartVo);
 
                 });
-                return ReturnResultUtils.returnSuccess(cartVos);
+                ReturnCartVo returnCartVo = new ReturnCartVo();
+                returnCartVo.setCartGoods(cartVos);
+                returnCartVo.setCartNum(cartCountsIndexUtil.cartCounts(userVo));
+                return ReturnResultUtils.returnSuccess(returnCartVo);
             }
         }
         return ReturnResultUtils.returnFail(ReturnResultContants.CODE_CART_EMPTY,
