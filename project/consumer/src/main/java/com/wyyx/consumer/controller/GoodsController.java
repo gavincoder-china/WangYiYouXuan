@@ -46,14 +46,12 @@ public class GoodsController {
         ComProduct product = goodsService.selectById(pId);
         BeanUtils.copyProperties(product, goodsVo);
 
-
         if (product.getInventory() >= 50) {
             goodsVo.setInventoryDesc(CommonContants.INVENTORY_FULL);
         } else if (product.getInventory() > 0 && product.getInventory() < 50) {
             goodsVo.setInventoryDesc(CommonContants.INVENTORY_HALF);
         } else if (product.getInventory() == 0) {
             goodsVo.setInventoryDesc(CommonContants.INVENTORY_ZERO);
-
         }
 
         int niceRatio = goodsService.goodsNiceRatio(pId);
@@ -77,12 +75,9 @@ public class GoodsController {
 
             return ReturnResultUtils.returnSuccess(goodsVo);
 
-
         } else {
 
             return ReturnResultUtils.returnSuccess(goodsVo);
         }
-
     }
-
 }

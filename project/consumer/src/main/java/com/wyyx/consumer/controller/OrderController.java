@@ -131,7 +131,7 @@ public class OrderController {
     @ApiOperation(value = "查询isdel的订单-加入回收站")
     @GetMapping(value = "/selectByIsDel")
     public ReturnResult selectByIsDel(@ApiParam(value = "是否逻辑删除")
-                                      @RequestParam(value = "isDel") boolean isDelete,
+                                      @RequestParam(value = "isDelete") boolean isDelete,
                                       @Valid PageVo pageVo,
                                       @RequireLoginParam UserVo userVo) {
         List<ProductOrder> productOrders = orderService.selectByIsDel(userVo.getUserID(),
@@ -152,7 +152,7 @@ public class OrderController {
 
         if (!ObjectUtils.isEmpty(order)) {
             //判断是否在回收站
-            if (!ObjectUtils.isEmpty(order.getIsDelete())) {
+            if (order.getIsDelete()) {
                 orderService.delOrder(userVo.getUserID(), id);
                 return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_DEL_ORDER_ORDERS,
                                                        ReturnResultContants.MSG_DEL_ORDER_ORDERS);
@@ -175,8 +175,13 @@ public class OrderController {
         if (OrderStatus.ORDER_HAVE_RECEIVE.getoStatus().equals(b)) {
 
             ProductComment productComment = new ProductComment();
+
             BeanUtils.copyProperties(commentVo, productComment);
+            if (ObjectUtils.isEmpty(commentVo.getRateLevel())) {
+                productComment.setRateLevel(9);
+            }
             productComment.setUserId(userVo.getUserID());
+
             orderService.insertSelective(productComment);
 
             return ReturnResultUtils.returnSuccess(ReturnResultContants.CODE_USER_COMMENT_SUCCESS,
