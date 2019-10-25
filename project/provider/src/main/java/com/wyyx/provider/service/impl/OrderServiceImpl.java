@@ -41,7 +41,6 @@ public class OrderServiceImpl implements OrderService {
     private OrderInfoMapper orderInfoMapper;
     @Autowired
     private ComProductMapper comProductMapper;
-
     @Autowired
     private TotalPriceUtil priceUtil;
 
@@ -75,7 +74,6 @@ public class OrderServiceImpl implements OrderService {
         } else {
             return false;
         }
-
     }
 
     //kitty_zhu:查询is_del的订单（回收站）
@@ -133,7 +131,6 @@ public class OrderServiceImpl implements OrderService {
         final BigDecimal[] totalPrice = {new BigDecimal(0)};
 
         map.forEach((k, v) -> {
-
             //往info中插值
             OrderInfo orderInfo = new OrderInfo();
             orderInfo.setOrderId(oId);
@@ -142,34 +139,29 @@ public class OrderServiceImpl implements OrderService {
             orderInfoMapper.insertSelective(orderInfo);
 
             //拿pid,数量去算钱
-
             ComProduct product = comProductMapper.selectById(Long.parseLong(k));
 
             BigDecimal multiply = product.getSellPrice().multiply(new BigDecimal(v));
 
             totalPrice[0] = totalPrice[0].add(multiply);
-
         });
-
 
         ProductOrder order = new ProductOrder();
         order.setId(oId);
-
         //得到计算过积分的价格
         BigDecimal priceTemp = priceUtil.finalPrice(uId, totalPrice[0]);
         //得到计算过运费的金额
         BigDecimal finalPrice = priceUtil.goodsFinalPrice(uId, priceTemp);
-
-        order.setTotalPrice(finalPrice);
-
+        order.setTotalPrice(priceTemp);
+        order.setFinalPrice(finalPrice);
         order.setUserId(uId);
         order.setCreateTime(new Date());
+        //使用枚举拿值
         order.setState(OrderStatus.ORDER_TO_PAY.getoStatus());
         order.setName(name);
 
         //生成订单
         productOrderMapper.insertSelective(order);
-
         return order;
     }
 
@@ -225,6 +217,4 @@ public class OrderServiceImpl implements OrderService {
     public long selectOrderAllCount(long userId) {
         return productOrderMapper.selectOrderAllCount(userId);
     }
-
-
 }

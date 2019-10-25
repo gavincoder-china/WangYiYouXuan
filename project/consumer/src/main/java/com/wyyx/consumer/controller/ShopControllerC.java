@@ -63,7 +63,7 @@ public class ShopControllerC {
 
     @ApiOperation(value = "首页")
     @GetMapping(value = "/selectIndex")
-    public ReturnResult selectIndex(HttpServletRequest request) {
+    public ReturnResult<HomeVoC> selectIndex(HttpServletRequest request) {
 
 
         HomeVoC homeVoC = new HomeVoC();
@@ -92,8 +92,8 @@ public class ShopControllerC {
 
     @ApiOperation(value = "根据商品类型查询")
     @GetMapping(value = "/selectByType")
-    public ReturnResult selectByType(@ApiParam(value = "查询商品的分类")
-                                     @RequestParam(value = "p_type") int p_type,
+    public ReturnResult<GoodsVoC> selectByType(@ApiParam(value = "查询商品的分类,1厨房用品, 2水果, 3衣服,4家电")
+                                    @RequestParam(value = "p_type") int p_type,
                                      @Valid PageVo pageVo) {
 
         List<ComProduct> comProducts = shopService.selectByClass(p_type, pageVo.getStart(),

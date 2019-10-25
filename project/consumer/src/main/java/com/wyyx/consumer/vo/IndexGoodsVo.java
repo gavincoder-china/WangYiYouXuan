@@ -1,5 +1,6 @@
 package com.wyyx.consumer.vo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
  * @description:
  ************************************************************/
 @Data
+@ApiModel(value = "商品信息")
 public class IndexGoodsVo implements Serializable {
     private static final long serialVersionUID = -6665209936433259845L;
 

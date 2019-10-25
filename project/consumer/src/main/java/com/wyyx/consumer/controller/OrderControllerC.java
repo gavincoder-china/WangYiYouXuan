@@ -50,13 +50,13 @@ public class OrderControllerC {
     @RequireLoginMethod
     @ApiOperation(value = "查询我的订单")
     @GetMapping(value = "/selectMyOrder")
-    public ReturnResult selectMyOrder(@Valid PageVo pageVo,
+    public ReturnResult<ReturnOrderVoC> selectMyOrder(@Valid PageVo pageVo,
                                       @RequireLoginParam UserVo userVo) {
 
         //把自己的订单全部查出
         List<ProductOrder> productOrders = orderService.selectOrderAll(userVo.getUserID(), pageVo.getStart(), pageVo.getPageSize());
 
-        ArrayList<Object> listTemp = new ArrayList<>();
+        ArrayList<OrderVoC> listTemp = new ArrayList<>();
         //遍历删选敏感字段
         productOrders.stream().forEach(list -> {
             OrderVoC orderVoC = new OrderVoC();

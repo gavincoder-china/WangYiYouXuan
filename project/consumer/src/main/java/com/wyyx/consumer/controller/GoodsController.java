@@ -38,7 +38,7 @@ public class GoodsController {
     @TempLoginMethod
     @ApiOperation(value = "商品详情展示")
     @GetMapping(value = "/showGood")
-    public ReturnResult showGood(@ApiParam(value = "商品id")
+    public ReturnResult<GoodsVo> showGood(@ApiParam(value = "商品id")
                                  @RequestParam(value = "pId") long pId,
                                  @TempLoginParam UserVo userVo) {
         GoodsVo goodsVo = new GoodsVo();
@@ -67,7 +67,6 @@ public class GoodsController {
 
         //登录的用户
         if (!StringUtils.isEmpty(userVo.getUserID().toString())) {
-
 
             BigDecimal vipPrice = goodsService.getVIPPrice(userVo.getUserID(), goodsVo.getSellPrice());
 

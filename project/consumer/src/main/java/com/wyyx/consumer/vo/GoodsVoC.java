@@ -1,5 +1,6 @@
 package com.wyyx.consumer.vo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
  * @description:
  ************************************************************/
 @Data
+@ApiModel(value = "商品信息")
 public class GoodsVoC implements Serializable {
     private static final long serialVersionUID = 1629558055041437593L;
 
@@ -31,6 +33,7 @@ public class GoodsVoC implements Serializable {
     private int pageSize;
     @ApiModelProperty(value = "总页数")
     private Long totalSize;
+
     @ApiModelProperty(value = "商品列表")
     private ArrayList goodsList;
 

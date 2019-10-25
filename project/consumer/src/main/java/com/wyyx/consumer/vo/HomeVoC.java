@@ -1,5 +1,6 @@
 package com.wyyx.consumer.vo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ import java.util.HashMap;
  * @description:
  ************************************************************/
 @Data
+@ApiModel(value = "首页信息")
 public class HomeVoC implements Serializable {
     private static final long serialVersionUID = -3003715721059946225L;
 

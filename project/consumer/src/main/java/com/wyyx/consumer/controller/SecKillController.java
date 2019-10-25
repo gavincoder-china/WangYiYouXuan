@@ -63,7 +63,7 @@ public class SecKillController {
 
     @ApiOperation(value = "展示所有商品")
     @GetMapping("/showAllProducts")
-    public ReturnResult showAllProducts(@Valid PageVo pageVo) {
+    public ReturnResult<SecGoodsVo> showAllProducts(@Valid PageVo pageVo) {
 
         List<SecProduct> lists = secKillService.selectAllSecGoods(pageVo.getStart(), pageVo.getPageSize());
 

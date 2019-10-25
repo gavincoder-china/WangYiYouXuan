@@ -26,6 +26,6 @@ public class ReturnOrderVoC implements Serializable {
     private int pageSize;
 
     @ApiModelProperty(value = "订单详情列表")
-    private List orderList;
+    private List<OrderVoC> orderList;
 
 }

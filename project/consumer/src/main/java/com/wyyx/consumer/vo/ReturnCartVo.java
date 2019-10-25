@@ -1,4 +1,6 @@
 package com.wyyx.consumer.vo;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import	java.io.Serializable;
@@ -16,9 +18,11 @@ import java.util.List;
  * @description:
  ************************************************************/
 @Data
+@ApiModel(value = "购物车信息")
 public class ReturnCartVo implements  Serializable {
     private static final long serialVersionUID = -778679250919180569L;
+    @ApiModelProperty(value = "购物车数量")
     private int cartNum=0;
-
-    private List CartGoods;
+    @ApiModelProperty(value = "购物车商品信息")
+    private List<CartVo> CartGoods;
 }

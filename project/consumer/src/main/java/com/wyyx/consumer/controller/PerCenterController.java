@@ -51,7 +51,7 @@ public class PerCenterController {
     @RequireLoginMethod
     @ApiOperation(value = "查看个人信息")
     @GetMapping(value = "/getPerInfo")
-    public ReturnResult getPerInfo(@RequireLoginParam UserVo userVo) {
+    public ReturnResult<PerCenterVo> getPerInfo(@RequireLoginParam UserVo userVo) {
 
         Long userId = userVo.getUserID();
         /*获取积分*/

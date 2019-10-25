@@ -127,7 +127,8 @@ public class UserController {
             String address = CommonContants.IS_COM_IP_ADDRESS;
             //获取当前位置的ip地址
             String curIpAddr = request.getLocalAddr();
-            if (!curIpAddr.equals(redisUtil.get(CommonContants.COM_IP_ADDRESS+comUser.getId()))) {  //检测是否为常用地登录
+            if (redisUtil.get(CommonContants.COM_IP_ADDRESS+comUser.getId())!=null&&
+                    !curIpAddr.equals(redisUtil.get(CommonContants.COM_IP_ADDRESS+comUser.getId()))) {  //检测是否为常用地登录
                 log.error(CommonContants.NOT_COM_IP_ADDRESS);
                 address = CommonContants.NOT_COM_IP_ADDRESS;
                 redisUtil.set(CommonContants.COM_IP_ADDRESS+comUser.getId(), curIpAddr);

@@ -99,7 +99,7 @@ public class CartController {
     @TempLoginMethod
     @ApiOperation("查看购物车")
     @GetMapping(value = "/allCart")
-    public ReturnResult allCart(@TempLoginParam UserVo userVo) {
+    public ReturnResult<ReturnCartVo> allCart(@TempLoginParam UserVo userVo) {
 
         if (!ObjectUtils.isEmpty(userVo.getUserID())) {
 

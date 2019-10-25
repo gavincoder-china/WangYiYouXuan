@@ -59,7 +59,7 @@ public class OrderController {
     @RequireLoginMethod
     @ApiOperation(value = "查询全部订单")
     @GetMapping(value = "/selectOrderAll")
-    public ReturnResult selectOrderAll(@Valid PageVo pageVo,
+    public ReturnResult<List<ProductOrder>> selectOrderAll(@Valid PageVo pageVo,
                                        @RequireLoginParam UserVo userVo) {
 
         List<ProductOrder> product_orders = orderService.selectOrderAll(userVo.getUserID(),
@@ -73,7 +73,7 @@ public class OrderController {
     @RequireLoginMethod
     @ApiOperation(value = "根据订单状态查询相应订单")
     @GetMapping(value = "/selectOrderByClass")
-    public ReturnResult selectOrderByClass(@ApiParam(value = "商品订单状态码")
+    public ReturnResult<List<ProductOrder>> selectOrderByClass(@ApiParam(value = "商品订单状态码")
                                            @RequestParam(value = "state") int state,
                                            @Valid PageVo pageVo,
                                            @RequireLoginParam UserVo userVo) {
@@ -92,7 +92,7 @@ public class OrderController {
     @RequireLoginMethod
     @ApiOperation(value = "根据商品名称模糊查询相应订单")
     @GetMapping(value = "/selectByGoodsName")
-    public ReturnResult selectByGoodsName(@ApiParam(value = "商品名称") @RequestParam(value = "name") String name,
+    public ReturnResult<List<ProductOrder>> selectByGoodsName(@ApiParam(value = "商品名称") @RequestParam(value = "name") String name,
                                           @ApiParam(value = "订单状态") @RequestParam(value = "state") byte state,
                                           @Valid PageVo pageVo,
                                           @RequireLoginParam UserVo userVo) {
@@ -130,7 +130,7 @@ public class OrderController {
     @RequireLoginMethod
     @ApiOperation(value = "查询isdel的订单-加入回收站")
     @GetMapping(value = "/selectByIsDel")
-    public ReturnResult selectByIsDel(@ApiParam(value = "是否逻辑删除")
+    public ReturnResult<List<ProductOrder>> selectByIsDel(@ApiParam(value = "是否逻辑删除")
                                       @RequestParam(value = "isDelete") boolean isDelete,
                                       @Valid PageVo pageVo,
                                       @RequireLoginParam UserVo userVo) {
@@ -195,7 +195,7 @@ public class OrderController {
     @RequireLoginMethod
     @ApiOperation(value = "商品选购,生成订单")
     @PostMapping(value = "/createOrder")
-    public ReturnResult createOrder(@RequireLoginParam UserVo userVo,
+    public ReturnResult<ProductOrder> createOrder(@RequireLoginParam UserVo userVo,
                                     @ApiParam(value = "选商品的id与件数")
                                     @RequestParam HashMap<String, String> map) {
 
@@ -206,11 +206,11 @@ public class OrderController {
             //订单超时
             redisUtil.set(CommonContants.ORDER_EXPIRE + order.getId(), 1, 1000);
 
-            HashMap<Object, Object> returnMap = new HashMap<>();
-            returnMap.put("订单信息", order);
-            returnMap.put("订单状态", "订单请尽快支付");
+           // HashMap<Object, Object> returnMap = new HashMap<>();
+           // returnMap.put("订单信息", order);
+           // returnMap.put("订单状态", "订单请尽快支付");
 
-            return ReturnResultUtils.returnSuccess(returnMap);
+            return ReturnResultUtils.returnSuccess(order);
 
         } else {
             return ReturnResultUtils.returnFail(ReturnResultContants.CODE_NO_INVENTORY,
@@ -223,7 +223,7 @@ public class OrderController {
     @RequireLoginMethod
     @ApiOperation(value = "商品选购订单生成后的查看订单")
     @GetMapping(value = "/checkOrder")
-    public ReturnResult checkOrder(@RequireLoginParam UserVo userVo,
+    public ReturnResult<OrderDescVo> checkOrder(@RequireLoginParam UserVo userVo,
                                    @ApiParam(value = "订单id")
                                    @RequestParam(value = "id") long id) {
 

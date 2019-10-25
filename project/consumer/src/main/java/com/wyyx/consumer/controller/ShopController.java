@@ -53,7 +53,7 @@ public class ShopController {
      */
     @ApiOperation(value = "展示首页分类商品")
     @GetMapping(value = "/selectAllByClass")
-    public ReturnResult selectAllByClass(@ApiParam(value = "每个分类你需要的个数")
+    public ReturnResult<IndexVo> selectAllByClass(@ApiParam(value = "每个分类你需要的个数")
                                          @RequestParam(value = "num") int num,
                                          HttpServletRequest request) {
 
@@ -84,7 +84,7 @@ public class ShopController {
      */
     @ApiOperation(value = "根据商品类型查询")
     @GetMapping(value = "/selectByClass")
-    public ReturnResult selectByClass(@ApiParam(value = "查询商品的分类")
+    public ReturnResult<HomeVo> selectByClass(@ApiParam(value = "查询商品的分类")
                                       @RequestParam(value = "p_type") int p_type,
                                       @Valid PageVo pageVo) {
         List<ComProduct> comProducts = shopService.selectByClass(p_type, pageVo.getStart(),
@@ -122,7 +122,7 @@ public class ShopController {
      */
     @ApiOperation(value = "模糊查询")
     @GetMapping(value = "/selectByName")
-    public ReturnResult selectByName(@ApiParam(value = "查询的商品名字")
+    public ReturnResult<HomeVo> selectByName(@ApiParam(value = "查询的商品名字")
                                      @RequestParam(value = "name") String name,
                                      @Valid PageVo pageVo) {
 
@@ -160,7 +160,7 @@ public class ShopController {
      */
     @ApiOperation(value = "火爆商品默认查询")
     @GetMapping(value = "/selectByHot")
-    public ReturnResult selectByHot() {
+    public ReturnResult<List<ComProduct>> selectByHot() {
 
         List<ComProduct> comProducts = shopService.selectByHot();
         return ReturnResultUtils.returnSuccess(comProducts);

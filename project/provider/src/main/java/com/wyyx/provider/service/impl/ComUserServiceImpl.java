@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 /**
  * @author ltl
  * @date 2019/10/17 12:13
@@ -27,22 +29,18 @@ public class ComUserServiceImpl implements ComUserService {
     @Override
     public int register(ComUser comUser) {
 
-        if (null!=comUser.getPassword()){
+        if (null != comUser.getPassword()) {
             //设置加密
             comUser.setPassword(encoder.encode(comUser.getPassword()));
         }
-
         //设置分布式id
         comUser.setId(idWorker.nextId());
-
         return comUserMapper.insertSelective(comUser);
     }
 
     @Override
     public ComUser login(String phone, String password) {
-
         ComUser comUser = comUserMapper.selectByPhone(phone);
-
         //密码匹配
         if (null != comUser && encoder.matches(password, comUser.getPassword())) {
             return comUser;
@@ -55,7 +53,6 @@ public class ComUserServiceImpl implements ComUserService {
 
         return comUserMapper.selectByPhone(phone);
     }
-
 
     @Override
     public int updateRole(ComUser comUser) {
